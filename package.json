@@ -8,6 +8,7 @@
   },
   "devDependencies": {
     "component": "0.19.9",
+    "grunt-http": "^1.5.0",
     "component-minify": "1.1.1",
     "component-stylus": "^1.1.3",
     "grunt": "^0.4.5",

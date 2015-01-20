@@ -63,6 +63,21 @@ module.exports = function (grunt) {
       }
     },
 
+    http: {
+      purge: {
+        options: {
+          url: process.env.CDN_ROOT + '/tutorial-navigator/latest',
+          method: 'DELETE'
+        }
+      },
+      purge_version: {
+        options: {
+          url: process.env.CDN_ROOT + '/tutorial-navigator/' + pkg.version,
+          method: 'DELETE'
+        }
+      }
+    },
+
     s3: {
       options: {
         key:    process.env.S3_KEY,
@@ -114,40 +129,11 @@ module.exports = function (grunt) {
           options: { gzip: false }
         }]
       }
-    },
-    maxcdn: {
-      purgeCache: {
-        options: {
-          companyAlias:   process.env.MAXCDN_COMPANY_ALIAS,
-          consumerKey:    process.env.MAXCDN_CONSUMER_KEY,
-          consumerSecret: process.env.MAXCDN_CONSUMER_SECRET,
-          zone_id:        process.env.MAXCDN_ZONE_ID,
-          method:         'delete'
-        },
-        files: [
-          { dest:     'tutorial-navigator/' + pkg.version + '/build.css', },
-          { dest:     'tutorial-navigator/' + pkg.version + '/build.js', },
-          { dest:     'tutorial-navigator/' + pkg.version + '/build.min.css', },
-          { dest:     'tutorial-navigator/' + pkg.version + '/build.min.js', },
-          { dest:     'tutorial-navigator/' + pkg.version + '/standalone.css', },
-          { dest:     'tutorial-navigator/' + pkg.version + '/standalone.js', },
-          { dest:     'tutorial-navigator/' + pkg.version + '/standalone.min.css', },
-          { dest:     'tutorial-navigator/' + pkg.version + '/standalone.min.js', },
-          { dest:     'tutorial-navigator/latest/build.css', },
-          { dest:     'tutorial-navigator/latest/build.js', },
-          { dest:     'tutorial-navigator/latest/build.min.css', },
-          { dest:     'tutorial-navigator/latest/build.min.js', },
-          { dest:     'tutorial-navigator/latest/standalone.css', },
-          { dest:     'tutorial-navigator/latest/standalone.js', },
-          { dest:     'tutorial-navigator/latest/standalone.min.css', },
-          { dest:     'tutorial-navigator/latest/standalone.min.js', },
-        ],
-      },
     }
   });
 
   grunt.registerTask('dev', ['shell:component_install', 'shell:component_build', 'connect', 'watch'])
   grunt.registerTask('build', ['clean', 'shell:component_install', 'shell:component_build_release']);
-  grunt.registerTask('cdn', ['build', 's3', 'maxcdn']);
+  grunt.registerTask('cdn', ['build', 's3', 'http']);
   grunt.registerTask('default', ['build']);
 };
