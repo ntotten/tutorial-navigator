@@ -77,7 +77,7 @@
     </div>
 
     <div class="row step select-platform-api" scroll-on="{!(!apptype || apptype === 'webapp' || serverApi || codevisible || !(clientPlatform || nativePlatform || hybridPlatform))}" disabled-if="{!(clientPlatform || nativePlatform || hybridPlatform)}" data-hidden="{!apptype || apptype === 'webapp' || codevisible}">
-      <h3>Will you use an API Server with your {'spa' === apptype ? 'javascript' : 'mobile'} application?<small>No, <a on-click="showCode">skip this</a></small></h3>
+      <h3>Will you use an API with your {'spa' === apptype ? 'javascript' : 'mobile'} application? <button on-click="showCode" class="btn btn-success btn-skip">No, skip this</button>
       <h4>Backend Platform</h4>
       <div each="serverapis" data-name="{name}" class="col-xs-2 tutorial-item" on-click="serverapiselect" data-hidden="thirdParty">
         <a data-href="url" class="logo-tutorial">
