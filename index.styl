@@ -1,157 +1,3 @@
-
-// Add some bootstrap.min.css@3.1.1
-// styles from migration to standalone version
-#tutorial-navigator
-  *
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-
-  *:before,
-  *:after
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-
-  .row:before,
-  .row:after
-    display: table;
-    content: " ";
-
-  h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6
-    font-family: inherit;
-    font-weight: 500;
-    line-height: 1.1;
-    color: inherit;
-
-  h1 small, h2 small, h3 small, h4 small, h5 small, h6 small, .h1 small, .h2 small, .h3 small, .h4 small, .h5 small, .h6 small, h1 .small, h2 .small, h3 .small, h4 .small, h5 .small, h6 .small, .h1 .small, .h2 .small, .h3 .small, .h4 .small, .h5 .small, .h6 .small
-    font-weight: normal;
-    line-height: 1;
-    color: #999;
-
-  h1, .h1, h2, .h2, h3, .h3
-    margin-top: 20px;
-    margin-bottom: 10px;
-
-  h1 small, .h1 small, h2 small, .h2 small, h3 small, .h3 small, h1 .small, .h1 .small, h2 .small, .h2 .small, h3 .small, .h3 .small
-    font-size: 65%;
-
-  h4, .h4, h5, .h5, h6, .h6
-    margin-top: 10px;
-    margin-bottom: 10px;
-
-  h4 small, .h4 small, h5 small, .h5 small, h6 small, .h6 small, h4 .small, .h4 .small, h5 .small, .h5 .small, h6 .small, .h6 .small
-    font-size: 75%;
-
-  h1, .h1
-    font-size: 36px;
-
-  h2, .h2
-    font-size: 30px;
-
-  h3, .h3
-    font-size: 24px;
-
-  h4, .h4
-    font-size: 18px;
-
-  h5, .h5
-    font-size: 14px;
-
-  h6, .h6
-    font-size: 12px;
-
-  p
-    margin: 0 0 10px;
-
-  .row:after
-    clear: both;
-
-  .col-xs-1, .col-sm-1, .col-md-1, .col-lg-1, .col-xs-2, .col-sm-2, .col-md-2, .col-lg-2, .col-xs-3, .col-sm-3, .col-md-3, .col-lg-3, .col-xs-4, .col-sm-4, .col-md-4, .col-lg-4, .col-xs-5, .col-sm-5, .col-md-5, .col-lg-5, .col-xs-6, .col-sm-6, .col-md-6, .col-lg-6, .col-xs-7, .col-sm-7, .col-md-7, .col-lg-7, .col-xs-8, .col-sm-8, .col-md-8, .col-lg-8, .col-xs-9, .col-sm-9, .col-md-9, .col-lg-9, .col-xs-10, .col-sm-10, .col-md-10, .col-lg-10, .col-xs-11, .col-sm-11, .col-md-11, .col-lg-11, .col-xs-12, .col-sm-12, .col-md-12, .col-lg-12
-    position: relative;
-    min-height: 1px;
-    padding-right: 15px;
-    padding-left: 15px;
-
-  .col-xs-1, .col-xs-2, .col-xs-3, .col-xs-4, .col-xs-5, .col-xs-6, .col-xs-7, .col-xs-8, .col-xs-9, .col-xs-10, .col-xs-11, .col-xs-12
-    float: left;
-
-  .col-xs-12
-    width: 100%;
-
-  .col-xs-11
-    width: 91.66666667%;
-
-  .col-xs-10
-    width: 83.33333333%;
-
-  .col-xs-9
-    width: 75%;
-
-  .col-xs-8
-    width: 66.66666667%;
-
-  .col-xs-7
-    width: 58.33333333%;
-
-  .col-xs-6
-    width: 50%;
-
-  .col-xs-5
-    width: 41.66666667%;
-
-  .col-xs-4
-    width: 33.33333333%;
-
-  .col-xs-3
-    width: 25%;
-
-  .col-xs-2
-    width: 16.66666667%;
-
-  .col-xs-1
-    width: 8.33333333%;
-
-  .btn
-    display: inline-block;
-    padding: 6px 12px;
-    margin-bottom: 0;
-    font-size: 14px;
-    font-weight: normal;
-    line-height: 1.42857143;
-    text-align: center;
-    white-space: nowrap;
-    vertical-align: middle;
-    cursor: pointer;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    background-image: none;
-    border: 1px solid transparent;
-    border-radius: 4px;
-
-    &.btn-skip
-      font-size: 12px;
-      margin-left: 9px;
-
-    &.btn-skip:hover,
-    &.btn-skip:focus
-      color: white;
-
-  .btn:hover,
-  .btn:focus
-    color: #333;
-    text-decoration: none;
-
-  .btn-xs,
-  .btn-group-xs > .btn
-    padding: 1px 5px;
-    font-size: 12px;
-    line-height: 1.5;
-    border-radius: 3px;
-
-
 // Now begins tutorial navigator styles
 #tutorial-navigator
   border 1px solid #ddd
@@ -267,10 +113,11 @@
             text-transform capitalize
             font-size 1.3em
             margin 20px 0 10px 0
-            font-weight 300
+            font-weight 400
             color black
             background none
             padding: 0;
+            
 
       .btn-select.btn-xs
         font-size: 11px;
@@ -359,21 +206,29 @@
     .snippet-tabs
       width 100%
       display table
-      border-bottom 1px solid #16214d
       margin-bottom 30px
+      font-size: 20px;
+      text-align: center;
+      background: #f6f6f6
+      border-radius: 3px;
       .snippet-tab
         display inline-block
         a
           display inline-block
-          background #f1f1f1
-          padding 10px
+          color #666
+          padding 20px 50px 0 50px;
+          margin: 0 20px;
           height auto
           min-width 110px
           text-align center
-          color #aaa
+          background: 
+          i 
+            display: block;
+            margin-top: 10px;
+            
           &.active
-            background #16214d
             color #fff
+            background: #44C7F4
 
 #tutorial-navigator *,
 #tutorial-navigator :before,
@@ -384,7 +239,7 @@
 
 #tutorial-navigator .step,
 #tutorial-navigator .code-snippets
-  padding 15px
+  padding 15px 20px;
   border-radius 3px
 
 #tutorial-navigator .step > h3,
@@ -432,3 +287,19 @@
 #tutorial-navigator .step .tutorial-item:hover a.logo-tutorial span
   background #fff
   color darken(#44C7F4, 40%)
+
+
+#tutorial-navigator
+  h1,h2,h3,h4,h5
+    font-weight: 500;
+    
+  img 
+    max-width: 100%;
+    
+  blockquote 
+    p 
+      margin-top: 0;
+    
+  .package blockquote
+    border: 0 
+    background: lighten(#44C7F4, 90%)
