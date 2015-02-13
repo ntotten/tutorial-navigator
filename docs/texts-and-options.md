@@ -2,7 +2,7 @@
 ## Native Mobile app
 **Desc**: Use any of our native SDKs to build your Mobile app.
 
-eg: iPhone SDK
+e.g. iPhone SDK
 ### Please choose your native SDK
 * iOS
 * Android
@@ -34,7 +34,7 @@ eg: iPhone SDK
 ## Single Page App
 **Desc**: Create a Javascript application that runs in your browser using your sever's API.
 
-eg: NodeJS + AngularJS
+e.g. NodeJS + AngularJS
 
 ### Please choose your FrontEnd technology
 
@@ -64,7 +64,7 @@ eg: NodeJS + AngularJS
 ## Regular WebApp
 **Desc**: Create a server side WebApplication using any of our SDKs.
 
-eg: Ruby on Rails
+e.g. Ruby on Rails
 
 ### Please choose the Backend platform you'll use
 
@@ -85,7 +85,7 @@ Are you using a FrontEnd technology like AngularJS or Ember? If you do, [please 
 ## Hybrid/Web Mobile app
 **Desc**: Create a Web/Hybrid Mobile app using any of our SDKs
 
-eg: PhoneGap, Ionic
+e.g. PhoneGap, Ionic
 ### Please choose your native SDK
 * Cordova / PhoneGap
 * Ionic Framework
@@ -113,15 +113,15 @@ eg: PhoneGap, Ionic
 # Template Locals (Parameters)
 
 * __account__
-  * __namespace__: Auth0 namespace. eg: `http://samples.auth0.com/`
-  * __callbackURL__: Selected callback. eg: `http://www.google.com/`
-  * __clientId__: Auth0 clientID. eg: `djasdklfjdasfh34ihgnjin`
-  * __clientSecret__: Auth0 clientID. eg: `asdfkjouhsugfgiuoshgifsgh`
+  * __namespace__: Auth0 namespace. e.g. `http://samples.auth0.com/`
+  * __callbackURL__: Selected callback. e.g. `http://www.google.com/`
+  * __clientId__: Auth0 clientID. e.g. `djasdklfjdasfh34ihgnjin`
+  * __clientSecret__: Auth0 clientID. e.g. `asdfkjouhsugfgiuoshgifsgh`
 * __configuration__
-  * __frontend__: The selected frontned lib. eg: `angularjs` or null
-  * __api__: The selected server API. eg: `nodejs` or null
-  * __backend__: The selected backend platform. eg: `nodejs` or null
-  * __mobile__: The selected mobile platform. eg: `iphone` or `cordova` or null
+  * __frontend__: The selected frontned lib. e.g. `angularjs` or null
+  * __api__: The selected server API. e.g. `nodejs` or null
+  * __backend__: The selected backend platform. e.g. `nodejs` or null
+  * __mobile__: The selected mobile platform. e.g. `iphone` or `cordova` or null
   * __thirdParty__: boolean indicating if it's a third party plugin or not.
   * __hybrid__: boolean indicating if it's a hybrid app or not.
 
