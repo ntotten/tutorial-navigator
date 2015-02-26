@@ -1,4 +1,9 @@
 
+0.12.8 / 2015-02-26
+===================
+
+  * Add visionmedia/debug as a core dependency so it installs properly
+
 0.12.7 / 2015-02-26
 ===================
 
