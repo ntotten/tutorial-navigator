@@ -1,4 +1,11 @@
 
+0.12.7 / 2015-02-26
+===================
+
+  * Fix package.json version
+  * Fix loading badge image
+  * Abbreviate e.g. correctly
+
 0.12.3 / 2015-01-20
 ===================
 
