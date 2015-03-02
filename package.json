@@ -26,6 +26,7 @@
     "supervisor": "*"
   },
   "scripts": {
-    "cdn": "grunt cdn"
+    "cdn": "grunt cdn",
+    "test": "grunt test"
   }
 }
