@@ -50,8 +50,14 @@ module.exports = function (grunt) {
       component_install: {
         command: './node_modules/.bin/component-install'
       },
+      component_install_test: {
+        command: './node_modules/.bin/component-install --dev'
+      },
       component_build: {
         command: './node_modules/.bin/component-build --use component-stylus'
+      },
+      component_build_test: {
+        command: './node_modules/.bin/component-build --dev --use component-stylus --out build'
       },
       component_build_release: {
         command: [
@@ -60,6 +66,12 @@ module.exports = function (grunt) {
           './node_modules/.bin/component-build --use component-stylus --out release --standalone TutorialNavigator --name standalone',
           './node_modules/.bin/component-build --use component-stylus,component-minify --out release --standalone TutorialNavigator --name standalone.min'
         ].join(' && ')
+      },
+      component_test_phantom: {
+        command: './node_modules/.bin/component-test phantom'
+      },
+      component_test_browser: {
+        command: './node_modules/.bin/component-test browser'
       }
     },
 
@@ -134,6 +146,8 @@ module.exports = function (grunt) {
 
   grunt.registerTask('dev', ['shell:component_install', 'shell:component_build', 'connect', 'watch'])
   grunt.registerTask('build', ['clean', 'shell:component_install', 'shell:component_build_release']);
+  grunt.registerTask('test', ['clean', 'shell:component_install_test', 'shell:component_build_test', 'shell:component_test_phantom']);
+  grunt.registerTask('test:browser', ['clean', 'shell:component_install_test', 'shell:component_build_test', 'shell:component_test_browser']);
   grunt.registerTask('cdn', ['build', 's3', 'http']);
   grunt.registerTask('default', ['build']);
 };
