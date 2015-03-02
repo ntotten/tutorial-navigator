@@ -10,6 +10,9 @@
     "cristiandouce/reactive": "*",
     "visionmedia/debug": "*"
   },
+  "development": {
+    "component/assert": "*"
+  },
   "paths": [
     "lib"
   ],

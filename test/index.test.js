@@ -1,13 +1,11 @@
 
-var TutorialNavigator = require('./index.js');
+var TutorialNavigator = require('tutorial-navigator');
+var assert = require('assert');
 
 describe('TutorialNavigator()', function() {
-  before(function(done) {
-    this.tutorial = new TutorialNavigator();
-    done();
-  });
-
   it('should initialize', function(done) {
-
+    var tutorial = new TutorialNavigator();
+    assert(tutorial);
+    done();
   });
 });
