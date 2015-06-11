@@ -15,8 +15,17 @@
   <div id="tutorial-container"></div>
   <script type="text/javascript">
     var TutorialNavigator = require('tutorial-navigator');
-    var tutorial = new TutorialNavigator();
-    tutorial.render('#tutorial-container');
+    $.getJSON('https://auth0.com/docs/meta/quickstart', function(data) {
+      var tutorial = new TutorialNavigator({
+        apptypes: data.app_types,
+        clientplatforms: data.client_platforms,
+        hybridplatforms: data.hybrid_platforms,
+        nativeplatforms: data.native_platforms,
+        serverplatforms: data.server_platforms,
+        serverapis: data.server_apis
+      });
+      tutorial.render('#tutorial-container');
+    }):
   </script>
 </body>
 </html>

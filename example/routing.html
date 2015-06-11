@@ -168,13 +168,23 @@
   </script>
   <script src="/build/build.js"></script>
   <script>
+
+  $.getJSON('https://auth0.com/docs/meta/quickstart', function(data) {
+
     /**
      * Tutorial Navigator routing example code
      * Note: 'Changes will be made to make this
      * code simpler...'
      */
     var TutorialNavigator = require('tutorial-navigator');
-    var tutorial = new TutorialNavigator();
+    var tutorial = new TutorialNavigator({
+      apptypes: data.app_types,
+      clientplatforms: data.client_platforms,
+      hybridplatforms: data.hybrid_platforms,
+      nativeplatforms: data.native_platforms,
+      serverplatforms: data.server_platforms,
+      serverapis: data.server_apis
+    });
     var eqlPath = function(url) {
       var base = page.base() || '';
       var path = window.location.pathname.slice(base.length) || '/';
@@ -305,5 +315,7 @@
     tutorial.pretty(function() {
       window.prettyPrint && window.prettyPrint();
     });
+
+  });
   </script>
 </html>
