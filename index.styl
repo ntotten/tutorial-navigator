@@ -4,8 +4,12 @@
   border-radius 3px
   -webkit-font-smoothing: antialiased;
   -moz-font-smoothing: antialiased;
-  font-family: "proxima-nova", "Helvetica Neue", sans-serif;
   color: #4d4d4d;
+
+  h1,h2,h3,h4,h5,h6
+    .anchor
+      display: none;
+
   .hidden
     display none!important
     visibility hidden!important
@@ -117,7 +121,7 @@
             color black
             background none
             padding: 0;
-            
+
 
       .btn-select.btn-xs
         font-size: 11px;
@@ -221,11 +225,10 @@
           height auto
           min-width 110px
           text-align center
-          background: 
-          i 
+          i
             display: block;
             margin-top: 10px;
-            
+
           &.active
             color #fff
             background: #44C7F4
@@ -292,16 +295,16 @@
 #tutorial-navigator
   h1,h2,h3,h4,h5
     font-weight: 500;
-    
-  img 
+
+  img
     max-width: 100%;
-    
-  blockquote 
-    p 
+
+  blockquote
+    p
       margin-top: 0;
-    
-  .package 
+
+  .package
     blockquote
       text-align: center;
-      border: 0 
+      border: 0
       background: lighten(#44C7F4, 90%)
