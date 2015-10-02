@@ -90,56 +90,53 @@ module.exports = function (grunt) {
       }
     },
 
-    s3: {
+    aws_s3: {
       options: {
-        key:    process.env.S3_KEY,
-        secret: process.env.S3_SECRET,
-        bucket: process.env.S3_BUCKET,
-        access: 'public-read',
-        headers: {
-          'Cache-Control':  'public, max-age=300'
-        }
+        accessKeyId:     process.env.S3_KEY,
+        secretAccessKey: process.env.S3_SECRET,
+        bucket:          process.env.S3_BUCKET,
+        region:          process.env.S3_REGION,
+        uploadConcurrency: 5,
+        params: {
+          CacheControl: 'public, max-age=300'
+        },
+        // debug: true <<< use this option to test changes
       },
       clean: {
-        del: [
-          { src:     'tutorial-navigator/' + pkg.version + '/build.css', },
-          { src:     'tutorial-navigator/' + pkg.version + '/build.js', },
-          { src:     'tutorial-navigator/' + pkg.version + '/build.min.css', },
-          { src:     'tutorial-navigator/' + pkg.version + '/build.min.js', },
-          { src:     'tutorial-navigator/' + pkg.version + '/standalone.css', },
-          { src:     'tutorial-navigator/' + pkg.version + '/standalone.js', },
-          { src:     'tutorial-navigator/' + pkg.version + '/standalone.min.css', },
-          { src:     'tutorial-navigator/' + pkg.version + '/standalone.min.js', },
-          { src:     'tutorial-navigator/latest/build.css', },
-          { src:     'tutorial-navigator/latest/build.js', },
-          { src:     'tutorial-navigator/latest/build.min.css', },
-          { src:     'tutorial-navigator/latest/build.min.js', },
-          { src:     'tutorial-navigator/latest/standalone.css', },
-          { src:     'tutorial-navigator/latest/standalone.js', },
-          { src:     'tutorial-navigator/latest/standalone.min.css', },
-          { src:     'tutorial-navigator/latest/standalone.min.js', },
+        files: [
+          { action: 'delete', dest: 'tutorial-navigator/' + pkg.version + '/build.css', },
+          { action: 'delete', dest: 'tutorial-navigator/' + pkg.version + '/build.js', },
+          { action: 'delete', dest: 'tutorial-navigator/' + pkg.version + '/build.min.css', },
+          { action: 'delete', dest: 'tutorial-navigator/' + pkg.version + '/build.min.js', },
+          { action: 'delete', dest: 'tutorial-navigator/' + pkg.version + '/standalone.css', },
+          { action: 'delete', dest: 'tutorial-navigator/' + pkg.version + '/standalone.js', },
+          { action: 'delete', dest: 'tutorial-navigator/' + pkg.version + '/standalone.min.css', },
+          { action: 'delete', dest: 'tutorial-navigator/' + pkg.version + '/standalone.min.js', },
+          { action: 'delete', dest: 'tutorial-navigator/latest/build.css', },
+          { action: 'delete', dest: 'tutorial-navigator/latest/build.js', },
+          { action: 'delete', dest: 'tutorial-navigator/latest/build.min.css', },
+          { action: 'delete', dest: 'tutorial-navigator/latest/build.min.js', },
+          { action: 'delete', dest: 'tutorial-navigator/latest/standalone.css', },
+          { action: 'delete', dest: 'tutorial-navigator/latest/standalone.js', },
+          { action: 'delete', dest: 'tutorial-navigator/latest/standalone.min.css', },
+          { action: 'delete', dest: 'tutorial-navigator/latest/standalone.min.js', },
         ]
       },
       publish: {
-        upload: [{
-          // src:    'release/*',
-          // dest:   'tutorial-navigator/' + minorVersion + '/',
-          // options: { gzip: false }
-        // }, {
-          // src:    'release/*',
-          // dest:   'tutorial-navigator-' + majorVersion + '/',
-          // options: { gzip: false }
-        // }, {
-          rel:    'release',
-          src:    'release/**/*',
-          dest:   'tutorial-navigator/' + pkg.version + '/',
-          options: { gzip: false }
-        }, {
-          rel:    'release',
-          src:    'release/*',
-          dest:   'tutorial-navigator/latest/',
-          options: { gzip: false }
-        }]
+        files: [
+          {
+            expand: true,
+            cwd: 'release/',
+            src: ['**'],
+            dest: 'tutorial-navigator/' + pkg.version + '/'
+          },
+          {
+            expand: true,
+            cwd: 'release/',
+            src: ['**'],
+            dest: 'tutorial-navigator/latest/'
+          },
+        ]
       }
     }
   });
