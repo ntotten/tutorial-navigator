@@ -4,7 +4,6 @@
   "private": true,
   "description": "Auth0's quickstarts",
   "dependencies": {
-    "auth0-tutorial-navigator": "git://github.com/auth0/tutorial-navigator#0.12.2"
   },
   "devDependencies": {
     "bump": "ianstormtaylor/bump",
