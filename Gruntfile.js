@@ -68,10 +68,10 @@ module.exports = function (grunt) {
         ].join(' && ')
       },
       component_test_phantom: {
-        command: './node_modules/.bin/component-test phantom'
+        command: 'node ./node_modules/.bin/component-test phantom'
       },
       component_test_browser: {
-        command: './node_modules/.bin/component-test browser'
+        command: 'node ./node_modules/.bin/component-test browser'
       }
     },
 
