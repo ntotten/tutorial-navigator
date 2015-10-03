@@ -145,6 +145,6 @@ module.exports = function (grunt) {
   grunt.registerTask('build', ['clean', 'shell:component_install', 'shell:component_build_release']);
   grunt.registerTask('test', ['clean', 'shell:component_install_test', 'shell:component_build_test', 'shell:component_test_phantom']);
   grunt.registerTask('test:browser', ['clean', 'shell:component_install_test', 'shell:component_build_test', 'shell:component_test_browser']);
-  grunt.registerTask('cdn', ['build', 's3', 'http']);
+  grunt.registerTask('cdn', ['build', 'aws_s3', 'http']);
   grunt.registerTask('default', ['build']);
 };
