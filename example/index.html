@@ -15,7 +15,7 @@
   <script type="text/javascript" src="js/jquery.ba-hashchange.min.js"></script>
   <script type="text/javascript" src="js/jquery.waypoints.js"></script>
   <script type="text/javascript" src="js/owl.carousel.min.js"></script>
-  <script type="text/javascript" src="http://fb.me/react-0.13.1.js"></script>
+  <script type="text/javascript" src="js/react.min.js"></script>
   <script type="text/javascript" src="js/page.min.js"></script>
   <script type="text/javascript" src="/build/build.js"></script>
 </head>
@@ -54,6 +54,7 @@
     var tnOpts = {
         baseUrl : 'https://auth0.com',
         basePath : '/docs',
+        usePageRouting: true,
         // userTenants : [],
         // platforms : platforms,
         platformsFetchFn : function() {
@@ -68,6 +69,7 @@
             console.log('tutorial-load');
         },
         onTutorialReset : function($template) {
+          $('#tutorial-navigator').removeClass('hide');
           console.log('reset');
         },
         onTutorialUpdate : function(state) {

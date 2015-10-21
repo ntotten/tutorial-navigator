@@ -4,7 +4,7 @@ TutorialNavigator = (function($, window, document) {
     handleClick: function(quickstart) {
       var question = this.props.getQuestion(quickstart.name);
 
-      page(this.props.tutorial.basePath + '/quickstart/' + quickstart.name);
+      this.props.onClick(quickstart.name);
     },
     render: function() {
       var quickstart = this.props.model;
@@ -81,6 +81,7 @@ TutorialNavigator = (function($, window, document) {
               key={i}
               model={quickstart}
               tutorial={this.props.tutorial}
+              onClick={this.props.onItemClick}
             />);
       }.bind(this));
 
@@ -104,10 +105,11 @@ TutorialNavigator = (function($, window, document) {
 
         if(tutorial.tech1) {
           config.path = '/' + tutorial.appType + '/' + tutorial.tech1 + '/' + tech.name;
+          return this.props.onClick(tutorial.appType, tutorial.tech1, tech.name);
         }
       }
 
-      page(tutorial.basePath + '/quickstart' + config.path);
+      return this.props.onClick(tutorial.appType, tech.name);
     },
     render: function() {
       var tech = this.props.model;
@@ -147,7 +149,7 @@ TutorialNavigator = (function($, window, document) {
         var time = 20 * i;
 
         collection.push(
-          <Tech key={i} delay={time} model={tech} tutorial={this.props.tutorial} />
+          <Tech key={i} delay={time} model={tech} tutorial={this.props.tutorial} onClick={this.props.onItemClick}/>
         );
       }.bind(this));
 
@@ -184,23 +186,34 @@ TutorialNavigator = (function($, window, document) {
       }
       return pageTitle;
     },
+    handleClick: function(appType, tech1) {
+      if (!appType){
+        if (!tech1){
+          return this.props.onItemClick();
+        }
+
+        return this.props.onItemClick(appType);
+      }
+
+      return this.props.onItemClick(appType, tech1);
+    },
     render: function() {
       var list = [];
       var tutorial = this.props.tutorial;
 
       if(tutorial.appType) {
-        list.push(<a href={tutorial.basePath + "/"}><span className="text">Documentation</span></a>);
-        list.push(<a href={tutorial.basePath + "/quickstart/"}><i className="icon-budicon-461"></i><span className="text">{this.getAppTypeName(tutorial.appType)}</span></a>);
+        list.push(<a onClick={this.handleClick.bind(this, null)}><span className="text">Documentation</span></a>);
+        list.push(<a onClick={this.handleClick.bind(this, null)}><i className="icon-budicon-461"></i><span className="text">{this.getAppTypeName(tutorial.appType)}</span></a>);
       } else {
         return (<div></div>);
       }
 
       if(tutorial.tech1) {
-        list.push(<a href={tutorial.basePath + "/quickstart/" + tutorial.appType + "/"}><i className="icon-budicon-461"></i><span className="text">{this.props.getTechName(tutorial.appType, tutorial.tech1)}</span></a>);
+        list.push(<a onClick={this.handleClick.bind(this, tutorial.appType)}><i className="icon-budicon-461"></i><span className="text">{this.props.getTechName(tutorial.appType, tutorial.tech1)}</span></a>);
       }
 
       if(tutorial.tech2) {
-        list.push(<a href={tutorial.basePath + "/quickstart/" + tutorial.appType + "/" + tutorial.tech1}><i className="icon-budicon-461"></i><span className="text">{this.props.getTechName('backend', tutorial.tech2)}</span></a>);
+        list.push(<a onClick={this.handleClick.bind(this, tutorial.appType, tutorial.tech1)}><i className="icon-budicon-461"></i><span className="text">{this.props.getTechName('backend', tutorial.tech2)}</span></a>);
       }
 
       document.title = this.getPageTitle(tutorial.appType, tutorial.tech1, tutorial.tech2);
@@ -368,7 +381,7 @@ TutorialNavigator = (function($, window, document) {
       return (
         <div>
           <div className="hide">
-            <Breadcrumbs ref="breadcrumbs" tutorial={this.props.tutorial} getTechName={this.props.getTechName} />
+            <Breadcrumbs ref="breadcrumbs" tutorial={this.props.tutorial} getTechName={this.props.getTechName} onItemClick={this.props.onItemClick}  />
           </div>
           <div className={(!this.state.ready) ? 'loading-tutorial' : 'hide' }>
             <div className="auth0-spinner">
@@ -464,10 +477,7 @@ TutorialNavigator = (function($, window, document) {
       this.setState(change);
     },
     handleSkip: function() {
-      var platformPath = this.getPlatformPath(this.state.appType);
-      var path = '/quickstart/' + this.state.appType + '/' + this.state.tech1 + '/no-api/';
-
-      page(this.props.basePath + path);
+      this.triggerNavigation(this.state.appType, this.state.tech1, 'no-api');
     },
     getInitialState: function () {
       this.getPlaforms();
@@ -548,27 +558,29 @@ TutorialNavigator = (function($, window, document) {
       var component = this;
       var basePath = this.props.basePath;
 
-      page(basePath + '/', function() {
-        component.setState(component.getInitialState());
-      });
+      if (this.props.usePageRouting && page){
+        page(basePath + '/', function() {
+          component.setState(component.getInitialState());
+        });
 
-      page(basePath + '/quickstart/', function() {
-        component.setState(component.getInitialState());
-      });
+        page(basePath + '/quickstart/', function() {
+          component.setState(component.getInitialState());
+        });
 
-      page(basePath + '/quickstart/:apptype?', function(ctx) {
-        component.appTypeChange(ctx.params.apptype);
-      });
+        page(basePath + '/quickstart/:apptype?', function(ctx) {
+          component.appTypeChange(ctx.params.apptype);
+        });
 
-      page(basePath + '/quickstart/:apptype/:platform?', function(ctx) {
-        component.platformChange(ctx.params.apptype, ctx.params.platform);
-      });
+        page(basePath + '/quickstart/:apptype/:platform?', function(ctx) {
+          component.platformChange(ctx.params.apptype, ctx.params.platform);
+        });
 
-      page(basePath + '/quickstart/:apptype/:platform/:api?', function(ctx) {
-        component.apiChange(ctx.params.apptype, ctx.params.platform, ctx.params.api);
-      });
+        page(basePath + '/quickstart/:apptype/:platform/:api?', function(ctx) {
+          component.apiChange(ctx.params.apptype, ctx.params.platform, ctx.params.api);
+        });
 
-      page();
+        page();
+      }
     },
     getPlaforms: function(){
       if (this.props.platforms) {
@@ -658,6 +670,24 @@ TutorialNavigator = (function($, window, document) {
         noApi: noApi
       });
     },
+    triggerNavigation: function(appType, platform, api){
+      var useRouter = this.props.usePageRouting && page,
+          basePath = this.props.basePath;;
+
+      if (!api) {
+        if (!platform) {
+          if (!appType){
+            return useRouter ? page(basePath + '/quickstart/') : this.setState(this.getInitialState());
+          }
+
+          return useRouter ? page(basePath + '/quickstart/' + appType) : this.appTypeChange(appType);
+        }
+
+        return useRouter ? page(basePath + '/quickstart/' + appType + '/' + platform) : this.platformChange(appType, platform);
+      }
+
+      return useRouter ? page(basePath + '/quickstart/' + appType + '/' + platform + '/' + api) : this.apiChange(appType, platform, api);
+    },
     render: function() {
       var hasMoreTenants = this.props.userTenants && this.props.userTenants.length > 1;
       var appTypes = this.state.platforms ? (this.state.platforms.apptypes || this.state.platforms.app_types)  : [];
@@ -674,11 +704,11 @@ TutorialNavigator = (function($, window, document) {
 
               <button href="#" data-skip onClick={this.handleSkip} className={(this.state.skippable) ? '' : 'hide' }>No, skip this</button>
               <br />
-              <Breadcrumbs tutorial={this.state} getTechName={this.getTechName} />
+              <Breadcrumbs tutorial={this.state} getTechName={this.getTechName} onItemClick={this.triggerNavigation}  />
             </div>
 
-            <QuickstartList quickstarts={appTypes} getQuestion={this.getQuestion} tutorial={this.state} />
-            <TechList getOptions={this.getOptions} tutorial={this.state} />
+            <QuickstartList quickstarts={appTypes} getQuestion={this.getQuestion} tutorial={this.state} onItemClick={this.triggerNavigation} />
+            <TechList getOptions={this.getOptions} tutorial={this.state} onItemClick={this.triggerNavigation} />
           </div>
 
           <div className="tutorial-content">
@@ -689,6 +719,7 @@ TutorialNavigator = (function($, window, document) {
               template={this.props.singleTpl}
               onLoad={this.props.onTutorialLoad}
               onReset={this.props.onTutorialReset}
+              onItemClick={this.triggerNavigation}
               />
           </div>
 
