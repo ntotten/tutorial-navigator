@@ -24,9 +24,15 @@ TutorialNavigator = (function($, window, document) {
   });
 
   var QuickstartList = React.createClass({
-    componentDidMount: function() {
+    componentWillUnmount: function(){
+        console.log('Unmount');
+    },
+    componentWillUpdate: function(){
       var $carousel = $(this.refs.carousel.getDOMNode());
-
+      $carousel.trigger('destroy.owl.carousel');
+    },
+    componentDidUpdate: function() {
+      var $carousel = $(this.refs.carousel.getDOMNode());
       $carousel.owlCarousel({
         margin: 20,
         center: true,
@@ -44,19 +50,19 @@ TutorialNavigator = (function($, window, document) {
             stagePadding: 60
           },
           380: {
-            items: 2,
+            items: this.props.quickstarts.length >= 2 ? 2 : this.props.quickstarts.length,
             stagePadding: 0
           },
           570: {
-            items: 3,
+            items: this.props.quickstarts.length >= 3 ? 3 : this.props.quickstarts.length,
             stagePadding: 0
           },
           768: {
-            items: 4,
+            items: this.props.quickstarts.length >= 4 ? 4 : this.props.quickstarts.length,
             stagePadding: 0
           },
           992: {
-            items: 5,
+            items: this.props.quickstarts.length >= 5 ? 5 : this.props.quickstarts.length,
             stagePadding: 0,
             center: false,
             dots: false
@@ -129,14 +135,15 @@ TutorialNavigator = (function($, window, document) {
     render: function() {
       var collection = [];
       var classString = '';
+      var options = this.props.getOptions(this.props.tutorial.options);
 
-      if(!this.props.options) {
+      if(!options) {
         return (
           <div></div>
         )
       }
 
-      this.props.options.forEach(function(tech, i) {
+      options.forEach(function(tech, i) {
         var time = 20 * i;
 
         collection.push(
@@ -167,7 +174,7 @@ TutorialNavigator = (function($, window, document) {
       return options[appType];
     },
     getPageTitle: function(appType, tech1, tech2) {
-      var pageTitle = window.SITE_TITLE;
+      var pageTitle = window.SITE_TITLE || document.title.split('-')[0].trim();
       if (appType && tech1 && tech2) {
         pageTitle += ' - Getting started with ' + this.props.getTechName(appType, tech1) + ' and ' + this.props.getTechName('backend', tech2);
       } else if (appType && tech1) {
@@ -180,7 +187,6 @@ TutorialNavigator = (function($, window, document) {
     render: function() {
       var list = [];
       var tutorial = this.props.tutorial;
-
 
       if(tutorial.appType) {
         list.push(<a href={tutorial.basePath + "/"}><span className="text">Documentation</span></a>);
@@ -239,8 +245,9 @@ TutorialNavigator = (function($, window, document) {
     },
     fetchDocument: function(url, toUpdate, jsonp) {
       var tutorial = this.props.tutorial;
+      var baseUrl = tutorial.baseUrl || '';
       var prefix = tutorial.basePath || '';
-      var uri = this.setUrlParams(prefix + url + '?e=1');
+      var uri = this.setUrlParams(baseUrl + prefix + url + '?e=1');
       var component = this;
       var config = {};
 
@@ -463,6 +470,8 @@ TutorialNavigator = (function($, window, document) {
       page(this.props.basePath + path);
     },
     getInitialState: function () {
+      this.getPlaforms();
+
       return {
         question: "Getting started? Try our quickstarts.",
         appType: null,
@@ -470,9 +479,11 @@ TutorialNavigator = (function($, window, document) {
         skippable: null,
         tech1: null,
         tech2: null,
+        platforms : null,
         tutorialUrls: [],
         showTutorial: false,
         path: '',
+        baseUrl: this.props.baseUrl || '',
         basePath: this.props.basePath || '',
         clientID: (this.props.userTenants && this.props.userTenants.length > 0) ? this.props.userTenants[0].clients[0].clientID : null
       };
@@ -489,16 +500,16 @@ TutorialNavigator = (function($, window, document) {
       return questions[platformType];
     },
     getOptions: function(platformType) {
-      if(!platformType) {
+      if(!platformType || !this.state.platforms) {
         return false;
       }
 
       var options = {
-        "spa": this.props.platforms.clientPlatforms,
-        "native-mobile": this.props.platforms.nativePlatforms,
-        "webapp": this.props.platforms.serverPlatforms,
-        "hybrid": this.props.platforms.hybridPlatforms,
-        "backend": this.props.platforms.serverApis
+        "spa": this.state.platforms.clientPlatforms || this.state.platforms.client_platforms,
+        "native-mobile": this.state.platforms.nativePlatforms || this.state.platforms.native_platforms,
+        "webapp": this.state.platforms.serverPlatforms || this.state.platforms.server_platforms,
+        "hybrid": this.state.platforms.hybridPlatforms || this.state.platforms.hybrid_platforms,
+        "backend": this.state.platforms.serverApis || this.state.platforms.server_apis
       };
 
       return options[platformType];
@@ -575,7 +586,6 @@ TutorialNavigator = (function($, window, document) {
             showTutorial: false
           });
 
-
         } else {
           component.setState({
             options: null,
@@ -619,6 +629,18 @@ TutorialNavigator = (function($, window, document) {
 
       page();
     },
+    getPlaforms: function(){
+      if (this.props.platforms) {
+          return Promise.resolve(this.props.platforms).then(this.setPlatformState.bind(this));
+      }
+
+      return this.props.platformsFetchFn().then(this.setPlatformState.bind(this));
+    },
+    setPlatformState: function(data){
+      if (this.isMounted()){
+        this.setState({ platforms : data });
+      }
+    },
     getTenantSwitcher: function() {
       if(!this.props.userTenants || this.props.userTenants.length < 2) {
         return false;
@@ -630,6 +652,7 @@ TutorialNavigator = (function($, window, document) {
     },
     render: function() {
       var hasMoreTenants = this.props.userTenants && this.props.userTenants.length > 1;
+      var appTypes = this.state.platforms ? (this.state.platforms.apptypes || this.state.platforms.app_types)  : [];
 
       return (
         <div className={(this.state.showTutorial) ? 'js-tutorial-navigator is-result' : 'js-tutorial-navigator'}>
@@ -646,8 +669,8 @@ TutorialNavigator = (function($, window, document) {
               <Breadcrumbs tutorial={this.state} getTechName={this.getTechName} />
             </div>
 
-            <QuickstartList quickstarts={this.props.platforms.apptypes} getQuestion={this.getQuestion} tutorial={this.state} />
-            <TechList options={this.getOptions(this.state.options)} tutorial={this.state} />
+            <QuickstartList quickstarts={appTypes} getQuestion={this.getQuestion} tutorial={this.state} />
+            <TechList getOptions={this.getOptions} tutorial={this.state} />
           </div>
 
           <div className="tutorial-content">
