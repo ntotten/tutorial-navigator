@@ -557,74 +557,15 @@ TutorialNavigator = (function($, window, document) {
       });
 
       page(basePath + '/quickstart/:apptype?', function(ctx) {
-        component.setState({
-          question: component.getQuestion(ctx.params.apptype),
-          options: ctx.params.apptype,
-          appType: ctx.params.apptype,
-          path: '/quickstart/' + ctx.params.apptype,
-          tutorialUrls: [],
-          skippable: false,
-          tech1: null,
-          tech2: null,
-          showTutorial: false
-        });
+        component.appTypeChange(ctx.params.apptype);
       });
 
       page(basePath + '/quickstart/:apptype/:platform?', function(ctx) {
-        var platformPath = component.getPlatformPath(ctx.params.apptype);
-
-        if(ctx.params.apptype !== 'backend' && ctx.params.apptype !== 'webapp') {
-          component.setState({
-            options: 'backend',
-            appType: ctx.params.apptype,
-            question: "Will you use a Backend or API with your application?",
-            skippable: true,
-            tech1: ctx.params.platform,
-            tech2: null,
-            path: '/quickstart/' + ctx.params.apptype + [platformPath + ctx.params.platform],
-            tutorialUrls: [platformPath + ctx.params.platform],
-            showTutorial: false
-          });
-
-        } else {
-          component.setState({
-            options: null,
-            appType: ctx.params.apptype,
-            question: null,
-            skippable: false,
-            tech1: ctx.params.platform,
-            tech2: null,
-            path: '/quickstart/' + ctx.params.apptype + [platformPath + ctx.params.platform],
-            tutorialUrls: [platformPath + ctx.params.platform],
-            showTutorial: true,
-            noApi: null
-          });
-        }
+        component.platformChange(ctx.params.apptype, ctx.params.platform);
       });
 
       page(basePath + '/quickstart/:apptype/:platform/:api?', function(ctx) {
-        var platformPath = component.getPlatformPath(ctx.params.apptype);
-        var tech2 = ctx.params.api;
-        var tutorialUrls = [platformPath + ctx.params.platform, '/server-apis/' + ctx.params.api];
-        var noApi = null;
-
-        if(ctx.params.api === 'no-api') {
-          tech2 = null;
-          tutorialUrls = [platformPath + ctx.params.platform]
-          noApi = true;
-        }
-
-        component.setState({
-          options: 'backend',
-          appType: ctx.params.apptype,
-          skippable: false,
-          tech1: ctx.params.platform,
-          tech2: tech2,
-          path: '/quickstart/' + ctx.params.apptype + [platformPath + ctx.params.platform, '/server-apis/' + ctx.params.api],
-          tutorialUrls: tutorialUrls,
-          showTutorial: true,
-          noApi: noApi
-        });
+        component.apiChange(ctx.params.apptype, ctx.params.platform, ctx.params.api);
       });
 
       page();
@@ -649,6 +590,73 @@ TutorialNavigator = (function($, window, document) {
       return (
         <TenantSwitcher tenants={this.props.userTenants} updateTutorial={this.updateTutorial} tutorial={this.state} />
       );
+    },
+    appTypeChange: function(appType){
+      this.setState({
+        question: this.getQuestion(appType),
+        options: appType,
+        appType: appType,
+        path: '/quickstart/' + appType,
+        tutorialUrls: [],
+        skippable: false,
+        tech1: null,
+        tech2: null,
+        showTutorial: false
+      });
+    },
+    platformChange: function(appType, platform){
+      var platformPath = this.getPlatformPath(appType);
+
+      if(appType !== 'backend' && appType !== 'webapp') {
+        this.setState({
+          options: 'backend',
+          appType: appType,
+          question: "Will you use a Backend or API with your application?",
+          skippable: true,
+          tech1: platform,
+          tech2: null,
+          path: '/quickstart/' + appType + [platformPath + platform],
+          tutorialUrls: [platformPath + platform],
+          showTutorial: false
+        });
+      } else {
+        this.setState({
+          options: null,
+          appType: appType,
+          question: null,
+          skippable: false,
+          tech1: platform,
+          tech2: null,
+          path: '/quickstart/' + appType + [platformPath + platform],
+          tutorialUrls: [platformPath + platform],
+          showTutorial: true,
+          noApi: null
+        });
+      }
+    },
+    apiChange: function(appType, platform, api){
+      var platformPath = this.getPlatformPath(appType);
+      var tech2 = api;
+      var tutorialUrls = [platformPath + platform, '/server-apis/' + api];
+      var noApi = null;
+
+      if(api === 'no-api') {
+        tech2 = null;
+        tutorialUrls = [platformPath + platform]
+        noApi = true;
+      }
+
+      this.setState({
+        options: 'backend',
+        appType: appType,
+        skippable: false,
+        tech1: platform,
+        tech2: tech2,
+        path: '/quickstart/' + appType + [platformPath + platform, '/server-apis/' + api],
+        tutorialUrls: tutorialUrls,
+        showTutorial: true,
+        noApi: noApi
+      });
     },
     render: function() {
       var hasMoreTenants = this.props.userTenants && this.props.userTenants.length > 1;
