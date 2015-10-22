@@ -3,18 +3,47 @@
 ## Usage
 
 ```js
-var TutorialNavigator = require('tutorial-navigator');  //You don't need this using the standalone compilation
-var tutorial = new TutorialNavigator({
-  clientId: 'some-client-id', // optional
-  docsDomain: 'https://docs.myauth0.com' // defaults to 'https://docs.auth0.com'
-});
+var TutorialNavigator = require('tutorial-navigator');  
+var options = {
+    docsDomain : 'https://auth0.com',
+    basePath : '/docs',
+    singleTpl : $('#tutorial-template'),
+    platformsFetchFn : function() {
+      return $.ajax({
+        url: 'https://auth0.com/docs/meta/quickstart',
+        dataType: 'jsonp'
+      });
+    },
+    onTutorialLoad : function($template) {
+        $('#tutorial-navigator').addClass('hide');
+    },
+    onTutorialReset : function($template) {
+      $('#tutorial-navigator').removeClass('hide');
+    }
+};
 
-tutorial.render('#my-tutorial-container');  // Try to avoid using 'tutorial-navigator' as an id
-tutorial.pretty(function() {
-  // save function to be called after docs get fetch and instert
-  // so they can be `prettyfied` by any pretty printing plugin
-});
+React.render(
+    React.createElement(TutorialNavigator.init, options),
+    $('#tutorial-navigator').get(0)
+);
 ```
+
+## API
+
+This are the list of properties you use to initialize the contorl
+
+|Name             |Type     |Description|Required|
+|---|---|---|---|
+|docsDomain       |string   | base url used to fetch the tutorial||
+|basePath         |string   |||
+|routing          |bool     | if enabled it will use page for routing||
+|userTenants      |array    |||
+|platforms        |object   | object containing all the information required by the control||
+|platformsFetchFn |function | if platforms is not defined, it will use this function to get the platforms from the server. Should return a promise||
+|singleTpl        |element  | Element used for parsing the tutorial||
+|onTutorialLoad   |function | Event triggered when the tutorial is loaded||
+|onTutorialReset  |function | Event triggered when the tutorial is reset||
+|onTutorialUpdate |function | Event triggered on navigation| |
 
 ## Install & Build
 
@@ -25,7 +54,7 @@ tutorial.pretty(function() {
 <script type="text/javascript" src="https://cdn.auth0.com/tutorial-navigator/0.7.2/build.js"></script>
 ```
 
-> You may also use our minified or standalone versions `build.min.*`, `standalone.*`, `standalone.min.*`.
+> You may also use our minified or standalone versions `build.min.*`.
 
 ### Downloading from this repository
 
@@ -34,77 +63,39 @@ Run the following lines in your terminal
 ```bash
 $ git clone git@github.com:auth0/tutorial-navigator.git
 $ cd tutorial-navigator
-$ make build
+$ npm build
 ```
 
 And then you can get the files from the `build/` folder.
-
-
-### Using Component(1)
-
-`TutorialNavigator` uses [deedubs/component-stylus](https://github.com/deedubs/component-stylus) plugin con transpile stylus files into CSS in the build process.
-
-So in order to work installed as a component you need to add this build step by following the next few steps:
-
-1. Add `auth0/tutorial-navigator` to your dependencies tree at your project's `component.json` file.
-
-  ```json
-  {
-    "dependencies": {
-      "auth0/tutorial-navigator": "*"
-    }
-  }
-  ```
-
-2. Install `component-stylus`
-
-  a. by adding it globaly to your environment
-
-    ```
-    $ [sudo] npm install -g component-stylus
-    ```
-
-  b. or local to your [Node.js](https://nodejs.org) application
-
-    ```
-    $ npm install --save component-stylus
-    ```
-
-  c. or as a devDependency
-
-    ```
-    $ npm install --save-dev component-stylus
-    ```
-
-3. Then proceed to build the tutorial
-
-  a. by `component(1)` command line tool with
-
-    ```
-      $ component build --use component-stylus
-    ```
-
-  b. or with your custom builder by
-
-    ```
-    var Builder = require('component-builder')
-    var stylus = require('component-stylus');
-
-    var builder = new Builder(__dirname);
-
-    builder.use(stylus());
-    ```
 
 ## Development
 
 ```bash
 $ git clone git@github.com:auth0/tutorial-navigator.git
 $ cd tutorial-navigator
-$ make dev-run
+$ npm start
 ```
 
-After that you will have access to 3 example pages:
+After that you will have access to [http://localhost:8989/](http://localhost:8989)
 
-* **Simple**: [http://localhost:8989/](http://localhost:8989) for simple view.
-* **Routing**: [http://localhost:8989/routing](http://localhost:8989/routing) for routing example
-* **Standalone**: [http://localhost:8989/routing](http://localhost:8989/standalone) for standalone version (withouth css) **this still requires bootstrap.css**
+## Component Structure
+
+The TutorialNavigator react class contains all the elements and is in charge of mantaining the state.
+
+The grid below the title is the list of Quickstarts  
+
+  ![TutorialNavigator1](./images/TutorialNavigator-1.png)
+
+  _Tutorial Navigator and Quickstart list_
+
+When you click on one Quickstart the list is loaded with a list of techonologies
+
+  ![TutorialNavigator2](./images/TutorialNavigator-2.png)
+
+  _Tech list_
+
+Once you click on the Techonology the template is requested and loaded in the defined template
+
+  ![TutorialNavigator3](./images/TutorialNavigator-3.png)
+
+  _Tech list_

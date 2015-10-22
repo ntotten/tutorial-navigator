@@ -24,9 +24,6 @@ TutorialNavigator = (function($, window, document) {
   });
 
   var QuickstartList = React.createClass({
-    componentWillUnmount: function(){
-        console.log('Unmount');
-    },
     componentWillUpdate: function(){
       var $carousel = $(this.refs.carousel.getDOMNode());
       $carousel.trigger('destroy.owl.carousel');
@@ -258,7 +255,7 @@ TutorialNavigator = (function($, window, document) {
     },
     fetchDocument: function(url, toUpdate, jsonp) {
       var tutorial = this.props.tutorial;
-      var baseUrl = tutorial.baseUrl || '';
+      var baseUrl = tutorial.docsDomain || '';
       var prefix = tutorial.basePath || '';
       var uri = this.setUrlParams(baseUrl + prefix + url + '?e=1');
       var component = this;
@@ -493,7 +490,7 @@ TutorialNavigator = (function($, window, document) {
         tutorialUrls: [],
         showTutorial: false,
         path: '',
-        baseUrl: this.props.baseUrl || '',
+        docsDomain: this.props.docsDomain || '',
         basePath: this.props.basePath || '',
         clientID: (this.props.userTenants && this.props.userTenants.length > 0) ? this.props.userTenants[0].clients[0].clientID : null
       };
@@ -558,7 +555,7 @@ TutorialNavigator = (function($, window, document) {
       var component = this;
       var basePath = this.props.basePath;
 
-      if (this.props.usePageRouting && page){
+      if (this.props.routing && page){
         page(basePath + '/', function() {
           component.setState(component.getInitialState());
         });
@@ -671,7 +668,7 @@ TutorialNavigator = (function($, window, document) {
       });
     },
     triggerNavigation: function(appType, platform, api){
-      var useRouter = this.props.usePageRouting && page,
+      var useRouter = this.props.routing && page,
           basePath = this.props.basePath;;
 
       if (!api) {
