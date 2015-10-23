@@ -55,11 +55,11 @@
         routing: true,
         // userTenants : [],
         // platforms : platforms,
-        selectedTutorial : {
-          apptype: 'spa',
-          platform: 'jquery',
-          serverApi: 'rails'
-        },
+        // selectedTutorial : {
+        //   apptype: 'spa',
+        //   platform: 'jquery',
+        //   serverApi: 'rails'
+        // },
         platformsFetchFn : function() {
           return $.ajax({
             url: 'https://auth0.com/docs/meta/quickstart',
@@ -73,7 +73,7 @@
         },
         onTutorialReset : function($template) {
           $('#tutorial-navigator').removeClass('hide');
-          console.log('reset');
+          console.log('tutorial-reset');
         },
         onTutorialUpdate : function(state) {
           console.log('tutorial-update');

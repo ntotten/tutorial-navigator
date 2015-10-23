@@ -512,11 +512,6 @@ TutorialNavigator = (function() {
         return this.props.onTutorialUpdate(this.state);
       }
     },
-    componentDidMount: function() {
-      if (this.props.onTutorialUpdate){
-        return this.props.onTutorialUpdate(this.state);
-      }
-    },
     componentWillMount: function() {
       var component = this;
       var basePath = this.props.basePath;
