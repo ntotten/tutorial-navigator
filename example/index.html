@@ -55,6 +55,11 @@
         routing: true,
         // userTenants : [],
         // platforms : platforms,
+        selectedTutorial : {
+          apptype: 'spa',
+          platform: 'jquery',
+          serverApi: 'rails'
+        },
         platformsFetchFn : function() {
           return $.ajax({
             url: 'https://auth0.com/docs/meta/quickstart',

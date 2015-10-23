@@ -1,3 +1,15 @@
+<!-- TOC depth:6 withLinks:1 updateOnSave:1 orderedList:0 -->
+
+- [Auth0 Navigator Tutorial](#auth0-navigator-tutorial)
+	- [Usage](#usage)
+	- [Install & Build](#install-build)
+		- [From Auth0's CDN, ready to go](#from-auth0s-cdn-ready-to-go)
+		- [Downloading from this repository](#downloading-from-this-repository)
+		- [Development](#development)
+	- [API](#api)
+	- [Component Structure](#component-structure)
+<!-- /TOC -->
+
 # Auth0 Navigator Tutorial
 
 ## Usage
@@ -28,23 +40,6 @@ React.render(
 );
 ```
 
-## API
-
-This are the list of properties you use to initialize the contorl
-
-|Name             |Type     |Description|Required|
-|---|---|---|---|
-|docsDomain       |string   | base url used to fetch the tutorial||
-|basePath         |string   |||
-|routing          |bool     | if enabled it will use page for routing||
-|userTenants      |array    |||
-|platforms        |object   | object containing all the information required by the control||
-|platformsFetchFn |function | if platforms is not defined, it will use this function to get the platforms from the server. Should return a promise||
-|singleTpl        |element  | Element used for parsing the tutorial||
-|onTutorialLoad   |function | Event triggered when the tutorial is loaded||
-|onTutorialReset  |function | Event triggered when the tutorial is reset||
-|onTutorialUpdate |function | Event triggered on navigation| |
-
 ## Install & Build
 
 ### From Auth0's CDN, ready to go
@@ -68,7 +63,7 @@ $ npm build
 
 And then you can get the files from the `build/` folder.
 
-## Development
+### Development
 
 ```bash
 $ git clone git@github.com:auth0/tutorial-navigator.git
@@ -77,6 +72,24 @@ $ npm start
 ```
 
 After that you will have access to [http://localhost:8989/](http://localhost:8989)
+
+## API
+
+This are the list of properties you use to initialize the contorl
+
+|Name             |Type     |Description|Required|
+|---|---|---|---|
+|docsDomain       |string   | base url used to fetch the tutorial||
+|basePath         |string   |||
+|selectedTutorial |object   | if set, it will try to load the tutorial ||
+|routing          |bool     | if enabled it will use page for routing||
+|userTenants      |array    |||
+|platforms        |object   | object containing all the information required by the control||
+|platformsFetchFn |function | if platforms is not defined, it will use this function to get the platforms from the server. Should return a promise||
+|singleTpl        |element  | Element used for parsing the tutorial||
+|onTutorialLoad   |function | Event triggered when the tutorial is loaded||
+|onTutorialReset  |function | Event triggered when the tutorial is reset||
+|onTutorialUpdate |function | Event triggered on navigation| |
 
 ## Component Structure
 

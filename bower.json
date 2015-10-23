@@ -16,5 +16,8 @@
     "css/vendor",
     "test",
     "tests"
-  ]
+  ],
+  "dependencies": {
+    "auth0-styleguide": "git://github.com/auth0/styleguide.git#2.1.2"
+  }
 }

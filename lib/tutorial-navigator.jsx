@@ -577,6 +577,10 @@ TutorialNavigator = (function() {
 
         page();
       }
+
+      if (this.props.selectedTutorial){
+        this.triggerNavigation(this.props.selectedTutorial.apptype, this.props.selectedTutorial.platform, this.props.selectedTutorial.serverApi);
+      }
     },
     getPlaforms: function(){
       if (this.props.platforms) {
