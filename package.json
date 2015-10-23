@@ -3,11 +3,10 @@
   "version": "0.12.9",
   "private": true,
   "description": "Auth0's quickstarts",
-  "dependencies": {
-  },
+  "dependencies": {},
   "devDependencies": {
-    "bump-version": "^0.5.0",
     "browserify": "^11.0.1",
+    "bump-version": "^0.5.0",
     "grunt": "^0.4.5",
     "grunt-aws-s3": "^0.14.0",
     "grunt-browserify": "^4.0.0",
@@ -15,6 +14,7 @@
     "grunt-contrib-clean": "^0.6.0",
     "grunt-contrib-connect": "^0.11.2",
     "grunt-contrib-copy": "^0.8.0",
+    "grunt-contrib-cssmin": "^0.14.0",
     "grunt-contrib-stylus": "^0.22.0",
     "grunt-contrib-uglify": "^0.9.1",
     "grunt-contrib-watch": "^0.6.1",
