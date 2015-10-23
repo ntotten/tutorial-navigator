@@ -77,6 +77,49 @@
         },
         onTutorialUpdate : function(state) {
           console.log('tutorial-update');
+        },
+        onQuickstartListLoading: function(data){
+          var $carousel = $(data.element);
+          $carousel.trigger('destroy.owl.carousel');
+        },
+        onQuickstartListLoaded : function(data) {
+          var $carousel = $(data.element);
+          $carousel.owlCarousel({
+            margin: 20,
+            center: true,
+            dots: true,
+            navContainerClass: 'nav',
+            navClass: ['prev', 'next'],
+            baseClass: 'js-carousel',
+            itemClass: 'item',
+            dotsClass: 'dots',
+            dotClass: 'dot',
+            nav: false,
+            responsive: {
+              0: {
+                items: 1,
+                stagePadding: 60
+              },
+              380: {
+                items: data.quickstarts.length >= 2 ? 2 : data.quickstarts.length,
+                stagePadding: 0
+              },
+              570: {
+                items: data.quickstarts.length >= 3 ? 3 : data.quickstarts.length,
+                stagePadding: 0
+              },
+              768: {
+                items: data.quickstarts.length >= 4 ? 4 : data.quickstarts.length,
+                stagePadding: 0
+              },
+              992: {
+                items: data.quickstarts.length >= 5 ? 5 : data.quickstarts.length,
+                stagePadding: 0,
+                center: false,
+                dots: false
+              }
+            }
+          });
         }
     };
 

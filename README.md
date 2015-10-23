@@ -76,18 +76,18 @@ After that you will have access to [http://localhost:8989/](http://localhost:898
 This are the list of properties you use to initialize the contorl
 
 |Name             |Type     |Description|Required|
-|---|---|---|---|
-|docsDomain       |string   | base url used to fetch the tutorial||
-|basePath         |string   |||
-|selectedTutorial |object   | if set, it will try to load the tutorial ||
-|routing          |bool     | if enabled it will use page for routing||
-|userTenants      |array    |||
-|platforms        |object   | object containing all the information required by the control||
-|platformsFetchFn |function | if platforms is not defined, it will use this function to get the platforms from the server. Should return a promise||
-|singleTpl        |element  | Element used for parsing the tutorial||
-|onTutorialLoad   |function | Event triggered when the tutorial is loaded||
-|onTutorialReset  |function | Event triggered when the tutorial is reset||
-|onTutorialUpdate |function | Event triggered on navigation| |
+|:---:|:---:|---|---|
+|`docsDomain`       |string   | base url used to fetch the tutorial||
+|`basePath`         |string   |||
+|`selectedTutorial` |object   | if set, it will try to load the tutorial ||
+|`routing`          |bool     | if enabled it will use page for routing||
+|`userTenants`      |array    |||
+|`platforms`        |object   | object containing all the information required by the control||
+|`platformsFetchFn` |function | if platforms is not defined, it will use this function to get the platforms from the server. Should return a promise||
+|`singleTpl`        |element  | Element used for parsing the tutorial||
+|`onTutorialLoad`   |function | Event triggered when the tutorial is loaded||
+|`onTutorialReset`  |function | Event triggered when the tutorial is reset||
+|`onTutorialUpdate` |function | Event triggered on navigation| |
 
 ## Component Structure
 

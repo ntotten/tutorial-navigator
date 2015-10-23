@@ -24,47 +24,14 @@ TutorialNavigator = (function() {
 
   var QuickstartList = React.createClass({
     componentWillUpdate: function(){
-      var $carousel = $(this.refs.carousel.getDOMNode());
-      $carousel.trigger('destroy.owl.carousel');
+      if (this.props.onQuickstartListLoading){
+        this.props.onQuickstartListLoading({ element : this.refs.carousel.getDOMNode(), quickstarts : this.props.quickstarts });
+      }
     },
     componentDidUpdate: function() {
-      var $carousel = $(this.refs.carousel.getDOMNode());
-      $carousel.owlCarousel({
-        margin: 20,
-        center: true,
-        dots: true,
-        navContainerClass: 'nav',
-        navClass: ['prev', 'next'],
-        baseClass: 'js-carousel',
-        itemClass: 'item',
-        dotsClass: 'dots',
-        dotClass: 'dot',
-        nav: false,
-        responsive: {
-          0: {
-            items: 1,
-            stagePadding: 60
-          },
-          380: {
-            items: this.props.quickstarts.length >= 2 ? 2 : this.props.quickstarts.length,
-            stagePadding: 0
-          },
-          570: {
-            items: this.props.quickstarts.length >= 3 ? 3 : this.props.quickstarts.length,
-            stagePadding: 0
-          },
-          768: {
-            items: this.props.quickstarts.length >= 4 ? 4 : this.props.quickstarts.length,
-            stagePadding: 0
-          },
-          992: {
-            items: this.props.quickstarts.length >= 5 ? 5 : this.props.quickstarts.length,
-            stagePadding: 0,
-            center: false,
-            dots: false
-          }
-        }
-      });
+      if (this.props.onQuickstartListLoaded){
+        this.props.onQuickstartListLoaded({ element : this.refs.carousel.getDOMNode(), quickstarts : this.props.quickstarts });
+      }
     },
     render: function() {
       var list = [];
@@ -707,7 +674,7 @@ TutorialNavigator = (function() {
               <Breadcrumbs tutorial={this.state} getTechName={this.getTechName} onItemClick={this.triggerNavigation}  />
             </div>
 
-            <QuickstartList quickstarts={appTypes} getQuestion={this.getQuestion} tutorial={this.state} onItemClick={this.triggerNavigation} />
+            <QuickstartList onQuickstartListLoading={this.props.onQuickstartListLoading} onQuickstartListLoaded={this.props.onQuickstartListLoaded} quickstarts={appTypes} getQuestion={this.getQuestion} tutorial={this.state} onItemClick={this.triggerNavigation} />
             <TechList getOptions={this.getOptions} tutorial={this.state} onItemClick={this.triggerNavigation} />
           </div>
 
