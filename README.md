@@ -1,16 +1,14 @@
-<!-- TOC depth:6 withLinks:1 updateOnSave:1 orderedList:0 -->
-
-- [Auth0 Navigator Tutorial](#auth0-navigator-tutorial)
-	- [Usage](#usage)
-	- [Install & Build](#install-build)
-		- [From Auth0's CDN, ready to go](#from-auth0s-cdn-ready-to-go)
-		- [Downloading from this repository](#downloading-from-this-repository)
-		- [Development](#development)
-	- [API](#api)
-	- [Component Structure](#component-structure)
-<!-- /TOC -->
-
 # Auth0 Navigator Tutorial
+
+
+- [Usage](#usage)
+- [Install & Build](#install-build)
+	- [From Auth0's CDN, ready to go](#from-auth0s-cdn-ready-to-go)
+	- [Downloading from this repository](#downloading-from-this-repository)
+	- [Development](#development)
+- [API](#api)
+- [Component Structure](#component-structure)
+
 
 ## Usage
 
