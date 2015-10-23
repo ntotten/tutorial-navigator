@@ -98,4 +98,4 @@ Once you click on the Techonology the template is requested and loaded in the de
 
   ![TutorialNavigator3](./images/TutorialNavigator-3.png)
 
-  _Tech list_
+  _Tutorial Loaded_

@@ -1,9 +1,8 @@
 /** @jsx React.DOM */
-TutorialNavigator = (function($, window, document) {
+TutorialNavigator = (function() {
   var Quickstart = React.createClass({
     handleClick: function(quickstart) {
       var question = this.props.getQuestion(quickstart.name);
-
       this.props.onClick(quickstart.name);
     },
     render: function() {
@@ -728,4 +727,4 @@ TutorialNavigator = (function($, window, document) {
   return {
     init: TutorialNavigator
   }
-})(jQuery, window, document);
+})();

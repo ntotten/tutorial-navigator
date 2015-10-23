@@ -8,7 +8,6 @@ var fs = require('fs');
 var read = fs.readFileSync;
 
 module.exports = function (grunt) {
-
   require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks);
 
   grunt.initConfig({
@@ -26,8 +25,12 @@ module.exports = function (grunt) {
           watch: true,
         },
         src: ["lib/tutorial-navigator.jsx"],
-        dest: "build/build.js"
-      }
+        dest: "build/tutorial-navigator.js"
+      },
+      build: {
+        src: ["lib/tutorial-navigator.jsx"],
+        dest: "build/tutorial-navigator.js"
+      },
     },
     clean: {
       dev: ["build/"]
@@ -37,7 +40,7 @@ module.exports = function (grunt) {
         options: {
           hostname: "*",
           base: [".", "example"],
-          port: 8989
+          port: 8990
         }
       },
     },
@@ -47,7 +50,7 @@ module.exports = function (grunt) {
               compress: false // temp
             },
           src: ["css/tutorial-navigator.styl", "css/carousel.styl"],
-          dest: "build/build.css"
+          dest: "build/tutorial-navigator.css"
         }
     },
     watch: {
@@ -56,7 +59,18 @@ module.exports = function (grunt) {
           tasks: ["stylus:build"]
         }
       },
+    uglify: {
+      build: {
+        src: "build/tutorial-navigator.js",
+        dest: "build/tutorial-navigator.min.js"
+      }
+    }
   });
 
   grunt.registerTask("dev", ["clean:dev", "stylus", "browserify:dev", "connect:dev", "watch", ]);
+  grunt.registerTask('build', ['clean', "stylus", "browserify:dev", "uglify:build"]);
+  grunt.registerTask('test', ['clean']);
+  grunt.registerTask('test:browser', ['clean']);
+  grunt.registerTask('cdn', ['build', 'aws_s3', 'http']);
+  grunt.registerTask('default', ['build']);
 };
