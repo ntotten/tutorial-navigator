@@ -3,7 +3,10 @@
   "version": "0.12.9",
   "private": true,
   "description": "Auth0's quickstarts",
-  "dependencies": {},
+  "dependencies": {
+    "jsonp": "^0.2.0",
+    "q": "^1.4.1"
+  },
   "devDependencies": {
     "browserify": "^11.0.1",
     "bump-version": "^0.5.0",
@@ -21,6 +24,7 @@
     "grunt-env": "^0.4.4",
     "grunt-http": "^1.6.0",
     "matchdep": "^0.3.0",
+    "mocha": "^2.3.3",
     "reactify": "^1.0.0",
     "serve": "*",
     "supervisor": "*"
@@ -28,7 +32,7 @@
   "scripts": {
     "start": "grunt dev",
     "build": "grunt build",
-    "test": "grunt test",
+    "test": "mocha --opts ./test/mocha.opts --compilers js:babel/register --recursive test/**/*.jsx",
     "deploy": "grunt cdn"
   }
 }

@@ -10,12 +10,7 @@
       padding: 20px;
     }
   </style>
-  <script type="text/javascript" src="//cdn.auth0.com/styleguide/vendor/jquery-1.9.0.min.js"></script>
-  <script type="text/javascript" src="js/jquery.accordion.min.js"></script>
-  <script type="text/javascript" src="js/jquery.waypoints.js"></script>
-  <script type="text/javascript" src="js/owl.carousel.min.js"></script>
-  <script type="text/javascript" src="js/react.min.js"></script>
-  <script type="text/javascript" src="js/page.min.js"></script>
+  <script type="text/javascript" src="../vendor/react/react.min.js"></script>
   <script type="text/javascript" src="/build/tutorial-navigator.js"></script>
 </head>
 <body>
@@ -52,80 +47,63 @@
     var tnOpts = {
         docsDomain : 'https://auth0.com',
         basePath : '/docs',
-        routing: true,
-        // userTenants : [],
-        // platforms : platforms,
-        // selectedTutorial : {
-        //   apptype: 'spa',
-        //   platform: 'jquery',
-        //   serverApi: 'rails'
-        // },
-        platformsFetchFn : function() {
-          return $.ajax({
-            url: 'https://auth0.com/docs/meta/quickstart',
-            dataType: 'jsonp'
-          });
-        },
-        singleTpl : $('#tutorial-template'),
+        routing: false,
+        platforms : platforms,
+        singleTpl : document.getElementById('tutorial-template'),
         onTutorialLoad : function($template) {
-            $('#tutorial-navigator').addClass('hide');
-            console.log('tutorial-load');
+          document.getElementById('tutorial-navigator').classList.add('hide');
         },
         onTutorialReset : function($template) {
-          $('#tutorial-navigator').removeClass('hide');
-          console.log('tutorial-reset');
+          document.getElementById('tutorial-navigator').classList.remove('hide');
         },
-        onTutorialUpdate : function(state) {
-          console.log('tutorial-update');
-        },
-        onQuickstartListLoading: function(data){
-          var $carousel = $(data.element);
-          $carousel.trigger('destroy.owl.carousel');
-        },
-        onQuickstartListLoaded : function(data) {
-          var $carousel = $(data.element);
-          $carousel.owlCarousel({
-            margin: 20,
-            center: true,
-            dots: true,
-            navContainerClass: 'nav',
-            navClass: ['prev', 'next'],
-            baseClass: 'js-carousel',
-            itemClass: 'item',
-            dotsClass: 'dots',
-            dotClass: 'dot',
-            nav: false,
-            responsive: {
-              0: {
-                items: 1,
-                stagePadding: 60
-              },
-              380: {
-                items: data.quickstarts.length >= 2 ? 2 : data.quickstarts.length,
-                stagePadding: 0
-              },
-              570: {
-                items: data.quickstarts.length >= 3 ? 3 : data.quickstarts.length,
-                stagePadding: 0
-              },
-              768: {
-                items: data.quickstarts.length >= 4 ? 4 : data.quickstarts.length,
-                stagePadding: 0
-              },
-              992: {
-                items: data.quickstarts.length >= 5 ? 5 : data.quickstarts.length,
-                stagePadding: 0,
-                center: false,
-                dots: false
-              }
-            }
-          });
-        }
+        // onQuickstartListLoading: function(data){
+        //   var $carousel = $(data.element);
+        //   $carousel.trigger('destroy.owl.carousel');
+        // },
+        // onQuickstartListLoaded : function(data) {
+        //   var $carousel = $(data.element);
+        //   $carousel.owlCarousel({
+        //     margin: 20,
+        //     center: true,
+        //     dots: true,
+        //     navContainerClass: 'nav',
+        //     navClass: ['prev', 'next'],
+        //     baseClass: 'js-carousel',
+        //     itemClass: 'item',
+        //     dotsClass: 'dots',
+        //     dotClass: 'dot',
+        //     nav: false,
+        //     responsive: {
+        //       0: {
+        //         items: 1,
+        //         stagePadding: 60
+        //       },
+        //       380: {
+        //         items: data.quickstarts.length >= 2 ? 2 : data.quickstarts.length,
+        //         stagePadding: 0
+        //       },
+        //       570: {
+        //         items: data.quickstarts.length >= 3 ? 3 : data.quickstarts.length,
+        //         stagePadding: 0
+        //       },
+        //       768: {
+        //         items: data.quickstarts.length >= 4 ? 4 : data.quickstarts.length,
+        //         stagePadding: 0
+        //       },
+        //       992: {
+        //         items: data.quickstarts.length >= 5 ? 5 : data.quickstarts.length,
+        //         stagePadding: 0,
+        //         center: false,
+        //         dots: false
+        //       }
+        //     }
+        //   });
+        // }
     };
 
     React.render(
         React.createElement(TutorialNavigator.init, tnOpts),
-        $('#tutorial-navigator').get(0)
+        document.getElementById('tutorial-navigator')
     );
 
   </script>

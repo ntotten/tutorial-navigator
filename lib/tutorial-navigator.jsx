@@ -1,4 +1,8 @@
 /** @jsx React.DOM */
+
+var JSONP  = require('jsonp');
+var Q = require('q');
+
 TutorialNavigator = (function() {
   var Quickstart = React.createClass({
     handleClick: function(quickstart) {
@@ -36,7 +40,6 @@ TutorialNavigator = (function() {
     render: function() {
       var list = [];
       var hide = (this.props.tutorial.appType) ? 'hide ' : '';
-
       this.props.quickstarts.forEach(function(quickstart, i) {
           list.push(
             <Quickstart
@@ -221,24 +224,23 @@ TutorialNavigator = (function() {
     },
     fetchDocument: function(url, toUpdate, jsonp) {
       var tutorial = this.props.tutorial;
+      var deffered = Q.defer();
       var baseUrl = tutorial.docsDomain || '';
       var prefix = tutorial.basePath || '';
       var uri = this.setUrlParams(baseUrl + prefix + url + '?e=1');
-      var component = this;
-      var config = {};
 
-      return $.ajax({
-        url: uri,
-        dataType: "jsonp",
-        jsonpCallback: jsonp,
-        contentType: "application/json",
-        error: function(status, err) {
+      JSONP(uri, { name: jsonp }, function(err, data){
+        if (err){
           return console.log(err);
         }
+
+        deffered.resolve(data);
       });
+
+      return deffered.promise;
     },
     getBreadcrumbs: function() {
-      return $(this.refs.breadcrumbs.getDOMNode()).clone();
+      return this.refs.breadcrumbs.getDOMNode().cloneNode(true);
     },
     getTitle: function(state) {
       var tutorial = this.props.tutorial;
@@ -262,45 +264,72 @@ TutorialNavigator = (function() {
       var tutorial = this.props.tutorial;
       var titles = this.getTitle(state);
 
-      $('.tutorial-title', template).text(titles.tutorial);
-      $('.breadcrumbs', template).replaceWith(this.getBreadcrumbs());
+      if (template.querySelector('.tutorial-title') != null){
+        template.querySelector('.tutorial-title').textContent = titles.tutorial;
+      }
+
+      if (template.querySelector('.breadcrumbs') != null){
+        template.querySelector('.breadcrumbs').outerHTML = this.getBreadcrumbs().outerHTML;
+      }
 
       if(state.content1) {
-        $('#tutorial-1', template).append(state.content1);
-        $('.nav-tabs li', template).eq(0).find('a').text(titles.tech1);
+        template.querySelector('#tutorial-1').innerHTML = state.content1;
+        var lis = template.querySelectorAll('.nav-tabs li')
+        if (lis.length > 0){
+          lis[0].querySelector('a').innerText = titles.tech2;
+        }
       }
 
       if(state.content2) {
-        $('#tutorial-2', template).append(state.content2);
-        $('.nav-tabs li', template).eq(1).find('a').text(titles.tech2);
+        template.querySelector('#tutorial-2').innerHTML = state.content2;
+        var lis = template.querySelectorAll('.nav-tabs li')
+        if (lis.length > 1){
+          lis[1].querySelector('a').innerText = titles.tech2;
+        }
       }
 
       // Remove duplicate titles
-      $('.tab-pane h1, .tab-pane h2', template).filter(':first-child').remove();
+      [].forEach.call(template.querySelectorAll('.tab-pane h1:first-child, .tab-pane h2:first-child'), function(el) {
+        el.parentNode.removeChild(el);
+      });
 
-      // If only one tutorial, hide the tabs
-      $('.nav-tabs', template).toggleClass('hide', !!!state.content2);
-      $('.tab-pane', template).removeClass('active').eq(0).addClass('active');
+      template.querySelector('.nav-tabs').classList.toggle('hide');
+      var tabs = template.querySelector('.tab-pane');
 
-      template.removeClass('hide');
+      [].forEach.call(tabs, function(tab) {
+        tab.classList.remove('active');
+      });
+
+      if (tabs.length > 0 && tabs[0].classList.indexOf('active') === -1){
+        tabs[0].classList.add('active');
+      }
+
+      template.classList.remove('hide');
 
       if (this.props.onLoad){
         this.props.onLoad(template);
       }
     },
-    emptyTemplate: function($template) {
-      $template.find('.tab-pane, .nav-tabs li a, .tutorial-title, .sidebar-sbs ul').html('');
-    },
-    resetTemplate: function($template) {
-      $template.addClass('hide');
-
-      this.emptyTemplate($template);
-      if (this.props.onReset) {
-        this.props.onReset($template);
+    emptyTemplate: function(template) {
+      if (template.querySelector('.tab-pane, .nav-tabs li a, .tutorial-title, .sidebar-sbs ul') !== null){
+        template.querySelector('.tab-pane, .nav-tabs li a, .tutorial-title, .sidebar-sbs ul').innerHTML =  '';
       }
     },
-    onReady: function(content1, content2) {
-      if(!content2[0].html) {
+    resetTemplate: function(template) {
+      if (template.className.indexOf('hide') == -1){
+        template.className += ' hide';
+      }
+
+      this.emptyTemplate(template);
+      if (this.props.onReset) {
+        this.props.onReset(template);
+      }
+    },
+    onReady: function(result) {
+      var content1 = result[0];
+      var content2 = result[1];
+
+      if(!content2.html) {
         this.setState({
           ready: true,
           content1: content1.html
@@ -309,11 +338,11 @@ TutorialNavigator = (function() {
         return this.updateTemplate(this.state);
       }
 
-      if(content1[0] && content2[0]) {
+      if(content1 && content2) {
         this.setState({
           ready: true,
-          content1: content1[0].html,
-          content2: content2[0].html
+          content1: content1.html,
+          content2: content2.html
         });
 
         return this.updateTemplate(this.state);
@@ -329,15 +358,15 @@ TutorialNavigator = (function() {
       }
 
       if(tutorial.tutorialUrls.length > 1) {
-        return $.when(
+        return Q.all([
           this.fetchDocument(tutorial.tutorialUrls[0], 'content1', '__a0tn1'),
           this.fetchDocument(tutorial.tutorialUrls[1], 'content2', '__a0tn2')
-        ).then(this.onReady);
+        ]).then(this.onReady);
       }
 
-      return $.when(
+      return Q.all([
         this.fetchDocument(tutorial.tutorialUrls[0], 'content1', '__a0tn1')
-      ).then(this.onReady);
+      ]).then(this.onReady);
 
     },
     render: function() {
@@ -490,9 +519,9 @@ TutorialNavigator = (function() {
     getTechName: function(platformType, tech) {
       var collection = this.getOptions(platformType);
 
-      var result = $.grep(collection, function(e){ return e.name == tech; });
+      var result = collection.filter(function(e){ return e.name == tech; });
 
-      if(result.length) {
+      if(collection && result.length) {
         return result[0].title;
       }
     },
@@ -546,7 +575,9 @@ TutorialNavigator = (function() {
     },
     getPlaforms: function(){
       if (this.props.platforms) {
-          return Promise.resolve(this.props.platforms).then(this.setPlatformState.bind(this));
+          var deferred = Q.defer();
+          deferred.resolve(this.props.platforms);
+          return deferred.promise.then(this.setPlatformState.bind(this));
       }
 
       return this.props.platformsFetchFn().then(this.setPlatformState.bind(this));
@@ -652,7 +683,7 @@ TutorialNavigator = (function() {
     },
     render: function() {
       var hasMoreTenants = this.props.userTenants && this.props.userTenants.length > 1;
-      var appTypes = this.state.platforms ? (this.state.platforms.apptypes || this.state.platforms.app_types)  : [];
+      var appTypes = this.state.platforms ? (this.state.platforms.apptypes || this.state.platforms.app_types) : [];
 
       return (
         <div className={(this.state.showTutorial) ? 'js-tutorial-navigator is-result' : 'js-tutorial-navigator'}>
@@ -694,3 +725,5 @@ TutorialNavigator = (function() {
     init: TutorialNavigator
   }
 })();
+
+module.export = TutorialNavigator;

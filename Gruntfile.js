@@ -77,7 +77,7 @@ module.exports = function (grunt) {
         options: {
           keepalive: true,
           hostname: '*',
-          base: ['.', 'example'],
+          base: ['.', 'example', 'vendor/react'],
           port: 8990
         }
       },

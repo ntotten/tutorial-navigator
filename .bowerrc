@@ -1,5 +1,5 @@
 {
-  "directory": "css/vendor",
+  "directory": "vendor",
   "analytics": false,
   "storage": {
     "packages": ".bower-cache",
