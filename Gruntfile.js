@@ -1,4 +1,10 @@
 module.exports = function (grunt) {
+  var serveStatic = require('serve-static');
+  var path = require('path');
+  var join = path.join;
+  var fs = require('fs');
+  var read = fs.readFileSync;
+
   var JS_DEV_PATH = 'js/tutorial-navigator/development/';
   var JS_BASE_PATH = 'js/tutorial-navigator/tutorial-navigator-';
 
@@ -32,11 +38,11 @@ module.exports = function (grunt) {
             ]
           }
         },
-        src: ['lib/tutorial-navigator.jsx'],
+        src: ['lib/index.jsx'],
         dest: 'build/tutorial-navigator.js'
       },
       build: {
-        src: ['lib/tutorial-navigator.jsx'],
+        src: ['lib/index.jsx'],
         dest: 'build/tutorial-navigator.js',
         options: {
           browserifyOptions: {
@@ -77,8 +83,20 @@ module.exports = function (grunt) {
         options: {
           keepalive: true,
           hostname: '*',
-          base: ['.', 'example', 'vendor/react'],
-          port: 8990
+          port: 8990,
+          middleware: function (connect, options) {
+           return [
+             serveStatic(__dirname),
+             function full(req, res, next) {
+                if (!/^\/full/.test(req.originalUrl)) return next();
+                res.end(read(join(__dirname, 'example/full.html')));
+                res.end(read(join(__dirname, 'example/full.html')));
+              },
+             function basic(req, res, next) {
+               res.end(read(join(__dirname, 'example/index.html')));
+             }
+           ]
+         }
         }
       },
     },

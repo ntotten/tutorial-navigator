@@ -27,6 +27,7 @@
     "mocha": "^2.3.3",
     "reactify": "^1.0.0",
     "serve": "*",
+    "serve-static": "^1.10.0",
     "supervisor": "*"
   },
   "scripts": {
