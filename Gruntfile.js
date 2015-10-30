@@ -41,8 +41,8 @@ module.exports = function (grunt) {
             ]
           }
         },
-        src: ['index.js'],
-        dest: 'build/tutorial-navigator.js'
+        src: ['index.js', 'example/src/Example.js'],
+        dest: 'example/lib/sample.js'
       },
       build: {
         src: ['index.js'],
@@ -51,7 +51,7 @@ module.exports = function (grunt) {
           browserifyOptions: {
             extensions: ['.jsx'],
             transform: [
-               [ 'reactify' , {'es6': true}]
+               ["babelify", { loose: "all"}], [ 'reactify' , {'es6': true}]
             ]
           }
         }
@@ -87,19 +87,7 @@ module.exports = function (grunt) {
           keepalive: true,
           hostname: '*',
           port: 8990,
-          middleware: function (connect, options) {
-           return [
-             serveStatic(__dirname),
-             function full(req, res, next) {
-                if (!/^\/full/.test(req.originalUrl)) return next();
-                res.end(read(join(__dirname, 'example/full.html')));
-                res.end(read(join(__dirname, 'example/full.html')));
-              },
-             function basic(req, res, next) {
-               res.end(read(join(__dirname, 'example/index.html')));
-             }
-           ]
-         }
+          base: ['.', 'example', 'vendor/react']
         }
       },
     },

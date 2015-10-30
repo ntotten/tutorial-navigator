@@ -10,6 +10,12 @@ export default function ArticleLoadAction(context, payload, done) {
       html: html,
       onDocumentLoaded : payload.onDocumentLoaded
     });
+    context.dispatch('LOAD_TUTORIAL_NAVIGATOR', {
+      appType : payload.appType,
+      tech1 : payload.tech1,
+      tech2 : payload.tech2,
+      baseUrl : payload.baseUrl
+    })
     done();
   }).catch((err) => {
     context.dispatch('RECIEVE_ARTICLE_FAILURE', err);
