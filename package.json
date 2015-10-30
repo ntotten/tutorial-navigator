@@ -2,10 +2,23 @@
   "name": "auth0-tutorial-navigator",
   "version": "0.12.9",
   "private": true,
+  "main": "index.js",
   "description": "Auth0's quickstarts",
   "dependencies": {
+    "babelify": "^6.4.0",
+    "fluxible": "^1.0.0",
+    "fluxible-addons-react": "^0.2.0",
+    "fluxible-router": "^0.3.0",
     "jsonp": "^0.2.0",
-    "q": "^1.4.1"
+    "lodash": "^3.10.1",
+    "q": "^1.4.1",
+    "react": "^0.14.0",
+    "react-dom": "^0.14.0"
+  },
+  "peerDependencies": {
+    "fluxible": ">=1.0.0",
+    "react": "^0.14.0",
+    "react-dom": "^0.14.0"
   },
   "devDependencies": {
     "browserify": "^11.0.1",
@@ -31,9 +44,15 @@
     "supervisor": "*"
   },
   "scripts": {
-    "start": "grunt dev",
+    "start": "serve --port ${PORT|3000} demo",
     "build": "grunt build",
     "test": "mocha --opts ./test/mocha.opts --compilers js:babel/register --recursive test/**/*.jsx",
-    "deploy": "grunt cdn"
+    "dev": "grunt dev",
+    "deploy": "grunt cdn",
+    "compile": "babel -d lib/ src/",
+    "prepublish": "npm run compile"
+  },
+  "devDependencies" : {
+    "babel": "^4.6.0"
   }
 }

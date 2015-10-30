@@ -1,3 +1,5 @@
+import React from 'react';
+
 var TenantSwitcher = React.createClass({
   getInitialState: function () {
     return {
@@ -77,4 +79,4 @@ var TenantSwitcher = React.createClass({
   }
 });
 
-module.exports = TenantSwitcher;
+export default TenantSwitcher;

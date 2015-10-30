@@ -9,6 +9,7 @@
 - [API](#api)
 - [Component Structure](#component-structure)
 
+> We included `react`, `react-dom` and `fluxible` libraries as peerDependencies in the package.json.
 
 ## Usage
 

@@ -33,16 +33,19 @@ module.exports = function (grunt) {
           watch: true,
           browserifyOptions: {
             extensions: ['.jsx'],
+            alias: [
+              "react:react", "React:react"
+            ],
             transform: [
-               [ 'reactify' , {'es6': true}]
+              ["babelify", { loose: "all"}], [ 'reactify' , {'es6': true}]
             ]
           }
         },
-        src: ['lib/index.jsx'],
+        src: ['index.js'],
         dest: 'build/tutorial-navigator.js'
       },
       build: {
-        src: ['lib/index.jsx'],
+        src: ['index.js'],
         dest: 'build/tutorial-navigator.js',
         options: {
           browserifyOptions: {
