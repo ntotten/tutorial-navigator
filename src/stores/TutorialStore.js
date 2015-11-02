@@ -8,16 +8,22 @@ class TutorialStore extends BaseStore {
     this.tech1 = null;
     this.tech2 = null;
     this.quickstart = null;
+    this.articleLoaded = false;
   }
   handleTutorialNavLoaded(payload) {
     this.appType = payload.appType;
     this.tech1 = payload.tech1;
     this.tech2 = payload.tech2;
+    this.articleLoaded = payload.articleLoaded || false;
     this.emitChange();
   }
   handleSettingsLoaded(payload) {
     this.quickstart = payload.quickstart;
     this.baseUrl = payload.baseUrl;
+    this.emitChange();
+  }
+  handleArticleSelected(payload){
+    this.articleLoaded =  payload.articleLoaded;
     this.emitChange();
   }
   getState() {
@@ -27,6 +33,7 @@ class TutorialStore extends BaseStore {
       tech1: this.tech1,
       tech2: this.tech2,
       quickstart: this.quickstart,
+      articleLoaded: this.articleLoaded
     };
   }
   getQuickstart() {
@@ -43,12 +50,14 @@ class TutorialStore extends BaseStore {
     this.appType = state.appType;
     this.tech1 = state.tech1;
     this.tech2 = state.tech2;
+    this.articleLoaded = state.articleLoaded;
     this.quickstart = state.quickstart;
   }
 }
 
 TutorialStore.storeName = 'TutorialStore';
 TutorialStore.handlers = {
+  'ARTICLE_LOADED': 'handleArticleSelected',
   'LOAD_TUTORIAL_NAVIGATOR': 'handleTutorialNavLoaded',
   'LOAD_SETTINGS': 'handleSettingsLoaded'
 };

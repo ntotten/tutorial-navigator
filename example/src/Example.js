@@ -38,7 +38,7 @@ var service = function(payload){
 class Application extends React.Component{
   render(){
     var view = <TutorialNavigator {...this.props}></TutorialNavigator>;
-    if (this.props.appType && this.props.tech1 && this.props.tech2){
+    if (this.props.articleLoaded){
       view = (<div><Breadcrumbs {...this.props}></Breadcrumbs><TutorialView {...this.props}></TutorialView></div>);
     }
     return (
