@@ -1,6 +1,6 @@
 import React from 'react';
-import NavigateAction from '../action/NavigateAction';
-import ArticleLoadAction from '../action/ArticleLoadAction';
+import navigateAction from '../action/navigateAction';
+import loadArticleAction from '../action/loadArticleAction';
 
 class Tech extends React.Component {
   handleClick(tech) {
@@ -10,10 +10,10 @@ class Tech extends React.Component {
       payload.tech1 = this.props.tech1;
       payload.tech2 = tech.name;
       payload.currentTech = this.props.tech1;
-      action =  this.props.customNavigationAction || ArticleLoadAction;
+      action =  this.props.customNavigationAction || loadArticleAction;
     } else {
       payload.tech1 = tech.name;
-      action = this.props.customNavigationAction || NavigateAction;
+      action = this.props.customNavigationAction || navigateAction;
     }
 
     this.context.executeAction(action, payload);

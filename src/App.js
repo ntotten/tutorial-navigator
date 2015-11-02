@@ -1,12 +1,12 @@
 import TutorialStore from './stores/TutorialStore';
 import ArticleStore from './stores/ArticleStore';
-import InitialSettingsAction from './action/InitialSettingsAction';
-import NavigateAction from './action/NavigateAction';
-import ArticleLoadAction from './action/ArticleLoadAction';
+import loadSettingsAction from './action/loadSettingsAction';
+import navigateAction from './action/navigateAction';
+import loadArticleAction from './action/loadArticleAction';
 import TutorialNavigator from './components/TutorialNavigator';
 import Breadcrumbs from './components/Breadcrumbs';
 import Tutorial from './components/Tutorial';
-import { ServiceName } from './action/ArticleLoadAction';
+import { ServiceName } from './action/loadArticleAction';
 
 module.exports = {
   TutorialNavigator : TutorialNavigator,
@@ -14,8 +14,10 @@ module.exports = {
   Tutorial : Tutorial,
   TutorialStore : TutorialStore,
   ArticleStore : ArticleStore,
-  InitialSettingsAction : InitialSettingsAction,
-  NavigateAction: NavigateAction,
-  ArticleLoadAction : ArticleLoadAction,
-  ServiceName : ServiceName
+  loadSettingsAction : loadSettingsAction,
+  loadArticleAction : loadArticleAction,
+  navigateAction: navigateAction,
+  Constants : {
+    ArticleServiceName : ServiceName
+  }
 }

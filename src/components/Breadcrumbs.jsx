@@ -1,12 +1,12 @@
 import React from 'react';
 import { getPlatformName, getTechTitle } from '../util/Tutorials';
-import NavigateAction from '../action/NavigateAction';
+import navigateAction from '../action/navigateAction';
 import TutorialStore from '../stores/TutorialStore';
 import { connectToStores, provideContext } from 'fluxible-addons-react';
 
 class Breadcrumbs extends React.Component {
   navigate(props) {
-    var action = this.props.customNavigationAction || NavigateAction;
+    var action = this.props.customNavigationAction || navigateAction;
     this.context.executeAction(action, {
       baseUrl : props.baseUrl,
       appType : props.appType,

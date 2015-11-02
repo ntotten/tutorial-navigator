@@ -4,13 +4,13 @@ import Breadcrumbs from './Breadcrumbs';
 import QuickstartList from './QuickstartList';
 import TechList from './TechList';
 import { connectToStores, provideContext } from 'fluxible-addons-react';
-import NavigateAction from '../action/NavigateAction';
+import navigateAction from '../action/navigateAction';
 import { getQuestion } from '../util/Tutorials';
 import TutorialStore from '../stores/TutorialStore';
 
 class TutorialNavigator extends React.Component {
   handleSkip() {
-    var action = this.props.customNavigationAction || NavigateAction;
+    var action = this.props.customNavigationAction || navigateAction;
     this.context.executeAction(action, {
       appType: this.props.appType,
       baseUrl: this.props.baseUrl,

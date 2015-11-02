@@ -1,4 +1,4 @@
-export default function initialSettingsAction(context, payload){
+export default function loadSettingsAction(context, payload){
   context.dispatch('LOAD_SETTINGS', {
     quickstart : payload.quickstart,
     baseUrl: payload.baseUrl,

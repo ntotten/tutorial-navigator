@@ -35,7 +35,7 @@ class TechList extends React.Component {
     });
 
     return (
-      <div className={classString + "container"}>
+      <div className={classString + "container techlist"}>
         <ul className="circle-list">
           {collection}
         </ul>

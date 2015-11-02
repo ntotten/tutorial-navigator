@@ -1,6 +1,6 @@
 import { loadArticle } from '../util/Tutorials';
 
-export default function ArticleLoadAction(context, payload, done) {
+export default function loadArticleAction(context, payload, done) {
   context.getService(ServiceName).loadArticle(payload).then((html) => {
     context.dispatch('ARTICLE_LOADED', {
       articleLoaded : true

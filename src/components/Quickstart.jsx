@@ -1,9 +1,9 @@
 import React from 'react';
-import NavigateAction from '../action/NavigateAction';
+import navigateAction from '../action/navigateAction';
 
 class Quickstart extends React.Component {
   handleClick(quickstart) {
-    this.context.executeAction(this.props.customNavigationAction || NavigateAction, {
+    this.context.executeAction(this.props.customNavigationAction || navigateAction, {
       baseUrl : this.props.baseUrl,
       appType : quickstart.name
     });
@@ -14,7 +14,7 @@ class Quickstart extends React.Component {
     var boundClick = this.handleClick.bind(this, quickstart);
 
     return (
-      <div className="quickstart" data-type={quickstart.name} onClick={boundClick}>
+      <div className="quickstart" ref="quickstart" data-type={quickstart.name} onClick={boundClick}>
         <div className="symbol"></div>
         <strong className="title">{quickstart.title}</strong>
         <p className="description">{quickstart.description}</p>
