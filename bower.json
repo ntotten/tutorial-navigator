@@ -1,7 +1,9 @@
 {
   "name": "auth0-tutorial-navigator",
   "description": "Auth0's quickstarts",
-  "main": "",
+  "main": [
+    "index.js"
+  ],
   "authors": [
     "Auth0 <support@auth0.com>"
   ],

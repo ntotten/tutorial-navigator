@@ -33,6 +33,7 @@ module.exports = function (grunt) {
           watch: true,
           browserifyOptions: {
             extensions: ['.jsx'],
+            standalone: '<%= pkg.name %>',
             alias: [
               "react:react", "React:react"
             ],
@@ -41,15 +42,16 @@ module.exports = function (grunt) {
             ]
           }
         },
-        src: ['index.js', 'example/src/Example.js'],
+        src: ['src/App.js', 'example/src/Example.js'],
         dest: 'example/lib/sample.js'
       },
       build: {
-        src: ['index.js'],
-        dest: 'build/tutorial-navigator.js',
+        src: ['src/App.js'],
+        dest: 'build/tutorial-navigator.standalone.js',
         options: {
           browserifyOptions: {
             extensions: ['.jsx'],
+            standalone: 'TutorialNavigator',
             transform: [
                ["babelify", { loose: "all"}], [ 'reactify' , {'es6': true}]
             ]
