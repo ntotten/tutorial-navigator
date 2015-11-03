@@ -9,8 +9,8 @@ class QuickstartList extends React.Component {
   }
   componentDidMountClient() {
     // Runs only on client, not on server
-    if (this.props.onQuickstartLoaded) {
-      this.props.onQuickstartLoaded.call(this);
+    if (this.props.componentLoadedInBrowser) {
+      this.props.componentLoadedInBrowser.call(this);
     }
   }
   render() {

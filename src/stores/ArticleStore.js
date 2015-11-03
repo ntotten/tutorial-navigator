@@ -5,7 +5,6 @@ class ArticleStore extends BaseStore {
   constructor(dispatcher) {
     super(dispatcher);
     this.articles = [];
-    this.onDocumentLoaded = null;
   }
   handleArticledLoaded(payload) {
     var article = _.find(this.articles, { appType: payload.appType, tech: payload.tech });
@@ -36,7 +35,6 @@ class ArticleStore extends BaseStore {
   }
   rehydrate(state) {
     this.articles = state.articles;
-    this.onDocumentLoaded = state.onDocumentLoaded
   }
 }
 

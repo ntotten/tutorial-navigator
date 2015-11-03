@@ -11,8 +11,8 @@ class Tutorial extends React.Component {
   }
   initClient(html) {
     if (typeof document !== 'undefined') {
-      if (this.props.onDocumentLoaded){
-        this.props.onDocumentLoaded.call(this);
+      if (this.props.componentLoadedInBrowser){
+        this.props.componentLoadedInBrowser.call(this);
       }
       var article = this.refs.article;
       if (article) {
