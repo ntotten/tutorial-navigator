@@ -1,5 +1,4 @@
 module.exports = function (grunt) {
-  var serveStatic = require('serve-static');
   var path = require('path');
   var join = path.join;
   var fs = require('fs');
@@ -32,16 +31,14 @@ module.exports = function (grunt) {
         options: {
           watch: true,
           browserifyOptions: {
-            standalone: '<%= pkg.name %>',
-            alias: [
-              "react:react", "React:react"
-            ],
+            extensions: ['.jsx'],
+            standalone: 'TutorialNavigator',
             transform: [
-              [ 'reactify' , {'es6': true}]
+               ["babelify", { loose: "all"}], [ 'reactify' , {'es6': true}]
             ]
           }
         },
-        src: ['example/src/Example.js'],
+        src: ['src/App.js', 'example/src/Example.js'],
         dest: 'example/lib/sample.js'
       },
       build: {
@@ -59,7 +56,7 @@ module.exports = function (grunt) {
       },
       noConflict:{
         src: ['src/App.js'],
-        dest: 'build/tutorial-navigator.standalone.js',
+        dest: 'build/tutorial-navigator.standalone.noconflict.js',
         options: {
           browserifyOptions: {
             extensions: ['.jsx'],
@@ -68,7 +65,7 @@ module.exports = function (grunt) {
                ["babelify", { loose: "all"}], [ 'reactify' , {'es6': true}]
             ]
           },
-          exclude : ['react']
+          exclude : ['react' ]
         }
       }
     },
@@ -90,14 +87,14 @@ module.exports = function (grunt) {
       }
     },
     uglify: {
-      standalone: {
+      noConflict: {
         files: {
-          'build/tutorial-navigator.min.js': ['build/tutorial-navigator.standalone.js'],
+          'build/tutorial-navigator.standalone.noconflict.min.js': ['build/tutorial-navigator.standalone.noconflict.js'],
         }
       },
       build: {
         files: {
-          'build/tutorial-navigator.min.js': ['build/tutorial-navigator.js'],
+          'build/tutorial-navigator.standalone.min.js': ['build/tutorial-navigator.standalone.js'],
         }
       }
     },
@@ -242,8 +239,9 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-aws-s3');
   grunt.loadNpmTasks('grunt-http');
 
-  grunt.registerTask('build-no-conflict',     ['clean:build', 'stylus', 'cssmin', 'browserify:noConflict', 'uglify:standalone' ]);
-  grunt.registerTask('build',                 ['clean:build', 'stylus', 'cssmin', 'browserify:build', 'uglify:standalone' ]);
+  grunt.registerTask('build-both',            ['clean:build', 'stylus', 'cssmin', 'browserify:build', 'browserify:noConflict', 'uglify:build', 'uglify:noConflict' ]);
+  grunt.registerTask('build-no-conflict',     ['clean:build', 'stylus', 'cssmin', 'browserify:noConflict', 'uglify:noConflict' ]);
+  grunt.registerTask('build',                 ['clean:build', 'stylus', 'cssmin', 'browserify:build', 'uglify:build' ]);
   grunt.registerTask('dev-no-conflict',       ['clean:build', 'stylus', 'browserify:noConflict', 'browserify:sample', 'connect:dev', 'watch' ]);
   grunt.registerTask('dev',                   ['clean:build', 'stylus', 'browserify:build', 'browserify:sample', 'connect:dev', 'watch' ]);
   grunt.registerTask('purge_cdn_dev',         ['http:purge_js_dev']);

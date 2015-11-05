@@ -42,9 +42,13 @@ export default function createCustomContext(customService){
     },
 
     getService : function(serviceName){
-      return {
-        loadArticle : customService || articleService
+      if (customService){
+        return {
+          loadArticle : customService
+        }
       }
+
+      return articleService;
     }
   };
 
