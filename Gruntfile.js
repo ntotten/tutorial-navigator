@@ -82,7 +82,7 @@ module.exports = function (grunt) {
       },
       release_dev: {
         files: [
-          { expand: true, flatten: true, src: 'build/feature-widget.js', dest: 'release/' },
+          { expand: true, flatten: true, src: 'build/*', dest: 'release/' },
         ]
       }
     },
@@ -148,7 +148,10 @@ module.exports = function (grunt) {
       },
       clean_dev: {
         files: [
-          { action: 'delete', dest: JS_DEV_PATH + '/tutorial-navigator.js' }
+          { action: 'delete', dest: JS_DEV_PATH + '/tutorial-navigator.css' },
+          { action: 'delete', dest: JS_DEV_PATH + '/tutorial-navigator.min.css' },
+          { action: 'delete', dest: JS_DEV_PATH + '/tutorial-navigator.standalone.js' },
+          { action: 'delete', dest: JS_DEV_PATH + '/tutorial-navigator.standalone.min.js' }
         ]
       },
       publish_dev: {
@@ -185,7 +188,7 @@ module.exports = function (grunt) {
     http: {
       purge_js_dev: {
         options: {
-          url: process.env.CDN_ROOT + '/' + JS_DEV_PATH + '/tutorial-navigator.js',
+          url: process.env.CDN_ROOT + '/' + JS_DEV_PATH + '/',
           method: 'DELETE'
         }
       },
