@@ -95,63 +95,14 @@ Include a script reference to the standalone version of the tutorial navigator
 
 	<script type="text/javascript" src="[TODO-REPLACE]"></script>
 
-Create flux dispatcher
+Use the provided function to create a custom context
 
 	...
-	var Dispatcher = require('flux').Dispatcher;
-	var TutorialStore = tutorialNavigatorPackage.TutorialStore;
-	var ArticleStore = tutorialNavigatorPackage.ArticleStore;
-
-	var dispatcher = new Dispatcher();
-
-	var stores = [];
-	stores[TutorialStore.name] = new TutorialStore(dispatcher);
-	stores[ArticleStore.name] = new ArticleStore(dispatcher);
+	var createCustomContext = require('tutorial-navigator').createCustomContext;
+	var context = createCustomContext();
 	...
 
-Create a callback to be called with every update that call the appropriate store function
-
-	function registerStores(payload){
-	  var list = [TutorialStore, ArticleStore];
-	  for (var i = 0; i < list.length; i++) {
-	    var store = list[i];
-	    for (var handler in store.handlers) {
-	      if (handler === payload.event){
-	        stores[store.name][store.handlers[handler]](payload);
-	      }
-	    }
-	  }
-	}
-
-	dispatcher.register(registerStores);
-
-Create the context
-
-	var articleService = require('tutorial-navigator').articleService;
-
-	var context = {
-	  _dispatcher: dispatcher,
-	  dispatch: function(type, payload){
-	    payload['event'] = type;
-	    this._dispatcher.dispatch(payload);
-	  },
-	  getStore: function(Store){
-	    return stores[Store.name];
-	  },
-	  executeAction: function(action, payload, done){
-	    if (!done){
-	      done = function(){};
-	    }
-	    return action(context, payload, done);
-	  },
-	  getService: function(serviceName){
-	    return {
-	      loadArticle : articleService
-	    }
-	  }
-	};
-
-Call `loadSettingsAction` with the context and the initial settings
+Call `loadSettingsAction` with the custom context and the initial settings. The function returns a promise.
 
 	loadSettingsAction(context, {
 		baseUrl: { BASE-URL-PARAM },
@@ -159,7 +110,11 @@ Call `loadSettingsAction` with the context and the initial settings
 		navigation: { NAVIGATION-PARAM }
 	})
 
-Render the NavigatorAndTutorialView (which already has the TutorialNavigator and TutorialView inside it)
+Once the initial loading completes, you can call React.render with the `NavigatorAndTutorialView` passing the context as the custom options (which already has the TutorialNavigator and TutorialView inside it)
+
+	var NavigatorAndTutorialView = tutorialNavigatorPackage.NavigatorAndTutorialView;
+
+	...
 
 	React.render(
 		React.createElement(NavigatorAndTutorialView, {
