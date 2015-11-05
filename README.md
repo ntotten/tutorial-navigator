@@ -23,68 +23,76 @@ First you'll need to install the tutorial navigator using NPM.
 
 After installing the tutorial navigator you create a fluxible app and register the two stores.
 
-	import Fluxible from 'fluxible';
-	import { TutorialStore, ArticleStore } from 'auth0-tutorial-navigator';
-	import serviceProxyPlugin from 'fluxible-plugin-service-proxy';
+````
+import Fluxible from 'fluxible';
+import { TutorialStore, ArticleStore } from 'auth0-tutorial-navigator';
+import serviceProxyPlugin from 'fluxible-plugin-service-proxy';
 
-	...
+...
 
-	// create new fluxible instance
-	var app = new Fluxible({
-	    component: Application
-	});
+// create new fluxible instance
+var app = new Fluxible({
+    component: Application
+});
 
-	// register plugins
-	app.plug(serviceProxyPlugin());
+// register plugins
+app.plug(serviceProxyPlugin());
 
-	// register stores
-	app.registerStore(TutorialStore);
-	app.registerStore(ArticleStore);
+// register stores
+app.registerStore(TutorialStore);
+app.registerStore(ArticleStore);
 
-	...
+...
+````
 
-	_App.js - Creating a fluxible app and register the stores_
+_App.js - Creating a fluxible app and register the stores_
 
 Register the `articleService` using `Constants.ArticleServiceName` to retrieve the selected tutorial.
 
-	...
-	import { Constants, articleService } from 'auth0-tutorial-navigator';
+````
+...
+import { Constants, articleService } from 'auth0-tutorial-navigator';
 
-	app.getPlugin('ServiceProxyPlugin').registerService(Constants.ArticleServiceName, articleService);
+app.getPlugin('ServiceProxyPlugin').registerService(Constants.ArticleServiceName, articleService);
 
-	...
+...
+````
 
-	_Register the article service to retrieve the selected article from the API_
+_Register the article service to retrieve the selected article from the API_
 
 
 After registering the service, create the context and instantiate then execute the `loadSettingsAction` to set the initial settings of the Tutorial Navigator.
 
-	import { loadSettingsAction, Constants } from 'auth0-tutorial-navigator';
+````
+import { loadSettingsAction, Constants } from 'auth0-tutorial-navigator';
 
-	let context = app.createContext();
-	var actionContext = context.getActionContext();
+let context = app.createContext();
+var actionContext = context.getActionContext();
 
-	actionContext.executeAction(loadSettingsAction, {
-		baseUrl: { BASE-URL-PARAM },
-		quickstart: { QUCKSTART-OBJECT-PARAM },
-		navigation: { NAVIGATION-PARAM }
-	})).then(() => {
+actionContext.executeAction(loadSettingsAction, {
+	baseUrl: { BASE-URL-PARAM },
+	quickstart: { QUCKSTART-OBJECT-PARAM },
+	navigation: { NAVIGATION-PARAM }
+})).then(() => {
 
-		//// Create your fluxible application element
+	//// Create your fluxible application element
 
-	});
+});
 
-	...
+...
+````
 
-	_Set the initial settings of the context after creating the context_
+_Set the initial settings of the context after creating the context_
 
 Inside your fluxible application views you instantiate the `TutorialNavigator`, `Breadcrumbs` and `Tutorial` react components. You can also set other custom properties (_e.g. customNavigationAction and componentLoadedInBrowser_ ) depending on your needs.
 
-	...
-	<TutorialNavigator customNavigationAction={CUSTOM-NAV-PARAM} componentLoadedInBrowser={COMPONENT-LOADED}/>
-	...
+````
+...
+<TutorialNavigator customNavigationAction={CUSTOM-NAV-PARAM} componentLoadedInBrowser={COMPONENT-LOADED}/>
+...
+````
 
-	_Tutorial Navigator instance in the app_
+_Tutorial Navigator instance in the app_
 
 
 ### Without fluxible
@@ -93,38 +101,46 @@ If you don't have fluxible in your context, you will need to create the context 
 
 Include a script reference to the standalone version of the tutorial navigator
 
-	<script type="text/javascript" src="[TODO-REPLACE]"></script>
+````
+<script type="text/javascript" src="[TODO-REPLACE]"></script>
+````
 
 Use the provided function to create a custom context
 
-	...
-	var createCustomContext = require('tutorial-navigator').createCustomContext;
-	var context = createCustomContext();
-	...
+````
+...
+var createCustomContext = require('tutorial-navigator').createCustomContext;
+var context = createCustomContext();
+...
+````
 
 Call `loadSettingsAction` with the custom context and the initial settings. The function returns a promise.
 
-	loadSettingsAction(context, {
-		baseUrl: { BASE-URL-PARAM },
-		quickstart: { QUCKSTART-OBJECT-PARAM },
-		navigation: { NAVIGATION-PARAM }
-	})
+````
+loadSettingsAction(context, {
+	baseUrl: { BASE-URL-PARAM },
+	quickstart: { QUCKSTART-OBJECT-PARAM },
+	navigation: { NAVIGATION-PARAM }
+})
+````
 
 Once the initial loading completes, you can call React.render with the `NavigatorAndTutorialView` passing the context as the custom options (which already has the TutorialNavigator and TutorialView inside it)
 
-	var NavigatorAndTutorialView = tutorialNavigatorPackage.NavigatorAndTutorialView;
+var NavigatorAndTutorialView = tutorialNavigatorPackage.NavigatorAndTutorialView;
 
-	...
+````
+...
 
-	React.render(
-		React.createElement(NavigatorAndTutorialView, {
-			context : context,
-			tutorialLoadedInBrowser : function(){
-				...
-			}
-		}),
-		$('#tutorial-navigator').get(0)
-	);
+React.render(
+	React.createElement(NavigatorAndTutorialView, {
+		context : context,
+		tutorialLoadedInBrowser : function(){
+			...
+		}
+	}),
+	$('#tutorial-navigator').get(0)
+);
+````
 
 ## Install & Build
 
