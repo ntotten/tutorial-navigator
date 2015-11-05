@@ -9,35 +9,185 @@
 - [API](#api)
 - [Component Structure](#component-structure)
 
-> We included `react`, `react-dom` and `fluxible` libraries as peerDependencies in the package.json.
+> We included `react`, `react-dom` and `fluxible` libraries as peerDependencies in the package.json to avoid multiple instances of the libraries instantiated when installing the project with npm.
 
 ## Usage
 
-```js
-var TutorialNavigator = require('tutorial-navigator');  
-var options = {
-    docsDomain : 'https://auth0.com',
-    basePath : '/docs',
-    singleTpl : $('#tutorial-template'),
-    platformsFetchFn : function() {
-      return $.ajax({
-        url: 'https://auth0.com/docs/meta/quickstart',
-        dataType: 'jsonp'
-      });
-    },
-    onTutorialLoad : function($template) {
-        $('#tutorial-navigator').addClass('hide');
-    },
-    onTutorialReset : function($template) {
-      $('#tutorial-navigator').removeClass('hide');
-    }
-};
+### Using fluxible
 
-React.render(
-    React.createElement(TutorialNavigator.init, options),
-    $('#tutorial-navigator').get(0)
-);
+The tutorial navigator widget was created to work with [yahoo/fluxible]() library. To use it you must create a fluxible app and register the `TutorialStore` and `ArticleStore` stores. Then, in the view, you can add the `TutorialNavigator`, `Breadcrumbs` and `Tutorial` react components to render the navigator.
+
+First you'll need to install the tutorial navigator using NPM.
+
+	```
+	npm install --save git@github.com:auth0/tutorial-navigator.git
+	```
+
+After installing the tutorial navigator you create a fluxible app and register the two stores.
+
+	```
+	import Fluxible from 'fluxible';
+	import { TutorialStore, ArticleStore } from 'auth0-tutorial-navigator';
+	import serviceProxyPlugin from 'fluxible-plugin-service-proxy';
+
+	...
+
+	// create new fluxible instance
+	var app = new Fluxible({
+	    component: Application
+	});
+
+	// register plugins
+	app.plug(serviceProxyPlugin());
+
+	// register stores
+	app.registerStore(TutorialStore);
+	app.registerStore(ArticleStore);
+
+	...
+	```
+
+	_App.js - Creating a fluxible app and register the stores_
+
+Register the `articleService` using `Constants.ArticleServiceName` to retrieve the selected tutorial.
+
+	```
+	...
+	import { Constants, articleService } from 'auth0-tutorial-navigator';
+
+	app.getPlugin('ServiceProxyPlugin').registerService(Constants.ArticleServiceName, articleService);
+
+	...
+	```
+
+	_Register the article service to retrieve the selected article from the API_
+
+
+After registering the service, create the context and instantiate then execute the `loadSettingsAction` to set the initial settings of the Tutorial Navigator.
+
+	```
+	import { loadSettingsAction, Constants } from 'auth0-tutorial-navigator';
+
+	let context = app.createContext();
+	var actionContext = context.getActionContext();
+
+	actionContext.executeAction(loadSettingsAction, {
+		baseUrl: { BASE-URL-PARAM },
+		quickstart: { QUCKSTART-OBJECT-PARAM },
+		navigation: { NAVIGATION-PARAM }
+	})).then(() => {
+
+		//// Create your fluxible application element
+
+	});
+
+	...
+	```
+
+	_Set the initial settings of the context after creating the context_
+
+Inside your fluxible application views you instantiate the `TutorialNavigator`, `Breadcrumbs` and `Tutorial` react components. You can also set other custom properties (_e.g. customNavigationAction and componentLoadedInBrowser_ ) depending on your needs.
+
+	```
+	...
+	<TutorialNavigator customNavigationAction={CUSTOM-NAV-PARAM} componentLoadedInBrowser={COMPONENT-LOADED}/>
+	...
+  ```  
+
+	_Tutorial Navigator instance in the app_
+
+
+### Without fluxible
+
+If you don't have fluxible in your context, you will need to create the context by your own before instantiating the component.
+
+Create flux dispatcher
+
+	```
+	...
+	var Dispatcher = require('flux').Dispatcher;
+	var TutorialStore = tutorialNavigatorPackage.TutorialStore;
+	var ArticleStore = tutorialNavigatorPackage.ArticleStore;
+
+	var dispatcher = new Dispatcher();
+
+	var stores = [];
+	stores[TutorialStore.name] = new TutorialStore(dispatcher);
+	stores[ArticleStore.name] = new ArticleStore(dispatcher);
+	...
+	```
+
+Create a callback to be called with every update that call the appropriate store function
+
+	```
+	function registerStores(payload){
+	  var list = [TutorialStore, ArticleStore];
+	  for (var i = 0; i < list.length; i++) {
+	    var store = list[i];
+	    for (var handler in store.handlers) {
+	      if (handler === payload.event){
+	        stores[store.name][store.handlers[handler]](payload);
+	      }
+	    }
+	  }
+	}
+
+	dispatcher.register(registerStores)
+	```
+
+Create the context
+
+	```
+	var articleService = require('tutorial-navigator').articleService;
+
+	var context = {
+	  _dispatcher: dispatcher,
+	  dispatch: function(type, payload){
+	    payload['event'] = type;
+	    this._dispatcher.dispatch(payload);
+	  },
+	  getStore: function(Store){
+	    return stores[Store.name];
+	  },
+	  executeAction: function(action, payload, done){
+	    if (!done){
+	      done = function(){};
+	    }
+	    return action(context, payload, done);
+	  },
+	  getService: function(serviceName){
+	    return {
+	      loadArticle : articleService
+	    }
+	  }
+	};
+	```
+
+Call `loadSettingsAction` with the context and the initial settings
+
+	```
+	loadSettingsAction(context, {
+		baseUrl: { BASE-URL-PARAM },
+		quickstart: { QUCKSTART-OBJECT-PARAM },
+		navigation: { NAVIGATION-PARAM }
+	})
+	```
+
+Render the
+
 ```
+React.render(
+		React.createElement(NavigatorAndTutorialView, {
+			context : context,
+			tutorialLoadedInBrowser : function(){
+				...
+			}
+		}),
+		$('#tutorial-navigator').get(0)
+);
+
+```
+
 
 ## Install & Build
 

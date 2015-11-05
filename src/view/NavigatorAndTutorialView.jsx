@@ -9,7 +9,7 @@ import { connectToStores, provideContext } from 'fluxible-addons-react';
 
 class NavigatorAndTutorialView extends React.Component{
   render(){
-    var view = <TutorialNavigator {...this.props}></TutorialNavigator>;
+    var view = <TutorialNavigator {...this.props} componentLoadedInBrowser={this.props.quickstartLoadedInBrowser}></TutorialNavigator>;
     if (this.props.articleLoaded){
       view = (<TutorialView {...this.props}></TutorialView>);
     }
