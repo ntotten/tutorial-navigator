@@ -4,7 +4,7 @@ module.exports = function (grunt) {
   var fs = require('fs');
   var read = fs.readFileSync;
 
-  var JS_DEV_PATH = 'js/tutorial-navigator/development/';
+  var JS_DEV_PATH = 'js/tutorial-navigator/development';
   var JS_BASE_PATH = 'js/tutorial-navigator/tutorial-navigator-';
 
   var pkg = require('./package');
@@ -148,7 +148,7 @@ module.exports = function (grunt) {
       },
       clean_dev: {
         files: [
-          { action: 'delete', dest: JS_DEV_PATH + 'tutorial-navigator.js' }
+          { action: 'delete', dest: JS_DEV_PATH + '/tutorial-navigator.js' }
         ]
       },
       publish_dev: {
@@ -157,7 +157,7 @@ module.exports = function (grunt) {
             expand: true,
             cwd:    'release/',
             src:    ['**'],
-            dest:   'js/tutorial-navigator/development'
+            dest:   JS_DEV_PATH
           }
         ]
       },
@@ -185,7 +185,7 @@ module.exports = function (grunt) {
     http: {
       purge_js_dev: {
         options: {
-          url: process.env.CDN_ROOT + '/' + JS_DEV_PATH + 'tutorial-navigator.js',
+          url: process.env.CDN_ROOT + '/' + JS_DEV_PATH + '/tutorial-navigator.js',
           method: 'DELETE'
         }
       },
@@ -209,7 +209,7 @@ module.exports = function (grunt) {
       },
       purge_major_js_min: {
         options: {
-          url: process.env.CDN_ROOT + '/' + JS_BASE_PATH + major_version + '.min.js',
+          url: process.env.CDN_ROOT + '/' + JS_BASE_PATH +  major_version + '.min.js',
           method: 'DELETE'
         }
       },
