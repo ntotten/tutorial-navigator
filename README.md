@@ -15,17 +15,14 @@
 
 ### Using fluxible
 
-The tutorial navigator widget was created to work with [yahoo/fluxible]() library. To use it you must create a fluxible app and register the `TutorialStore` and `ArticleStore` stores. Then, in the view, you can add the `TutorialNavigator`, `Breadcrumbs` and `Tutorial` react components to render the navigator.
+The tutorial navigator widget was created to work with [yahoo/fluxible](https://github.com/yahoo/fluxible/) library. To use it you must create a fluxible app and register the `TutorialStore` and `ArticleStore` stores. Then, in the view, you can add the `TutorialNavigator`, `Breadcrumbs` and `Tutorial` react components to render the navigator.
 
 First you'll need to install the tutorial navigator using NPM.
 
-	```
 	npm install --save git@github.com:auth0/tutorial-navigator.git
-	```
 
 After installing the tutorial navigator you create a fluxible app and register the two stores.
 
-	```
 	import Fluxible from 'fluxible';
 	import { TutorialStore, ArticleStore } from 'auth0-tutorial-navigator';
 	import serviceProxyPlugin from 'fluxible-plugin-service-proxy';
@@ -45,27 +42,23 @@ After installing the tutorial navigator you create a fluxible app and register t
 	app.registerStore(ArticleStore);
 
 	...
-	```
 
 	_App.js - Creating a fluxible app and register the stores_
 
 Register the `articleService` using `Constants.ArticleServiceName` to retrieve the selected tutorial.
 
-	```
 	...
 	import { Constants, articleService } from 'auth0-tutorial-navigator';
 
 	app.getPlugin('ServiceProxyPlugin').registerService(Constants.ArticleServiceName, articleService);
 
 	...
-	```
 
 	_Register the article service to retrieve the selected article from the API_
 
 
 After registering the service, create the context and instantiate then execute the `loadSettingsAction` to set the initial settings of the Tutorial Navigator.
 
-	```
 	import { loadSettingsAction, Constants } from 'auth0-tutorial-navigator';
 
 	let context = app.createContext();
@@ -82,17 +75,14 @@ After registering the service, create the context and instantiate then execute t
 	});
 
 	...
-	```
 
 	_Set the initial settings of the context after creating the context_
 
 Inside your fluxible application views you instantiate the `TutorialNavigator`, `Breadcrumbs` and `Tutorial` react components. You can also set other custom properties (_e.g. customNavigationAction and componentLoadedInBrowser_ ) depending on your needs.
 
-	```
 	...
 	<TutorialNavigator customNavigationAction={CUSTOM-NAV-PARAM} componentLoadedInBrowser={COMPONENT-LOADED}/>
 	...
-  ```  
 
 	_Tutorial Navigator instance in the app_
 
@@ -101,9 +91,12 @@ Inside your fluxible application views you instantiate the `TutorialNavigator`, 
 
 If you don't have fluxible in your context, you will need to create the context by your own before instantiating the component.
 
+Include a script reference to the standalone version of the tutorial navigator
+
+	<script type="text/javascript" src="[TODO-REPLACE]"></script>
+
 Create flux dispatcher
 
-	```
 	...
 	var Dispatcher = require('flux').Dispatcher;
 	var TutorialStore = tutorialNavigatorPackage.TutorialStore;
@@ -115,11 +108,9 @@ Create flux dispatcher
 	stores[TutorialStore.name] = new TutorialStore(dispatcher);
 	stores[ArticleStore.name] = new ArticleStore(dispatcher);
 	...
-	```
 
 Create a callback to be called with every update that call the appropriate store function
 
-	```
 	function registerStores(payload){
 	  var list = [TutorialStore, ArticleStore];
 	  for (var i = 0; i < list.length; i++) {
@@ -132,12 +123,10 @@ Create a callback to be called with every update that call the appropriate store
 	  }
 	}
 
-	dispatcher.register(registerStores)
-	```
+	dispatcher.register(registerStores);
 
 Create the context
 
-	```
 	var articleService = require('tutorial-navigator').articleService;
 
 	var context = {
@@ -161,22 +150,18 @@ Create the context
 	    }
 	  }
 	};
-	```
 
 Call `loadSettingsAction` with the context and the initial settings
 
-	```
 	loadSettingsAction(context, {
 		baseUrl: { BASE-URL-PARAM },
 		quickstart: { QUCKSTART-OBJECT-PARAM },
 		navigation: { NAVIGATION-PARAM }
 	})
-	```
 
-Render the
+Render the NavigatorAndTutorialView (which already has the TutorialNavigator and TutorialView inside it)
 
-```
-React.render(
+	React.render(
 		React.createElement(NavigatorAndTutorialView, {
 			context : context,
 			tutorialLoadedInBrowser : function(){
@@ -184,10 +169,7 @@ React.render(
 			}
 		}),
 		$('#tutorial-navigator').get(0)
-);
-
-```
-
+	);
 
 ## Install & Build
 
