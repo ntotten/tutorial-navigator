@@ -14,7 +14,7 @@ class Quickstart extends React.Component {
     var boundClick = this.handleClick.bind(this, quickstart);
 
     return (
-      <div className="quickstart" ref="quickstart" data-type={quickstart.name} onClick={boundClick}>
+      <div className="quickstart" data-type={quickstart.name} onClick={boundClick}>
         <div className="symbol"></div>
         <strong className="title">{quickstart.title}</strong>
         <p className="description">{quickstart.description}</p>

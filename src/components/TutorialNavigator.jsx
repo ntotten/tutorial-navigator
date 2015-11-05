@@ -53,7 +53,7 @@ class TutorialNavigator extends React.Component {
     }
 
     return (
-      <div id="tutorial-navigator" ref="tutorialNavigator">
+      <div id="tutorial-navigator">
         <div className='js-tutorial-navigator'>
           <div className="banner tutorial-wizard">
             <div className="container">

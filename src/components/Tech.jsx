@@ -1,6 +1,7 @@
 import React from 'react';
 import navigateAction from '../action/navigateAction';
 import loadArticleAction from '../action/loadArticleAction';
+import Q from 'q';
 
 class Tech extends React.Component {
   handleClick(tech) {
@@ -10,13 +11,28 @@ class Tech extends React.Component {
       payload.tech1 = this.props.tech1;
       payload.tech2 = tech.name;
       payload.currentTech = this.props.tech1;
-      action =  this.props.customNavigationAction || loadArticleAction;
+      if (this.props.customNavigationAction){
+          this.context.executeAction(this.props.customNavigationAction, payload);
+      } else {
+        var promises = [];
+        if (this.props.tech2 !== 'no-api'){
+          promises.push(this.context.executeAction(loadArticleAction, {
+             appType: 'backend',
+             tech1: this.props.tech1,
+             tech2: tech.name,
+             currentTech: tech.name,
+             baseUrl : this.props.baseUrl || ''
+           }));
+         }
+
+         promises.push(this.context.executeAction(loadArticleAction, payload));
+         return Q.when(promises);
+      }
     } else {
       payload.tech1 = tech.name;
       action = this.props.customNavigationAction || navigateAction;
+      this.context.executeAction(action, payload);
     }
-
-    this.context.executeAction(action, payload);
   }
   render() {
     var tech = this.props.tech;

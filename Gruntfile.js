@@ -28,21 +28,20 @@ module.exports = function (grunt) {
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
     browserify: {
-      dev: {
+      sample: {
         options: {
           watch: true,
           browserifyOptions: {
-            extensions: ['.jsx'],
             standalone: '<%= pkg.name %>',
             alias: [
               "react:react", "React:react"
             ],
             transform: [
-              ["babelify", { loose: "all"}], [ 'reactify' , {'es6': true}]
+              [ 'reactify' , {'es6': true}]
             ]
           }
         },
-        src: ['src/App.js', 'example/src/Example.js'],
+        src: ['example/src/Example.js'],
         dest: 'example/lib/sample.js'
       },
       build: {
@@ -56,6 +55,20 @@ module.exports = function (grunt) {
                ["babelify", { loose: "all"}], [ 'reactify' , {'es6': true}]
             ]
           }
+        }
+      },
+      noConflict:{
+        src: ['src/App.js'],
+        dest: 'build/tutorial-navigator.standalone.js',
+        options: {
+          browserifyOptions: {
+            extensions: ['.jsx'],
+            standalone: 'TutorialNavigator',
+            transform: [
+               ["babelify", { loose: "all"}], [ 'reactify' , {'es6': true}]
+            ]
+          },
+          exclude : ['react']
         }
       }
     },
@@ -77,6 +90,11 @@ module.exports = function (grunt) {
       }
     },
     uglify: {
+      standalone: {
+        files: {
+          'build/tutorial-navigator.min.js': ['build/tutorial-navigator.standalone.js'],
+        }
+      },
       build: {
         files: {
           'build/tutorial-navigator.min.js': ['build/tutorial-navigator.js'],
@@ -224,11 +242,13 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-aws-s3');
   grunt.loadNpmTasks('grunt-http');
 
-  grunt.registerTask('build',         ['clean:build', 'stylus', 'cssmin', 'browserify:build', 'uglify:build']);
-  grunt.registerTask('dev',           ['clean:build', 'stylus', 'browserify:dev', 'connect:dev', 'watch' ]);
-  grunt.registerTask('purge_cdn_dev', ['http:purge_js_dev']);
-  grunt.registerTask('cdn_dev',       ['build', 'copy:release_dev', 'aws_s3:clean_dev', 'aws_s3:publish_dev', 'purge_cdn_dev']);
-  grunt.registerTask('purge_cdn',     ['http:purge_js', 'http:purge_js_min', 'http:purge_major_js', 'http:purge_major_js_min', 'http:purge_minor_js', 'http:purge_minor_js_min']);
-  grunt.registerTask('cdn',           ['build', 'copy:release', 'aws_s3:clean', 'aws_s3:publish', 'purge_cdn']);
-  grunt.registerTask('default',       ['build']);
+  grunt.registerTask('build-no-conflict',     ['clean:build', 'stylus', 'cssmin', 'browserify:noConflict', 'uglify:standalone' ]);
+  grunt.registerTask('build',                 ['clean:build', 'stylus', 'cssmin', 'browserify:build', 'uglify:standalone' ]);
+  grunt.registerTask('dev-no-conflict',       ['clean:build', 'stylus', 'browserify:noConflict', 'browserify:sample', 'connect:dev', 'watch' ]);
+  grunt.registerTask('dev',                   ['clean:build', 'stylus', 'browserify:build', 'browserify:sample', 'connect:dev', 'watch' ]);
+  grunt.registerTask('purge_cdn_dev',         ['http:purge_js_dev']);
+  grunt.registerTask('cdn_dev',               ['build', 'copy:release_dev', 'aws_s3:clean_dev', 'aws_s3:publish_dev', 'purge_cdn_dev']);
+  grunt.registerTask('purge_cdn',             ['http:purge_js', 'http:purge_js_min', 'http:purge_major_js', 'http:purge_major_js_min', 'http:purge_minor_js', 'http:purge_minor_js_min']);
+  grunt.registerTask('cdn',                   ['build', 'copy:release', 'aws_s3:clean', 'aws_s3:publish', 'purge_cdn']);
+  grunt.registerTask('default',               ['build']);
 };

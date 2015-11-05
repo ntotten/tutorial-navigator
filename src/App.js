@@ -7,6 +7,8 @@ import TutorialNavigator from './components/TutorialNavigator';
 import Breadcrumbs from './components/Breadcrumbs';
 import Tutorial from './components/Tutorial';
 import { ServiceName } from './action/loadArticleAction';
+import articleService from './services/articleService';
+import NavigatorAndTutorialView  from './view/NavigatorAndTutorialView';
 
 module.exports = {
   TutorialNavigator : TutorialNavigator,
@@ -14,8 +16,10 @@ module.exports = {
   Tutorial : Tutorial,
   TutorialStore : TutorialStore,
   ArticleStore : ArticleStore,
+  articleService : articleService,
   loadSettingsAction : loadSettingsAction,
   loadArticleAction : loadArticleAction,
+  NavigatorAndTutorialView : NavigatorAndTutorialView,
   navigateAction: navigateAction,
   Constants : {
     ArticleServiceName : ServiceName

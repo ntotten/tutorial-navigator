@@ -7,6 +7,7 @@ import { connectToStores, provideContext } from 'fluxible-addons-react';
 class Breadcrumbs extends React.Component {
   navigate(props) {
     var action = this.props.customNavigationAction || navigateAction;
+
     this.context.executeAction(action, {
       baseUrl : props.baseUrl,
       appType : props.appType,

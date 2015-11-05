@@ -20,9 +20,17 @@ class TutorialStore extends BaseStore {
   handleSettingsLoaded(payload) {
     this.quickstart = payload.quickstart;
     this.baseUrl = payload.baseUrl;
+
+    if (payload.selectedTutorial){
+      this.appType = payload.selectedTutorial.appType;
+      this.tech1 = payload.selectedTutorial.tech1;
+      this.tech2 = payload.selectedTutorial.tech2;
+      this.articleLoaded = true;
+    }
     this.emitChange();
   }
   handleArticleSelected(payload){
+    this.tech2 = payload.tech2;
     this.articleLoaded =  payload.articleLoaded;
     this.emitChange();
   }

@@ -6,6 +6,7 @@
   "description": "Auth0's quickstarts",
   "dependencies": {
     "babelify": "^6.4.0",
+    "flux": "^2.1.1",
     "fluxible": "^1.0.0",
     "fluxible-addons-react": "^0.2.0",
     "fluxible-plugin-service-proxy": "^1.1.0",
@@ -38,13 +39,25 @@
   },
   "devDependencies": {
     "babel": "^4.6.0",
+    "browserify-global-shim": "^1.0.0",
+    "browserify-shim": "^3.8.11",
     "jsdom": "^7.0.2"
+  },
+  "browserify": {
+    "transform": [
+      "browserify-shim"
+    ]
+  },
+  "browserify-shim": {
+    "react": "global:React",
+    "react-dom": "global:ReactDOM",
+    "react/addons": "global:React"
   },
   "scripts": {
     "start": "serve --port ${PORT|3000} demo",
     "build": "grunt build",
     "test": "mocha --opts ./test/mocha.opts --compilers js:babel/register --require ./test/setup-dom.js --recursive test/**/*.js",
-    "dev": "grunt dev",
+    "dev": "grunt dev-no-conflict",
     "deploy": "grunt cdn",
     "compile": "babel -d lib/ src/",
     "postinstall": "npm run compile"

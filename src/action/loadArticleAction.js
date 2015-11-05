@@ -1,8 +1,9 @@
 import { loadArticle } from '../util/Tutorials';
 
 export default function loadArticleAction(context, payload, done) {
-  context.getService(ServiceName).loadArticle(payload).then((html) => {
+  return context.getService(ServiceName).loadArticle(payload).then((html) => {
     context.dispatch('ARTICLE_LOADED', {
+      tech2 : payload.tech2,
       articleLoaded : true
     });
     context.dispatch('RECIEVE_ARTICLE_SUCCESS', {
