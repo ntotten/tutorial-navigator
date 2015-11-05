@@ -4,8 +4,8 @@ module.exports = function (grunt) {
   var fs = require('fs');
   var read = fs.readFileSync;
 
-  var JS_DEV_PATH = 'js/tutorial-navigator/development';
-  var JS_BASE_PATH = 'js/tutorial-navigator/tutorial-navigator-';
+  var JS_DEV_PATH = 'tutorial-navigator/development';
+  var JS_BASE_PATH = 'tutorial-navigator/tutorial-navigator-';
 
   var pkg = require('./package');
   var path = require('path');

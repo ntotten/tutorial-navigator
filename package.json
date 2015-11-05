@@ -44,7 +44,7 @@
   "scripts": {
     "start": "serve --port ${PORT|3000} example",
     "build": "grunt build-both",
-    "test": "mocha --opts ./test/mocha.opts --compilers js:babel/register --require ./test/setup-dom.js --recursive test/**/*.js",
+    "test": "./node_modules/.bin/mocha --compilers js:babel/register --require ./test/setup-dom.js --recursive test/**/*.js",
     "dev": "grunt dev",
     "deploy": "grunt cdn",
     "dev-cdn": "grunt cdn_dev",

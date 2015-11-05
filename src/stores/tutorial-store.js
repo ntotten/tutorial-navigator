@@ -21,7 +21,11 @@ class TutorialStore extends BaseStore {
     this.quickstart = payload.quickstart;
     this.baseUrl = payload.baseUrl;
 
-    if (payload.selectedTutorial){
+    if (payload.selectedTutorial &&
+      payload.selectedTutorial.appType &&
+      payload.selectedTutorial.tech1 &&
+      payload.selectedTutorial.tech2)
+    {
       this.appType = payload.selectedTutorial.appType;
       this.tech1 = payload.selectedTutorial.tech1;
       this.tech2 = payload.selectedTutorial.tech2;
