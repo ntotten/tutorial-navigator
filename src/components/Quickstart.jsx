@@ -1,5 +1,5 @@
 import React from 'react';
-import navigateAction from '../action/navigateAction';
+import navigateAction from '../action/navigate-action';
 
 class Quickstart extends React.Component {
   handleClick(quickstart) {

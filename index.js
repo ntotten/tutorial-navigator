@@ -1,4 +1,4 @@
-var plugin = require('./lib/App');
+var plugin = require('./lib/app');
 
 module.exports = {
   // Components

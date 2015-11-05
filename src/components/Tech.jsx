@@ -1,6 +1,6 @@
 import React from 'react';
-import navigateAction from '../action/navigateAction';
-import loadArticleAction from '../action/loadArticleAction';
+import navigateAction from '../action/navigate-action';
+import loadArticleAction from '../action/load-article-action';
 import Q from 'q';
 
 class Tech extends React.Component {

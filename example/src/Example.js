@@ -1,4 +1,4 @@
-var App = require('../../src/App');
+var App = require('../../src/app');
 var React = require('react');
 
 var platforms = {

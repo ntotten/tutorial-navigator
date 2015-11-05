@@ -1,10 +1,10 @@
 import React from 'react';
-import TutorialStore from '../stores/TutorialStore';
-import ArticleStore from '../stores/ArticleStore';
-import TutorialNavigator from '../components/TutorialNavigator';
-import Breadcrumbs from '../components/Breadcrumbs';
+import TutorialStore from '../stores/tutorial-store';
+import ArticleStore from '../stores/article-store';
+import TutorialNavigator from '../components/tutorial-navigator';
+import Breadcrumbs from '../components/breadcrumbs';
 import { getPlatformName, getTechTitle } from '../util/tutorials';
-import Tutorial from '../components/Tutorial';
+import Tutorial from '../components/tutorial';
 import { connectToStores, provideContext } from 'fluxible-addons-react';
 
 class NavigatorAndTutorialView extends React.Component{

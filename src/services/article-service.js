@@ -1,4 +1,4 @@
-import { getPlatformSlug } from '../util/Tutorials';
+import { getPlatformSlug } from '../util/tutorials';
 
 export default {
   loadArticle: function(payload) {

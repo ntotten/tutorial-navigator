@@ -1,5 +1,5 @@
 import React from 'react';
-import ArticleStore from '../stores/ArticleStore';
+import ArticleStore from '../stores/article-store';
 import { connectToStores, provideContext } from 'fluxible-addons-react';
 
 class Tutorial extends React.Component {

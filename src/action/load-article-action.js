@@ -1,4 +1,4 @@
-import { loadArticle } from '../util/Tutorials';
+import { loadArticle } from '../util/tutorials';
 
 export default function loadArticleAction(context, payload, done) {
   return context.getService(ServiceName).loadArticle(payload).then((html) => {

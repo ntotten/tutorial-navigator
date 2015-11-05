@@ -38,11 +38,11 @@ module.exports = function (grunt) {
             ]
           }
         },
-        src: ['src/App.js', 'example/src/Example.js'],
+        src: ['src/app.js', 'example/src/example.js'],
         dest: 'example/lib/sample.js'
       },
       build: {
-        src: ['src/App.js'],
+        src: ['src/app.js'],
         dest: 'build/tutorial-navigator.standalone.js',
         options: {
           browserifyOptions: {
@@ -55,7 +55,7 @@ module.exports = function (grunt) {
         }
       },
       noConflict:{
-        src: ['src/App.js'],
+        src: ['src/app.js'],
         dest: 'build/tutorial-navigator.standalone.noconflict.js',
         options: {
           browserifyOptions: {

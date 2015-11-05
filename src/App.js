@@ -1,15 +1,15 @@
-import TutorialStore from './stores/TutorialStore';
-import ArticleStore from './stores/ArticleStore';
-import loadSettingsAction from './action/loadSettingsAction';
-import navigateAction from './action/navigateAction';
-import loadArticleAction from './action/loadArticleAction';
-import TutorialNavigator from './components/TutorialNavigator';
-import Breadcrumbs from './components/Breadcrumbs';
-import Tutorial from './components/Tutorial';
-import { ServiceName } from './action/loadArticleAction';
-import articleService from './services/articleService';
-import NavigatorAndTutorialView  from './view/NavigatorAndTutorialView';
-import createCustomContext  from './util/createCustomContext';
+import TutorialStore from './stores/tutorial-store';
+import ArticleStore from './stores/article-store';
+import loadSettingsAction from './action/load-settings-action';
+import navigateAction from './action/navigate-action';
+import loadArticleAction from './action/load-article-action';
+import TutorialNavigator from './components/tutorial-navigator';
+import Breadcrumbs from './components/breadcrumbs';
+import Tutorial from './components/tutorial';
+import { ServiceName } from './action/load-article-action';
+import articleService from './services/article-service';
+import NavigatorAndTutorialView  from './view/navigator-and-tutorial-view';
+import createCustomContext  from './util/create-custom-context';
 
 module.exports = {
   TutorialNavigator : TutorialNavigator,

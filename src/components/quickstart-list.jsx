@@ -1,5 +1,5 @@
 import React from 'react';
-import Quickstart from './Quickstart';
+import Quickstart from './quickstart';
 
 class QuickstartList extends React.Component {
   componentDidMount() {

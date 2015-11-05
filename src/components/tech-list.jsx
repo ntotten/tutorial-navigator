@@ -1,6 +1,6 @@
 import React from 'react';
-import Tech from './Tech';
-import { getPlatformCollection } from '../util/Tutorials';
+import Tech from './tech';
+import { getPlatformCollection } from '../util/tutorials';
 
 class TechList extends React.Component {
   render() {

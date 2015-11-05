@@ -1,12 +1,12 @@
 //import TenantSwitcher from './TenantSwitcher';
 import React from 'react';
-import Breadcrumbs from './Breadcrumbs';
-import QuickstartList from './QuickstartList';
-import TechList from './TechList';
+import Breadcrumbs from './breadcrumbs';
+import QuickstartList from './quickstart-list';
+import TechList from './tech-list';
 import { connectToStores, provideContext } from 'fluxible-addons-react';
-import navigateAction from '../action/navigateAction';
-import { getQuestion } from '../util/Tutorials';
-import TutorialStore from '../stores/TutorialStore';
+import navigateAction from '../action/navigate-action';
+import { getQuestion } from '../util/tutorials';
+import TutorialStore from '../stores/tutorial-store';
 
 class TutorialNavigator extends React.Component {
   handleSkip() {

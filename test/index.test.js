@@ -1,7 +1,7 @@
 import { createMockComponentContext } from 'fluxible/utils';
-import TutorialStore from '../src/stores/TutorialStore';
-import TutorialNavigator from '../src/components/TutorialNavigator';
-import loadSettingsAction from '../src/action/loadSettingsAction'
+import TutorialStore from '../src/stores/tutorial-store';
+import TutorialNavigator from '../src/components/tutorial-navigator';
+import loadSettingsAction from '../src/action/load-settings-action'
 import assert from 'assert';
 import Fluxible from 'fluxible';
 import { createElementWithContext } from 'fluxible-addons-react';
