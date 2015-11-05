@@ -5,6 +5,7 @@
   "main": "index.js",
   "description": "Auth0's quickstarts",
   "dependencies": {
+    "auth0-styleguide": "auth0/styleguide#2.1.2",
     "flux": "^2.1.1",
     "fluxible-addons-react": "^0.2.0",
     "fluxible-plugin-service-proxy": "^1.1.0",
