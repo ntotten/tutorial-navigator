@@ -1,5 +1,6 @@
 node_modules
-components
 build
 .DS_Store
 release
+.bower-*
+*.log
