@@ -10,6 +10,7 @@ import { ServiceName } from './action/load-article-action';
 import articleService from './services/article-service';
 import NavigatorAndTutorialView  from './view/navigator-and-tutorial-view';
 import createCustomContext  from './util/create-custom-context';
+import renderElement  from './util/render-element';
 
 module.exports = {
   TutorialNavigator : TutorialNavigator,
@@ -20,7 +21,7 @@ module.exports = {
   articleService : articleService,
   loadSettingsAction : loadSettingsAction,
   loadArticleAction : loadArticleAction,
-  NavigatorAndTutorialView : NavigatorAndTutorialView,
+  renderElement: renderElement,
   createCustomContext: createCustomContext,
   navigateAction: navigateAction,
   Constants : {
