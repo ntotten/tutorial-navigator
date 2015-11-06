@@ -12,10 +12,15 @@ export default function loadArticleAction(context, payload, done) {
       html: html,
       onDocumentLoaded : payload.onDocumentLoaded
     });
-    done();
+    if (done){
+      done();
+    }
   }).catch((err) => {
     context.dispatch('RECIEVE_ARTICLE_FAILURE', err);
-    return done(err);
+    if (done){
+      done(err);
+    }
+    return err;
   });
 }
 
