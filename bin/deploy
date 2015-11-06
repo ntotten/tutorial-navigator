@@ -6,6 +6,15 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 VERSION=$(node -e "console.log(require('$DIR/../package.json').version)")
 PACKAGE=$(node -e "console.log(require('$DIR/../package.json').name)")
 
+CDN_EXISTS=$(curl -s -o /dev/null -w "%{http_code}" https://cdn.auth0.com/tutorial-navigator/tutorial-navigator-$VERSION.min.js | grep 200 || true)
+
+if [ ! -z "$CDN_EXISTS" ]; then
+    echo "There is already a version $VERSION in the CDN. Skiping cdn publish."
+else
+    echo "Deploying $VERSION to cdn"
+    npm run cdn
+fi
+
 TAG_NAME="$VERSION"
 TAG_EXISTS=$(git tag -l "$TAG_NAME")
 
@@ -24,13 +33,4 @@ else
     git checkout master
     git push origin $TAG_NAME
     git branch -D dist
-fi
-
-CDN_EXISTS=$(curl -s -o /dev/null -w "%{http_code}" https://cdn.auth0.com/tutorial-navigator/tutorial-navigator-$VERSION.min.js | grep 200 || true)
-
-if [ ! -z "$CDN_EXISTS" ]; then
-    echo "There is already a version $VERSION in the CDN. Skiping cdn publish."
-else
-  echo "Deploying $VERSION to cdn"
-  npm run cdn
 fi
