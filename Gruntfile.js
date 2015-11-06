@@ -4,8 +4,8 @@ module.exports = function (grunt) {
   var fs = require('fs');
   var read = fs.readFileSync;
 
-  var JS_DEV_PATH = 'tutorial-navigator/development';
-  var JS_BASE_PATH = 'tutorial-navigator/tutorial-navigator-';
+  var DEV_PATH = 'tutorial-navigator/development';
+  var BASE_PATH = 'tutorial-navigator/tutorial-navigator';
 
   var pkg = require('./package');
   var path = require('path');
@@ -148,10 +148,10 @@ module.exports = function (grunt) {
       },
       clean_dev: {
         files: [
-          { action: 'delete', dest: JS_DEV_PATH + '/tutorial-navigator.css' },
-          { action: 'delete', dest: JS_DEV_PATH + '/tutorial-navigator.min.css' },
-          { action: 'delete', dest: JS_DEV_PATH + '/tutorial-navigator.standalone.js' },
-          { action: 'delete', dest: JS_DEV_PATH + '/tutorial-navigator.standalone.min.js' }
+          { action: 'delete', dest: DEV_PATH + '/tutorial-navigator.css' },
+          { action: 'delete', dest: DEV_PATH + '/tutorial-navigator.min.css' },
+          { action: 'delete', dest: DEV_PATH + '/tutorial-navigator.standalone.js' },
+          { action: 'delete', dest: DEV_PATH + '/tutorial-navigator.standalone.min.js' }
         ]
       },
       publish_dev: {
@@ -160,18 +160,18 @@ module.exports = function (grunt) {
             expand: true,
             cwd:    'release/',
             src:    ['**'],
-            dest:   JS_DEV_PATH
+            dest:   DEV_PATH
           }
         ]
       },
       clean: {
         files: [
-          { action: 'delete', dest: JS_BASE_PATH + pkg.version + '.js' },
-          { action: 'delete', dest: JS_BASE_PATH + pkg.version + '.min.js' },
-          { action: 'delete', dest: JS_BASE_PATH + major_version + '.js' },
-          { action: 'delete', dest: JS_BASE_PATH + major_version + '.min.js' },
-          { action: 'delete', dest: JS_BASE_PATH + minor_version + '.js' },
-          { action: 'delete', dest: JS_BASE_PATH + minor_version + '.min.js' }
+          { action: 'delete', dest: BASE_PATH + '-' + pkg.version + '.js' },
+          { action: 'delete', dest: BASE_PATH + '-' + pkg.version + '.min.js' },
+          { action: 'delete', dest: BASE_PATH + '-' + major_version + '.js' },
+          { action: 'delete', dest: BASE_PATH + '-' + major_version + '.min.js' },
+          { action: 'delete', dest: BASE_PATH + '-' + minor_version + '.js' },
+          { action: 'delete', dest: BASE_PATH + '-' + minor_version + '.min.js' }
         ]
       },
       publish: {
@@ -188,45 +188,117 @@ module.exports = function (grunt) {
     http: {
       purge_js_dev: {
         options: {
-          url: process.env.CDN_ROOT + '/' + JS_DEV_PATH + '/',
+          url: process.env.CDN_ROOT + '/' + DEV_PATH + '/',
           method: 'DELETE'
         }
       },
       purge_js: {
         options: {
-          url: process.env.CDN_ROOT + '/' + JS_BASE_PATH + pkg.version + '.js',
+          url: process.env.CDN_ROOT + '/' + BASE_PATH + '-' + pkg.version + '.js',
+          method: 'DELETE'
+        }
+      },
+      purge_js_standalone: {
+        options: {
+          url: process.env.CDN_ROOT + '/' + BASE_PATH + '.standalone-' + pkg.version + '.js',
+          method: 'DELETE'
+        }
+      },
+      purge_js_standalone_noconflict: {
+        options: {
+          url: process.env.CDN_ROOT + '/' + BASE_PATH + '.standalone.noconflict-' + pkg.version + '.js',
           method: 'DELETE'
         }
       },
       purge_js_min: {
         options: {
-          url: process.env.CDN_ROOT + '/' + JS_BASE_PATH + pkg.version + '.min.js',
+          url: process.env.CDN_ROOT + '/' + BASE_PATH + '-' + pkg.version + '.min.js',
           method: 'DELETE'
         }
       },
       purge_major_js: {
         options: {
-          url: process.env.CDN_ROOT + '/' + JS_BASE_PATH + major_version + '.js',
+          url: process.env.CDN_ROOT + '/' + BASE_PATH + '-' + major_version + '.js',
+          method: 'DELETE'
+        }
+      },
+      purge_major_js_standalone: {
+        options: {
+          url: process.env.CDN_ROOT + '/' + BASE_PATH + '.standalone-' + major_version + '.js',
+          method: 'DELETE'
+        }
+      },
+      purge_major_js_standalone_noconflict: {
+        options: {
+          url: process.env.CDN_ROOT + '/' + BASE_PATH + '.standalone.noconflict-' + major_version + '.js',
           method: 'DELETE'
         }
       },
       purge_major_js_min: {
         options: {
-          url: process.env.CDN_ROOT + '/' + JS_BASE_PATH +  major_version + '.min.js',
+          url: process.env.CDN_ROOT + '/' + BASE_PATH +  '-' + major_version + '.min.js',
           method: 'DELETE'
         }
       },
       purge_minor_js: {
         options: {
-          url: process.env.CDN_ROOT + '/' + JS_BASE_PATH + minor_version + '.js',
+          url: process.env.CDN_ROOT + '/' + BASE_PATH + '-' + minor_version + '.js',
+          method: 'DELETE'
+        }
+      },
+      purge_minor_js_standalone: {
+        options: {
+          url: process.env.CDN_ROOT + '/' + BASE_PATH + '.standalone-' + minor_version + '.js',
+          method: 'DELETE'
+        }
+      },
+      purge_minor_js_standalone_noconflict: {
+        options: {
+          url: process.env.CDN_ROOT + '/' + BASE_PATH + '.standalone.noconflict-' + minor_version + '.js',
           method: 'DELETE'
         }
       },
       purge_minor_js_min: {
         options: {
-          url: process.env.CDN_ROOT + '/' + JS_BASE_PATH + minor_version + '.min.js',
+          url: process.env.CDN_ROOT + '/' + BASE_PATH + '-' + minor_version + '.min.js',
           method: 'DELETE'
         }
+      },
+      purge_css: {
+       options: {
+         url: process.env.CDN_ROOT + '/' + BASE_PATH + '-' + pkg.version + '.css',
+         method: 'DELETE'
+       }
+      },
+      purge_css_min: {
+       options: {
+         url: process.env.CDN_ROOT + '/' + BASE_PATH + '-' + pkg.version + '.min.css',
+         method: 'DELETE'
+       }
+      },
+      purge_major_css: {
+       options: {
+         url: process.env.CDN_ROOT + '/' + BASE_PATH + '-' + major_version + '.css',
+         method: 'DELETE'
+       }
+      },
+      purge_major_css_min: {
+       options: {
+         url: process.env.CDN_ROOT + '/' + BASE_PATH + '-' + major_version + '.min.css',
+         method: 'DELETE'
+       }
+      },
+      purge_minor_css: {
+       options: {
+         url: process.env.CDN_ROOT + '/' + BASE_PATH + '-' + minor_version + '.css',
+         method: 'DELETE'
+       }
+      },
+      purge_minor_css_min: {
+       options: {
+         url: process.env.CDN_ROOT + '/' + BASE_PATH + '-' + minor_version + '.min.css',
+         method: 'DELETE'
+       }
       }
     }
   });
@@ -249,7 +321,7 @@ module.exports = function (grunt) {
   grunt.registerTask('dev',                   ['clean:build', 'stylus', 'browserify:build', 'browserify:sample', 'connect:dev', 'watch' ]);
   grunt.registerTask('purge_cdn_dev',         ['http:purge_js_dev']);
   grunt.registerTask('cdn_dev',               ['build-both', 'copy:release_dev', 'aws_s3:clean_dev', 'aws_s3:publish_dev', 'purge_cdn_dev']);
-  grunt.registerTask('purge_cdn',             ['http:purge_js', 'http:purge_js_min', 'http:purge_major_js', 'http:purge_major_js_min', 'http:purge_minor_js', 'http:purge_minor_js_min']);
-  grunt.registerTask('cdn',                   ['build', 'copy:release', 'aws_s3:clean', 'aws_s3:publish', 'purge_cdn']);
+  grunt.registerTask('purge_cdn',             ['http:purge_js', 'http:purge_js_standalone', 'http:purge_js_standalone_noconflict', 'http:purge_js_min', 'http:purge_major_js', 'http:purge_major_js_standalone', 'http:purge_major_js_standalone_noconflict', 'http:purge_major_js_min', 'http:purge_minor_js', 'http:purge_minor_js_standalone', 'http:purge_minor_js_standalone_noconflict',  'http:purge_minor_js_min', 'http:purge_css', 'http:purge_css_min', 'http:purge_major_css', 'http:purge_major_css_min', 'http:purge_minor_css', 'http:purge_minor_css_min']);
+  grunt.registerTask('cdn',                   ['build-both', 'copy:release', 'aws_s3:clean', 'aws_s3:publish', 'purge_cdn']);
   grunt.registerTask('default',               ['build']);
 };
