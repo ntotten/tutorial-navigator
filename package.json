@@ -46,9 +46,10 @@
     "build": "grunt build-both",
     "test": "./node_modules/.bin/mocha --compilers js:babel/register --require ./test/setup-dom.js --recursive test/**/*.js",
     "dev": "grunt dev",
-    "deploy": "grunt cdn",
-    "dev-cdn": "grunt cdn_dev",
+    "deploy": "./bin/deploy",
+    "deploy-dev": "npm run cdn-dev",
     "cdn": "grunt cdn",
+    "cdn-dev": "grunt cdn_dev",
     "compile": "babel -d lib/ src/",
     "postinstall": "npm run compile"
   }

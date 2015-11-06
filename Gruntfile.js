@@ -15,7 +15,7 @@ module.exports = function (grunt) {
 
   function  rename_release (v) {
     return function (d, f) {
-      var dest = path.join(d, f.replace(/(\.min)?\.js$/, '-'+ v + '$1.js'));
+      var dest = path.join(d, f.replace(/(\.min)?\.(js|css)$/, '-'+ v + '$1.$2'));
       return dest;
     };
   }
