@@ -18,7 +18,9 @@ module.exports = {
   Tutorial : Tutorial,
   TutorialStore : TutorialStore,
   ArticleStore : ArticleStore,
-  articleService : loadArticle,
+  articleService : {
+    loadArticle : loadArticle
+  },
   loadSettingsAction : loadSettingsAction,
   loadArticleAction : loadArticleAction,
   renderElement: renderElement,
