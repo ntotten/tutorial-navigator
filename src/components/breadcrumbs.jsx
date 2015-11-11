@@ -9,7 +9,6 @@ class Breadcrumbs extends React.Component {
     var action = this.props.customNavigationAction || navigateAction;
 
     this.context.executeAction(action, {
-      baseUrl : this.props.baseUrl,
       appType : params.appType,
       tech1: params.tech1,
       tech2: params.tech2

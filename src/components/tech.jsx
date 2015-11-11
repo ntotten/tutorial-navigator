@@ -6,22 +6,21 @@ import Q from 'q';
 class Tech extends React.Component {
   handleClick(tech) {
     var action;
-    var payload = { appType: this.props.appType, baseUrl : this.props.baseUrl || ''};
+    var payload = { appType: this.props.appType };
     if(this.props.tech1) {
       payload.tech1 = this.props.tech1;
       payload.tech2 = tech.name;
       payload.currentTech = this.props.tech1;
-      if (this.props.customNavigationAction){
+      if (this.props.customNavigationAction) {
           this.context.executeAction(this.props.customNavigationAction, payload);
       } else {
         var promises = [];
-        if (this.props.tech2 !== 'no-api'){
+        if (this.props.tech2 !== 'no-api') {
           promises.push(this.context.executeAction(loadArticleAction, {
              appType: 'backend',
              tech1: this.props.tech1,
              tech2: tech.name,
-             currentTech: tech.name,
-             baseUrl : this.props.baseUrl || ''
+             currentTech: tech.name
            }));
          }
 

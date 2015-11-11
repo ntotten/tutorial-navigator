@@ -3,7 +3,6 @@ import { BaseStore } from 'fluxible/addons';
 class TutorialStore extends BaseStore {
   constructor(dispatcher) {
     super(dispatcher);
-    this.baseUrl = '';
     this.appType = null;
     this.tech1 = null;
     this.tech2 = null;
@@ -19,7 +18,6 @@ class TutorialStore extends BaseStore {
   }
   handleSettingsLoaded(payload) {
     this.quickstart = payload.quickstart;
-    this.baseUrl = payload.baseUrl;
 
     if (payload.selectedTutorial &&
       payload.selectedTutorial.appType &&
@@ -40,7 +38,6 @@ class TutorialStore extends BaseStore {
   }
   getState() {
     return {
-      baseUrl: this.baseUrl,
       appType: this.appType,
       tech1: this.tech1,
       tech2: this.tech2,
@@ -51,14 +48,10 @@ class TutorialStore extends BaseStore {
   getQuickstart() {
     return this.quickstart;
   }
-  getBaseUrl(){
-    return this.baseUrl;
-  }
   dehydrate() {
     return this.getState();
   }
   rehydrate(state) {
-    this.baseUrl = state.baseUrl,
     this.appType = state.appType;
     this.tech1 = state.tech1;
     this.tech2 = state.tech2;

@@ -88,7 +88,7 @@ export function getQuickstartMetdata(quickstart, appType, tech1, tech2) {
 }
 
 export function loadArticle(payload) {
-  var url = `${payload.baseUrl || ''}/${getPlatformSlug(payload.appType)}/` +
+  var url = `/docs/${getPlatformSlug(payload.appType)}/` +
          `${payload.currentTech}?${payload.appType}=${payload.tech1}&e=1`;
   if(payload.tech2) {
    url += '&api=' + payload.tech2;

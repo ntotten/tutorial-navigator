@@ -4,7 +4,6 @@ import navigateAction from '../action/navigate-action';
 class Quickstart extends React.Component {
   handleClick(quickstart) {
     this.context.executeAction(this.props.customNavigationAction || navigateAction, {
-      baseUrl : this.props.baseUrl,
       appType : quickstart.name
     });
   }
