@@ -23,7 +23,7 @@ class TechList extends React.Component {
 
       collection.push(
         <Tech
-          key={i}
+          key={platformType + i}
           delay={time}
           skippable={skippable}
           tech={tech}
