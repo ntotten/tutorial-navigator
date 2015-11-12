@@ -1,3 +1,20 @@
+## [1.0.1] - 2015-11-06
+
+### Fixed
+
+- [] Fixed navigation for manage (`Marcos Castany`)
+  https://github.com/auth0/tutorial-navigator/commit/9f936afb048288c3e6fa85c9d0d1ef524b9b8ca8
+- [] Update article service (`Marcos Castany`)
+  https://github.com/auth0/tutorial-navigator/commit/dbb4157ce38854723b8763e5d11c93dd398ac259
+- [] Updated tech component key to trigger animation (`Marcos Castany`)
+  https://github.com/auth0/tutorial-navigator/commit/b9dc7c97719be7f584a20429b70cf5990449fce6
+- [] Replaced React with ReactDOM in util function (`Marcos Castany`)
+  https://github.com/auth0/tutorial-navigator/commit/5d6aa8e576848f3f19983d86670b92976e729c97
+- [] Removed all references to baseUrl inside the widget. Fixed sample (`Marcos Castany`)
+  https://github.com/auth0/tutorial-navigator/commit/7071462551010e71fee742f9ea68bba5d7946898
+- [] Fixed issue with breadcrumbs navigation not setting the correct base url (`Marcos Castany`)
+  https://github.com/auth0/tutorial-navigator/commit/b78aa3eaa5bcfbdd2d2e0c06ba5f1467c7b45cac
+
 ## [1.0.0] - 2015-10-02
 
 ### Fixed
