@@ -29,8 +29,14 @@ class Tech extends React.Component {
       }
     } else {
       payload.tech1 = tech.name;
-      action = this.props.customNavigationAction || navigateAction;
-      this.context.executeAction(action, payload);
+      if (this.props.appType === 'webapp' || this.props.appType === 'backend'){
+        action = loadArticleAction;
+        payload.currentTech = tech.name;
+      } else {
+        action = navigateAction;
+      }
+
+      this.context.executeAction(this.props.customNavigationAction || action, payload);
     }
   }
   render() {

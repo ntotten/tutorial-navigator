@@ -1,6 +1,7 @@
 export default function loadArticleAction(context, payload, done) {
   return context.getService(ServiceName).loadArticle(payload).then((html) => {
     context.dispatch('ARTICLE_LOADED', {
+      tech1 : payload.tech1,
       tech2 : payload.tech2,
       articleLoaded : true
     });

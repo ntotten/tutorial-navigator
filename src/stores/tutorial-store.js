@@ -32,6 +32,7 @@ class TutorialStore extends BaseStore {
     this.emitChange();
   }
   handleArticleSelected(payload){
+    this.tech1 = payload.tech1;
     this.tech2 = payload.tech2;
     this.articleLoaded =  payload.articleLoaded;
     this.emitChange();
