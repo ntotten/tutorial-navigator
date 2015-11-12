@@ -166,7 +166,7 @@ module.exports = function (grunt) {
             expand: true,
             cwd:    'release/',
             src:    ['**'],
-            dest:   'js/tutorial-navigator/'
+            dest:   'tutorial-navigator/'
           }
         ]
       }
