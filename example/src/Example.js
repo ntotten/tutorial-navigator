@@ -1,6 +1,3 @@
-var App = require('../../src/app');
-var React = require('react');
-
 var platforms = {
   "apptypes":[
     {"title":"Native mobile app","name":"native-mobile","description":"An app that runs natively in devices","example":"eg: iOS SDK","budicon":243},
@@ -82,16 +79,53 @@ var platforms = {
   ]
 };
 
+var context = TutorialNavigator.createCustomContext(loadArticle);
+
 var opts = {
-  baseUrl : 'http://auth0.com/docs',
   quickstart : platforms
 };
 
-var context = App.createCustomContext();
+TutorialNavigator.loadSettingsAction(context, opts, function(){})
 
-App.loadSettingsAction(context, opts)
-
-React.render(
-    React.createElement(App.NavigatorAndTutorialView, { context : context }),
-    document.getElementById('app')
+TutorialNavigator.renderElement(
+  document.getElementById('app'),
+  { context : context }
 );
+
+function loadArticle(payload) {
+  var promise = new Promise(function(resolve, reject){
+    var url = `https://auth0.com/docs/${getPlatformSlug(payload.appType)}/` +
+              `${payload.currentTech}?${payload.appType}=${payload.tech1}&e=1`;
+
+    if(payload.tech2) {
+     url += '&api=' + payload.tech2;
+    }
+
+    if(payload.clientId) {
+     url += '&a=' + payload.clientId;
+    }
+
+    $.ajax({
+        url: url,
+        jsonp: "callback",
+        dataType: "jsonp",
+        success: function(data){
+          return resolve(data.html);
+        }
+      });
+  });
+
+  return promise;
+}
+
+function getPlatformSlug(platformType) {
+  var paths = {
+    'spa': 'client-platforms',
+    'native-mobile': 'native-platforms',
+    'webapp': 'server-platforms',
+    'hybrid': 'native-platforms',
+    'backend': 'server-apis'
+  };
+
+  return paths[platformType];
+}

@@ -22,10 +22,10 @@ class TechList extends React.Component {
       var time = 20 * i;
 
       collection.push(
-        <Tech key={i}
+        <Tech
+          key={platformType + i}
           delay={time}
           skippable={skippable}
-          baseUrl={this.props.baseUrl}
           tech={tech}
           tech1={this.props.tech1}
           appType={this.props.appType}
@@ -35,7 +35,7 @@ class TechList extends React.Component {
     });
 
     return (
-      <div className={classString + "container techlist"}>
+      <div key={this.props} className={classString + "container techlist"}>
         <ul className="circle-list">
           {collection}
         </ul>

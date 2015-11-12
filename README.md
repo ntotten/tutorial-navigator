@@ -70,7 +70,6 @@ let context = app.createContext();
 var actionContext = context.getActionContext();
 
 actionContext.executeAction(loadSettingsAction, {
-	baseUrl: { BASE-URL-PARAM },
 	quickstart: { QUCKSTART-OBJECT-PARAM },
 	navigation: { NAVIGATION-PARAM }
 })).then(() => {

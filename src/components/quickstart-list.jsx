@@ -19,7 +19,7 @@ class QuickstartList extends React.Component {
 
     this.props.quickstart.apptypes.forEach(function(appType, i) {
         list.push(
-          <Quickstart key={i} model={appType} baseUrl={this.props.baseUrl} onDocumentLoaded={this.props.onDocumentLoaded}  customNavigationAction={this.props.customNavigationAction}/>
+          <Quickstart key={i} model={appType} onDocumentLoaded={this.props.onDocumentLoaded}  customNavigationAction={this.props.customNavigationAction}/>
         );
     }.bind(this));
 

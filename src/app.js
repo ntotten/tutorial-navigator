@@ -7,7 +7,7 @@ import TutorialNavigator from './components/tutorial-navigator';
 import Breadcrumbs from './components/breadcrumbs';
 import Tutorial from './components/tutorial';
 import { ServiceName } from './action/load-article-action';
-import articleService from './services/article-service';
+import { loadArticle } from './util/tutorials';
 import NavigatorAndTutorialView  from './view/navigator-and-tutorial-view';
 import createCustomContext  from './util/create-custom-context';
 import renderElement  from './util/render-element';
@@ -18,7 +18,9 @@ module.exports = {
   Tutorial : Tutorial,
   TutorialStore : TutorialStore,
   ArticleStore : ArticleStore,
-  articleService : articleService,
+  articleService : {
+    loadArticle : loadArticle
+  },
   loadSettingsAction : loadSettingsAction,
   loadArticleAction : loadArticleAction,
   renderElement: renderElement,

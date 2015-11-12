@@ -4,18 +4,18 @@ import Breadcrumbs from './breadcrumbs';
 import QuickstartList from './quickstart-list';
 import TechList from './tech-list';
 import { connectToStores, provideContext } from 'fluxible-addons-react';
-import navigateAction from '../action/navigate-action';
+import loadArticleAction from '../action/load-article-action';
 import { getQuestion } from '../util/tutorials';
 import TutorialStore from '../stores/tutorial-store';
 
 class TutorialNavigator extends React.Component {
   handleSkip() {
-    var action = this.props.customNavigationAction || navigateAction;
+    var action = this.props.customNavigationAction || loadArticleAction;
     this.context.executeAction(action, {
       appType: this.props.appType,
-      baseUrl: this.props.baseUrl,
       tech1: this.props.tech1,
-      tech2: 'no-api'
+      currentTech: this.props.tech1,
+      tech2: 'no-api',
     });
   }
   getTenantSwitcher() {

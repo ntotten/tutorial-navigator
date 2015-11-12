@@ -27,20 +27,6 @@ module.exports = function (grunt) {
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
     browserify: {
-      sample: {
-        options: {
-          watch: true,
-          browserifyOptions: {
-            extensions: ['.jsx'],
-            standalone: 'TutorialNavigator',
-            transform: [
-               ["babelify", { loose: "all"}], [ 'reactify' , {'es6': true}]
-            ]
-          }
-        },
-        src: ['src/app.js', 'example/src/example.js'],
-        dest: 'example/lib/sample.js'
-      },
       build: {
         src: ['src/app.js'],
         dest: 'build/tutorial-navigator.standalone.js',
@@ -317,8 +303,8 @@ module.exports = function (grunt) {
   grunt.registerTask('build-both',            ['clean:build', 'stylus', 'cssmin', 'browserify:build', 'browserify:noConflict', 'uglify:build', 'uglify:noConflict' ]);
   grunt.registerTask('build-no-conflict',     ['clean:build', 'stylus', 'cssmin', 'browserify:noConflict', 'uglify:noConflict' ]);
   grunt.registerTask('build',                 ['clean:build', 'stylus', 'cssmin', 'browserify:build', 'uglify:build' ]);
-  grunt.registerTask('dev-no-conflict',       ['clean:build', 'stylus', 'browserify:noConflict', 'browserify:sample', 'connect:dev', 'watch' ]);
-  grunt.registerTask('dev',                   ['clean:build', 'stylus', 'browserify:build', 'browserify:sample', 'connect:dev', 'watch' ]);
+  grunt.registerTask('dev-no-conflict',       ['clean:build', 'stylus', 'browserify:noConflict', 'connect:dev', 'watch' ]);
+  grunt.registerTask('dev',                   ['clean:build', 'stylus', 'browserify:build', 'connect:dev', 'watch' ]);
   grunt.registerTask('purge_cdn_dev',         ['http:purge_js_dev']);
   grunt.registerTask('cdn_dev',               ['build-both', 'copy:release_dev', 'aws_s3:clean_dev', 'aws_s3:publish_dev', 'purge_cdn_dev']);
   grunt.registerTask('purge_cdn',             ['http:purge_js', 'http:purge_js_standalone', 'http:purge_js_standalone_noconflict', 'http:purge_js_min', 'http:purge_major_js', 'http:purge_major_js_standalone', 'http:purge_major_js_standalone_noconflict', 'http:purge_major_js_min', 'http:purge_minor_js', 'http:purge_minor_js_standalone', 'http:purge_minor_js_standalone_noconflict',  'http:purge_minor_js_min', 'http:purge_css', 'http:purge_css_min', 'http:purge_major_css', 'http:purge_major_css_min', 'http:purge_minor_css', 'http:purge_minor_css_min']);

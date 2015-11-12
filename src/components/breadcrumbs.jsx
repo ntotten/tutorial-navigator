@@ -5,14 +5,13 @@ import TutorialStore from '../stores/tutorial-store';
 import { connectToStores, provideContext } from 'fluxible-addons-react';
 
 class Breadcrumbs extends React.Component {
-  navigate(props) {
+  navigate(params) {
     var action = this.props.customNavigationAction || navigateAction;
 
     this.context.executeAction(action, {
-      baseUrl : props.baseUrl,
-      appType : props.appType,
-      tech1: props.tech1,
-      tech2: props.tech2
+      appType : params.appType,
+      tech1: params.tech1,
+      tech2: params.tech2
     });
   }
   render() {

@@ -25,13 +25,6 @@ describe('Tutorial Navigator Test', function () {
         done();
     });
 
-    // afterEach(function () {
-    //     delete global.window;
-    //     delete global.document;
-    //     delete global.navigator;
-    //     context = null;
-    // });
-
     it('Store should be registered', function (done) {
       var storeInstance = context.getStore(TutorialStore);
       assert.notEqual(storeInstance, 'undefined');
@@ -41,8 +34,7 @@ describe('Tutorial Navigator Test', function () {
     it('Should create Tutorial Navigator basic structure with context', function (done) {
       var platforms = JSON.parse('{"apptypes":[], "clientPlatforms":[],"nativePlatforms":[],"serverPlatforms":[]}');
       context.getActionContext().executeAction(loadSettingsAction, {
-        quickstart: platforms,
-        baseUrl: 'http://localhost:5050'
+        quickstart: platforms
       }).then(() =>{
         var component = ReactTestUtils.renderIntoDocument(
             createElementWithContext(context)
@@ -57,8 +49,7 @@ describe('Tutorial Navigator Test', function () {
     it('Should create Tutorial Navigator structure with context and only one quickstart', function (done) {
       var platforms = JSON.parse('{"apptypes":[{"title":"Title1","name":"Name1","description":"Description1","example":"e.g.1","budicon":243}], "clientPlatforms":[],"nativePlatforms":[],"serverPlatforms":[]}');
       context.getActionContext().executeAction(loadSettingsAction, {
-        quickstart: platforms,
-        baseUrl: 'http://localhost:5050'
+        quickstart: platforms
       }).then(() =>{
         var component = ReactTestUtils.renderIntoDocument(
             createElementWithContext(context)
