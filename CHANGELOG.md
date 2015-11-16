@@ -1,3 +1,14 @@
+## [1.0.2] - 2015-11-12
+
+### Fixed
+
+- [] Removed trailing comma in package json file (`Marcos Castany`)
+  https://github.com/auth0/tutorial-navigator/commit/1180422d5bfc129b3c5059b40b641a760bbc1a4d
+- [] Removed Q (`Marcos Castany`)
+  https://github.com/auth0/tutorial-navigator/commit/7cb6b2c19248429dfd3b19d8a769191f891ac0e6
+- [] Updated tech to use fetch instead of window.fetch and replaced Q with Promises (`Marcos Castany`)
+  https://github.com/auth0/tutorial-navigator/commit/7155bca0cd9e208f9b2eb3ec0282f472e61d09d1
+
 ## [1.0.1] - 2015-11-06
 
 ### Fixed

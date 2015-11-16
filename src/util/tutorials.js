@@ -109,7 +109,7 @@ export function loadArticle(payload) {
    }
   }
 
-  return window.fetch(url, {
+  return fetch(url, {
    credentials: 'include'
   })
   .then(checkStatus)

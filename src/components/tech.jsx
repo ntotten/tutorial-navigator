@@ -1,7 +1,6 @@
 import React from 'react';
 import navigateAction from '../action/navigate-action';
 import loadArticleAction from '../action/load-article-action';
-import Q from 'q';
 
 class Tech extends React.Component {
   handleClick(tech) {
@@ -25,7 +24,7 @@ class Tech extends React.Component {
          }
 
          promises.push(this.context.executeAction(loadArticleAction, payload));
-         return Q.when(promises);
+         return Promises.all(promises);
       }
     } else {
       payload.tech1 = tech.name;
