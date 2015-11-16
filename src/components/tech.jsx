@@ -25,7 +25,7 @@ class Tech extends React.Component {
          }
 
          promises.push(this.context.executeAction(loadArticleAction, payload));
-         return Q.when(promises);
+         return Promises.all(promises);
       }
     } else {
       payload.tech1 = tech.name;
