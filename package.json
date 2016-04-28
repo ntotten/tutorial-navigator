@@ -6,17 +6,17 @@
   "description": "Auth0's quickstarts",
   "dependencies": {
     "auth0-styleguide": "auth0/styleguide#2.1.2",
-    "flux": ">2.1.1",
-    "fluxible-addons-react": ">0.2.0",
-    "fluxible-plugin-service-proxy": ">1.1.0",
-    "fluxible-router": ">0.4.8",
-    "jsonp": ">0.2.0",
-    "lodash": ">3.10.1"
+    "flux": ">=2.1.1",
+    "fluxible-addons-react": ">=0.2.0",
+    "fluxible-plugin-service-proxy": ">=1.1.0",
+    "fluxible-router": ">=0.4.8",
+    "jsonp": ">=0.2.0",
+    "lodash": ">=3.10.1"
   },
   "peerDependencies": {
-    "fluxible": ">1.0.0",
-    "react": ">0.14.0",
-    "react-dom": ">0.14.0"
+    "fluxible": ">=1.0.0",
+    "react": ">=0.14.0",
+    "react-dom": ">=0.14.0"
   },
   "devDependencies": {
     "babel": "^4.6.0",
