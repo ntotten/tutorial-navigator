@@ -4,3 +4,4 @@ build
 release
 .bower-*
 *.log
+lib

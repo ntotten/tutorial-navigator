@@ -3,7 +3,7 @@ import React from 'react';
 import Breadcrumbs from './breadcrumbs';
 import QuickstartList from './quickstart-list';
 import TechList from './tech-list';
-import { connectToStores, provideContext } from 'fluxible-addons-react';
+import { connectToStores } from 'fluxible-addons-react';
 import loadArticleAction from '../action/load-article-action';
 import { getQuestion } from '../util/tutorials';
 import TutorialStore from '../stores/tutorial-store';
