@@ -2,11 +2,9 @@ import _ from 'lodash';
 
 export function getPlatformName(platformType) {
   var options = {
-    'spa': 'Single Page App',
-    'native-mobile': 'Native Mobile App',
-    'webapp': 'Regular Web Application',
-    'hybrid': 'Hybrid Mobile App',
-    'backend': 'Backend/API'
+    'native': 'Native App',
+    'web': 'Web Application',
+    'service': 'Backend Service'
   };
 
   return options[platformType];
@@ -16,11 +14,9 @@ export function getQuestion(platformType) {
   platformType = platformType || 'none';
   var questions = {
     'none': 'Getting started? Try our quickstarts.',
-    'spa': 'What technology will you use in the FrontEnd?',
-    'native-mobile': 'Select a native SDK',
-    'webapp': 'What technology are you using for your WebApp?',
-    'hybrid': 'Select a Hybrid SDK',
-    'backend': 'Select an API or Backend platform'
+    'native': 'Select a native SDK',
+    'web': 'What technology are you using for your web app?',
+    'service': 'Select an API or Backend platform'
   };
 
   return questions[platformType];
@@ -28,11 +24,9 @@ export function getQuestion(platformType) {
 
 export function getPlatformSlug(platformType) {
   var paths = {
-    'spa': 'client-platforms',
-    'native-mobile': 'native-platforms',
-    'webapp': 'server-platforms',
-    'hybrid': 'native-platforms',
-    'backend': 'server-apis'
+    'native': 'x-native-platforms',
+    'web': 'x-web-platforms',
+    'service': 'x-service-platforms'
   };
 
   return paths[platformType];
@@ -44,11 +38,9 @@ export function getPlatformCollection(quickstart, platformType) {
   }
 
   var options = {
-    'spa': quickstart.clientPlatforms,
-    'native-mobile': quickstart.nativePlatforms,
-    'webapp': quickstart.serverPlatforms,
-    'hybrid': quickstart.hybridPlatforms,
-    'backend': quickstart.serverApis
+    'native': quickstart.nativePlatforms,
+    'web': quickstart.webPlatforms,
+    'service': quickstart.servicePlatforms
   };
 
   return options[platformType];
@@ -64,40 +56,16 @@ export function getTechTitle(quickstart, appType, techName) {
   }
 }
 
-export function getQuickstartMetdata(quickstart, appType, tech1, tech2) {
-  var meta = {};
-  if (appType && tech1 && tech2) {
-    if (tech2 === 'no-api') {
-      meta.pageTitle = `${getTechTitle(quickstart, appType, tech1)} Quickstart`;
-      meta.pageDescription = `Learn how to quickly add authentication to your ${getTechTitle(quickstart, appType, tech1)} app. Authenticate with any social or enterprise identity provider.`;
-    } else {
-      meta.pageTitle = `${getTechTitle(quickstart, appType, tech1)} + ${getTechTitle(quickstart, 'backend', tech2)} Quickstart`;
-      meta.pageDescription = `Learn how to quickly add authentication to your ${getTechTitle(quickstart, appType, tech1)} app that connects to ${getTechTitle(quickstart, 'backend', tech2)}. Authenticate with any social or enterprise identity provider.`;
-    }
-
-  } else if (appType && tech1) {
-    meta.pageTitle = `${getTechTitle(quickstart, appType, tech1)} Quickstarts`;
-    meta.pageDescription =  `Learn how to quickly add authentication to your ${getTechTitle(quickstart, appType, tech1)} app. Authenticate with any social or enterprise identity provider.`;
-  } else if (appType) {
-    meta.pageTitle = `${getPlatformName(appType)} Quickstarts`;
-    meta.pageDescription = `Browse ${getPlatformName(appType).toLowerCase()} quickstarts to learn how to quickly add authentication to your app.`;
-  } else {
-    meta.pageTitle = process.env.SITE_TITLE;
-  }
-  return meta;
-}
-
 export function loadArticle(payload) {
-  var url = `/docs/${getPlatformSlug(payload.appType)}/` +
-         `${payload.currentTech}?${payload.appType}=${payload.tech1}&e=1`;
-  if(payload.tech2) {
-   url += '&api=' + payload.tech2;
-  }
-
-  if(payload.clientId) {
-   url += '&a=' + payload.clientId;
-  }
-
+  
+  let tokens = ['/docs'];
+  if (payload.appType)  tokens.push(getPlatformSlug(payload.appType));
+  if (payload.platform) tokens.push(payload.platform);
+  if (payload.article)  tokens.push(payload.article);
+  
+  let url = tokens.join('/') + "?e=1";
+  if (payload.clientId) url += `&a=${payload.clientId}`;
+  
   function checkStatus(response) {
    if (response.status >= 200 && response.status < 400) {
      return response;
@@ -109,11 +77,10 @@ export function loadArticle(payload) {
    }
   }
 
-  return fetch(url, {
-   credentials: 'include'
-  })
+  return fetch(url, {credentials: 'include'})
   .then(checkStatus)
   .then(function(response) {
-   return response.text();
+    return response.text();
   });
+  
 };

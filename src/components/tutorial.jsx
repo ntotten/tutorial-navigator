@@ -3,13 +3,16 @@ import ArticleStore from '../stores/article-store';
 import { connectToStores } from 'fluxible-addons-react';
 
 class Tutorial extends React.Component {
+  
   componentDidMount () {
     this.initClient();
   }
+  
   componentDidUpdate() {
     this.initClient();
   }
-  initClient(html) {
+  
+  initClient() {
     if (typeof document !== 'undefined') {
       if (this.props.componentLoadedInBrowser){
         this.props.componentLoadedInBrowser.call(this);
@@ -23,27 +26,27 @@ class Tutorial extends React.Component {
       }
     }
   }
-  createMarkup() {
-    return {__html: this.props.articleHtml};
-  }
+  
   render() {
-    if (this.props.articleHtml) {
-      return (
-        <div id={this.props.tabName}
-          className={'tab-pane' + (this.props.default ? ' active' : '')}
-          dangerouslySetInnerHTML={this.createMarkup()}
-          ref="article" />
-      );
-    } else {
-      return (
-          <div id={this.props.tabName} className='loading-tutorial'>
-            <div className='auth0-spinner'>
-              <div className='spinner'></div>
-            </div>
-          </div>
-      );
+    let {articleHtml} = this.props;
+    if (!articleHtml) {
+      <div className='loading-tutorial'>
+        <div className='auth0-spinner'>
+          <div className='spinner'></div>
+        </div>
+      </div>
+    }
+    else {
+      let markup = {__html: articleHtml};
+      return <div ref="article" dangerouslySetInnerHTML={markup} />;
     }
   }
+  
+}
+
+Tutorial.propTypes = {
+  articleHtml: React.PropTypes.string,
+  componentLoadedInBrowser: React.PropTypes.func
 }
 
 Tutorial.contextTypes = {
@@ -52,7 +55,7 @@ Tutorial.contextTypes = {
 };
 
 Tutorial = connectToStores(Tutorial, [ArticleStore], (context, props) => ({
-  articleHtml: context.getStore(ArticleStore).getArticleHtml(props.appType, props.tech)
+  articleHtml: context.getStore(ArticleStore).getArticleHtml(props.appType, props.platform)
 }));
 
 export default Tutorial;

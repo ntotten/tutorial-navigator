@@ -2,12 +2,15 @@ import { BaseStore } from 'fluxible/addons';
 import _ from 'lodash';
 
 class ArticleStore extends BaseStore {
+  
   constructor(dispatcher) {
     super(dispatcher);
     this.articles = [];
   }
-  handleArticledLoaded(payload) {
-    var article = _.find(this.articles, { appType: payload.appType, tech: payload.tech });
+  
+  handleArticleLoaded(payload) {
+    let {appType, platform} = payload;
+    var article = _.find(this.articles, {appType, platform});
     if (article) {
       article = payload;
     } else {
@@ -15,33 +18,39 @@ class ArticleStore extends BaseStore {
     }
     this.emitChange();
   }
-  handleArticledLoadFailure(payload) {
+  
+  handleArticleLoadFailure(payload) {
     // TODO: Handle the error
   }
-  getArticleHtml(appType, tech) {
-    var article = _.find(this.articles, { appType: appType, tech: tech });
+  
+  getArticleHtml(appType, platform) {
+    var article = _.find(this.articles, {appType, platform});
     if (article) {
       return article.html;
     }
   }
+  
   getState() {
     return {
       articles: this.articles,
       onDocumentLoaded : this.onDocumentLoaded
     };
   }
+  
   dehydrate() {
     return this.getState();
   }
+  
   rehydrate(state) {
     this.articles = state.articles;
   }
+  
 }
 
 ArticleStore.storeName = 'ArticleStore';
 ArticleStore.handlers = {
-  'RECIEVE_ARTICLE_SUCCESS': 'handleArticledLoaded',
-  'RECIEVE_ARTICLE_FAILURE': 'handleArticledLoadFailure'
+  'RECIEVE_ARTICLE_SUCCESS': 'handleArticleLoaded',
+  'RECIEVE_ARTICLE_FAILURE': 'handleArticleLoadFailure'
 };
 
 export default ArticleStore;

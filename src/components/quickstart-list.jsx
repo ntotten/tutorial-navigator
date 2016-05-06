@@ -2,33 +2,40 @@ import React from 'react';
 import Quickstart from './quickstart';
 
 class QuickstartList extends React.Component {
+  
   componentDidMount() {
     if (typeof window !== 'undefined') {
       this.componentDidMountClient();
     }
   }
+  
   componentDidMountClient() {
     // Runs only on client, not on server
     if (this.props.componentLoadedInBrowser) {
       this.props.componentLoadedInBrowser.call(this);
     }
   }
+  
   render() {
-    var list = [];
-    var hide = (!this.props.quickstart.apptypes) ? 'hide ' : '';
-
-    this.props.quickstart.apptypes.forEach(function(appType, i) {
-        list.push(
-          <Quickstart key={i} model={appType} onDocumentLoaded={this.props.onDocumentLoaded}  customNavigationAction={this.props.customNavigationAction}/>
-        );
-    }.bind(this));
-
+    let {quickstart, onDocumentLoaded, customNavigationAction} = this.props;
+    let list = quickstart.appTypes.map((appType, i) => {
+      return <Quickstart key={i} model={appType} onDocumentLoaded={onDocumentLoaded} customNavigationAction={customNavigationAction}/>
+    })
+    let hide = quickstart.appTypes ? '' : 'hide'
     return (
       <div className={hide + "quickstart-list container"}>
         <div className="js-carousel" ref="carousel">{list}</div>
       </div>
     );
   }
+  
 }
+
+QuickstartList.propTypes = {
+  quickstart: React.PropTypes.object,
+  onDocumentLoaded: React.PropTypes.func,
+  customNavigationAction: React.PropTypes.func,
+  componentLoadedInBrowser: React.PropTypes.func
+};
 
 export default QuickstartList;
