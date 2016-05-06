@@ -5,18 +5,18 @@
   "main": "index.js",
   "description": "Auth0's quickstarts",
   "dependencies": {
-    "auth0-styleguide": "auth0/styleguide#2.1.2",
+    "auth0-styleguide": "auth0/styleguide#2.2.7",
     "flux": ">=2.1.1",
-    "fluxible-addons-react": ">=0.2.0",
-    "fluxible-plugin-service-proxy": ">=1.1.0",
-    "fluxible-router": ">=0.4.8",
+    "fluxible-addons-react": "^0.2.8",
+    "fluxible-plugin-service-proxy": "^1.1.0",
+    "fluxible-router": "^0.4.14",
     "jsonp": ">=0.2.0",
     "lodash": ">=3.10.1"
   },
   "peerDependencies": {
-    "fluxible": ">=1.0.0",
-    "react": ">=0.14.0",
-    "react-dom": ">=0.14.0"
+    "fluxible": "^1.1.0",
+    "react": "^15.0.1",
+    "react-dom": "^15.0.1"
   },
   "devDependencies": {
     "babel": "^4.6.0",
@@ -52,6 +52,7 @@
     "cdn": "grunt cdn",
     "cdn-dev": "grunt cdn_dev",
     "compile": "babel -d lib/ src/",
+    "watch": "babel -w -d lib/ src/",
     "postinstall": "npm run compile"
   }
 }
