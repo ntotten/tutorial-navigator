@@ -40,14 +40,10 @@ class TutorialNavigator extends React.Component {
 }
 
 TutorialNavigator.propTypes = {
+  quickstarts: React.PropTypes.object,
   appType: React.PropTypes.string,
   platform: React.PropTypes.string
 }
-
-TutorialNavigator.contextTypes = {
-  getStore: React.PropTypes.func,
-  executeAction: React.PropTypes.func,
-};
 
 TutorialNavigator = connectToStores(TutorialNavigator, [TutorialStore], (context, props) => {
   return context.getStore(TutorialStore).getState();

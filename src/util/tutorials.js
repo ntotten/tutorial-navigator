@@ -1,17 +1,18 @@
 import _ from 'lodash';
 
-export function getPlatformName(platformType) {
+export function getPlatformName(appType) {
   var options = {
     'native': 'Native App',
     'web': 'Web Application',
     'service': 'Backend Service'
   };
 
-  return options[platformType];
+  return options[appType];
 }
 
-export function getQuestion(platformType) {
-  platformType = platformType || 'none';
+export function getQuestion(appType) {
+  appType = appType || 'none';
+  
   var questions = {
     'none': 'Getting started? Try our quickstarts.',
     'native': 'Select a native SDK',
@@ -19,31 +20,17 @@ export function getQuestion(platformType) {
     'service': 'Select an API or Backend platform'
   };
 
-  return questions[platformType];
+  return questions[appType];
 }
 
-export function getPlatformSlug(platformType) {
+export function getPlatformSlug(appType) {
   var paths = {
     'native': 'x-native-platforms',
     'web': 'x-web-platforms',
     'service': 'x-service-platforms'
   };
 
-  return paths[platformType];
-}
-
-export function getPlatformCollection(quickstart, platformType) {
-  if(!platformType) {
-    return [];
-  }
-
-  var options = {
-    'native': quickstart.nativePlatforms,
-    'web': quickstart.webPlatforms,
-    'service': quickstart.servicePlatforms
-  };
-
-  return options[platformType];
+  return paths[appType];
 }
 
 export function getTechTitle(quickstart, appType, techName) {

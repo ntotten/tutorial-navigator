@@ -16,7 +16,7 @@ class Breadcrumbs extends React.Component {
   
   render() {
     let crumbs = [];
-    let {quickstart, appType, platform} = this.props;
+    let {quickstarts, appType, platform} = this.props;
     
     if (!appType) {
       return <div/>;
@@ -38,7 +38,7 @@ class Breadcrumbs extends React.Component {
     if (platform) {
       crumbs.push(
         <a key="platform" onClick={this.navigate.bind(this, {appType, platform})}>
-          <i className="icon-budicon-461"></i><span className="text">{getTechTitle(quickstart, appType, platform)}</span>
+          <i className="icon-budicon-461"></i><span className="text">{getTechTitle(quickstarts, appType, platform)}</span>
         </a>
       );
     }

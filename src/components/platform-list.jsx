@@ -1,13 +1,12 @@
 import React from 'react';
 import Platform from './platform';
-import { getPlatformCollection } from '../util/tutorials';
 
 class PlatformList extends React.Component {
   
   render() {
-    let {quickstart, appType, onDocumentLoaded, customNavigationAction} = this.props;
+    let {quickstarts, appType, onDocumentLoaded, customNavigationAction} = this.props;
     
-    let items = getPlatformCollection(quickstart, appType).map((platform, i) => {
+    let items = quickstarts[appType].platforms.map((platform, i) => {
       return <Platform
         key={appType + i}
         delay={20 * i}
@@ -18,12 +17,19 @@ class PlatformList extends React.Component {
     });
 
     return (
-      <div key={this.props} className="container techlist">
+      <div className="container techlist">
         <ul className="circle-list">{items}</ul>
       </div>
     );
   }
   
 }
+
+PlatformList.propTypes = {
+  quickstarts: React.PropTypes.object,
+  appType: React.PropTypes.string,
+  onDocumentLoaded: React.PropTypes.func,
+  customNavigationAction: React.PropTypes.func
+};
 
 export default PlatformList;

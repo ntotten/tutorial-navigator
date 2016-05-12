@@ -9,7 +9,7 @@ class Quickstart extends React.Component {
   }
 
   render() {
-    var quickstart = this.props.model;
+    var {quickstart} = this.props;
     return (
       <div className="quickstart" data-type={quickstart.name} onClick={this.handleClick.bind(this, quickstart)}>
         <div className="symbol"></div>
@@ -26,7 +26,7 @@ class Quickstart extends React.Component {
 }
 
 Quickstart.propTypes = {
-  model: React.PropTypes.object
+  quickstart: React.PropTypes.object
 }
 
 Quickstart.contextTypes = {

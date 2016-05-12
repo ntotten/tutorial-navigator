@@ -17,14 +17,22 @@ class QuickstartList extends React.Component {
   }
   
   render() {
-    let {quickstart, onDocumentLoaded, customNavigationAction} = this.props;
-    let list = quickstart.appTypes.map((appType, i) => {
-      return <Quickstart key={i} model={appType} onDocumentLoaded={onDocumentLoaded} customNavigationAction={customNavigationAction}/>
-    })
-    let hide = quickstart.appTypes ? '' : 'hide'
+    let {quickstarts, onDocumentLoaded, customNavigationAction} = this.props;
+    let items = null;
+    let hide = 'hide ';
+    if (quickstarts) {
+      hide = '';
+      items = Object.keys(quickstarts).map(appType => {
+        return <Quickstart
+          key={appType}
+          quickstart={quickstarts[appType]}
+          onDocumentLoaded={onDocumentLoaded}
+          customNavigationAction={customNavigationAction} />
+      })
+    }
     return (
       <div className={hide + "quickstart-list container"}>
-        <div className="js-carousel" ref="carousel">{list}</div>
+        <div className="js-carousel" ref="carousel">{items}</div>
       </div>
     );
   }
@@ -32,7 +40,7 @@ class QuickstartList extends React.Component {
 }
 
 QuickstartList.propTypes = {
-  quickstart: React.PropTypes.object,
+  quickstarts: React.PropTypes.array,
   onDocumentLoaded: React.PropTypes.func,
   customNavigationAction: React.PropTypes.func,
   componentLoadedInBrowser: React.PropTypes.func

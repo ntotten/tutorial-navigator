@@ -4,7 +4,7 @@ class TutorialStore extends BaseStore {
   
   constructor(dispatcher) {
     super(dispatcher);
-    this.quickstart = null;
+    this.quickstarts = null;
     this.appType = null;
     this.platform = null;
     this.articleLoaded = false;
@@ -19,33 +19,34 @@ class TutorialStore extends BaseStore {
   }
   
   handleSettingsLoaded(payload) {
-    this.quickstart = payload.quickstart;
+    this.quickstarts = payload.quickstarts;
     let tutorial = payload.selectedTutorial;
-    if (tutorial && tutorial.appType && tutorial.tech) {
+    if (tutorial && tutorial.appType && tutorial.platform) {
       this.appType = tutorial.appType;
-      this.tech = tutorial.tech;
+      this.platform = tutorial.platform;
       this.articleLoaded = true;
     }
     this.emitChange();
   }
   
-  handleArticleLoaded(payload){
-    this.tech = payload.tech;
+  handleArticleLoaded(payload) {
+    this.platform = payload.platform;
     this.articleLoaded = payload.articleLoaded;
     this.emitChange();
   }
   
   getState() {
     return {
+      quickstarts: this.quickstarts,
       appType: this.appType,
-      tech: this.tech,
-      quickstart: this.quickstart,
+      platform: this.platform,
+      article: this.article,
       articleLoaded: this.articleLoaded
     };
   }
   
-  getQuickstart() {
-    return this.quickstart;
+  getQuickstarts() {
+    return this.quickstarts;
   }
   
   dehydrate() {
@@ -53,10 +54,11 @@ class TutorialStore extends BaseStore {
   }
   
   rehydrate(state) {
+    this.quickstarts = state.quickstarts;
     this.appType = state.appType;
-    this.tech = state.tech;
+    this.platform = state.platform;
+    this.article = state.article;
     this.articleLoaded = state.articleLoaded;
-    this.quickstart = state.quickstart;
   }
   
 }

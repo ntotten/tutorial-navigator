@@ -188,27 +188,17 @@
       opacity: 0.5;
       font-size: 12px;
 
-    &[data-type="webapp"]
-      .symbol
-        &:after
-          background-image: url('https://auth0.com/docs/img/quickstarts/webapp.svg');
-
-    &[data-type="spa"]
-      .symbol
-        &:after
-          background-image: url('https://auth0.com/docs/img/quickstarts/spa.svg');
-
-    &[data-type="hybrid"]
-      .symbol
-        &:after
-          background-image: url('https://auth0.com/docs/img/quickstarts/hybrid.svg');
-
-    &[data-type="native-mobile"]
+    &[data-type="native"]
       .symbol
         &:after
           background-image: url('https://auth0.com/docs/img/quickstarts/native-mobile.svg');
 
-    &[data-type="backend"]
+    &[data-type="web"]
+      .symbol
+        &:after
+          background-image: url('https://auth0.com/docs/img/quickstarts/spa.svg');
+
+    &[data-type="service"]
       .symbol
         &:after
           background-image: url('https://auth0.com/docs/img/quickstarts/backend.svg');
