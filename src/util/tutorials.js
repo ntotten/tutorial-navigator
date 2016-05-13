@@ -33,16 +33,6 @@ export function getPlatformSlug(appType) {
   return paths[appType];
 }
 
-export function getTechTitle(quickstart, appType, techName) {
-  var collection = getPlatformCollection(quickstart, appType);
-
-  var result = _.find(collection, { name: techName });
-
-  if(result) {
-    return result.title;
-  }
-}
-
 export function loadArticle(payload) {
   
   let tokens = ['/docs'];

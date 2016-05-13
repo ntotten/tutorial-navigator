@@ -1,19 +1,15 @@
 export default function loadArticleAction(context, payload, done) {
   return context.getService(ServiceName).loadArticle(payload)
   .then((html) => {
-    context.dispatch('ARTICLE_LOADED', {
-      payload: payload.payload,
-      articleLoaded: true
-    });
-    context.dispatch('RECIEVE_ARTICLE_SUCCESS', {
+    context.dispatch('ARTICLE_LOAD_SUCCESS', {
+      html,
       appType: payload.appType,
-      payload: payload.payload,
-      html: html,
-      onDocumentLoaded: payload.onDocumentLoaded
+      platform: payload.platform,
+      article: payload.article,
     });
     if (done) done();
   }).catch((err) => {
-    context.dispatch('RECIEVE_ARTICLE_FAILURE', err);
+    context.dispatch('ARTICLE_LOAD_FAILURE', err);
     if (done) done();
     return err;
   });

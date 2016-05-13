@@ -3,6 +3,7 @@ import ArticleStore from './stores/article-store';
 import loadSettingsAction from './action/load-settings-action';
 import navigateAction from './action/navigate-action';
 import loadArticleAction from './action/load-article-action';
+import TableOfContents from './components/table-of-contents'; 
 import TutorialNavigator from './components/tutorial-navigator';
 import Breadcrumbs from './components/breadcrumbs';
 import Tutorial from './components/tutorial';
@@ -13,6 +14,7 @@ import createCustomContext  from './util/create-custom-context';
 import renderElement  from './util/render-element';
 
 module.exports = {
+  TableOfContents : TableOfContents,
   TutorialNavigator : TutorialNavigator,
   Breadcrumbs: Breadcrumbs,
   Tutorial : Tutorial,

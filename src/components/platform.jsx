@@ -1,14 +1,25 @@
 import React from 'react';
-//import navigateAction from '../action/navigate-action';
+import navigateAction from '../action/navigate-action';
 import loadArticleAction from '../action/load-article-action';
 
 class Platform extends React.Component {
   
-  handleClick(platform) {
-    this.context.executeAction(loadArticleAction, {
-      appType: this.props.appType,
-      platform: platform.name
-    });
+  handleClick() {
+    let {appType, platform, customNavigationAction} = this.props;
+    let payload = {
+      appType,
+      platform: platform.name,
+      article: platform.articles[0].name
+    };
+    if (customNavigationAction) {
+      this.context.executeAction(customNavigationAction, payload);
+    }
+    else {
+      Promises.all([
+        this.context.executeAction(loadArticleAction, payload),
+        this.context.executeAction(navigateAction, payload)
+      ]);
+    }
   }
   
   getStyle() {
@@ -26,7 +37,7 @@ class Platform extends React.Component {
     var {platform} = this.props;
     return (
       <li className='animated scaleIn' style={this.getStyle()}>
-        <div data-name={platform.name} className='circle-logo' onClick={this.handleClick.bind(this, platform)}>
+        <div data-name={platform.name} className='circle-logo' onClick={this.handleClick.bind(this)}>
           <div className='logo'></div>
           <div className='title'>{platform.title}</div>
         </div>
@@ -34,6 +45,11 @@ class Platform extends React.Component {
     );
   }
   
+}
+
+Platform.propTypes = {
+  platform: React.PropTypes.object,
+  customNavigationAction: React.PropTypes.func
 }
 
 Platform.contextTypes = {

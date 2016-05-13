@@ -23,6 +23,7 @@ class Breadcrumbs extends React.Component {
     }
     
     if (appType) {
+      let title = quickstarts[appType].title;
       crumbs.push(
         <a key="base" onClick={this.navigate.bind(this, {})}>
           <span className="text">Documentation</span>
@@ -30,15 +31,16 @@ class Breadcrumbs extends React.Component {
       );
       crumbs.push(
         <a key="apptype" onClick={this.navigate.bind(this, {appType})}>
-          <i className="icon-budicon-461"></i><span className="text">{getPlatformName(appType)}</span>
+          <i className="icon-budicon-461"></i><span className="text">{title}</span>
         </a>
       );
     }
 
     if (platform) {
+      let title = quickstarts[appType].platforms[platform].title;
       crumbs.push(
         <a key="platform" onClick={this.navigate.bind(this, {appType, platform})}>
-          <i className="icon-budicon-461"></i><span className="text">{getTechTitle(quickstarts, appType, platform)}</span>
+          <i className="icon-budicon-461"></i><span className="text">{title}</span>
         </a>
       );
     }

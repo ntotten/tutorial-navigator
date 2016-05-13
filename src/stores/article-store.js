@@ -9,13 +9,9 @@ class ArticleStore extends BaseStore {
   }
   
   handleArticleLoaded(payload) {
-    let {appType, platform} = payload;
-    var article = _.find(this.articles, {appType, platform});
-    if (article) {
-      article = payload;
-    } else {
-      this.articles.push(payload);
-    }
+    let {appType, platform, article, html} = payload;
+    let key = [appType, platform, article].join('/');
+    this.articles[key] = html;
     this.emitChange();
   }
   
@@ -23,17 +19,19 @@ class ArticleStore extends BaseStore {
     // TODO: Handle the error
   }
   
-  getArticleHtml(appType, platform) {
-    var article = _.find(this.articles, {appType, platform});
-    if (article) {
-      return article.html;
-    }
+  getArticleHtml(appType, platform, article) {
+    let key = getKeyForArticle(appType, platform, article);
+    return this.articles[key] || undefined;
+  }
+  
+  getKeyForArticle(appType, platform, article) {
+    return [appType, platform, article].join('/');
   }
   
   getState() {
     return {
       articles: this.articles,
-      onDocumentLoaded : this.onDocumentLoaded
+      onDocumentLoaded: this.onDocumentLoaded
     };
   }
   
@@ -49,8 +47,8 @@ class ArticleStore extends BaseStore {
 
 ArticleStore.storeName = 'ArticleStore';
 ArticleStore.handlers = {
-  'RECIEVE_ARTICLE_SUCCESS': 'handleArticleLoaded',
-  'RECIEVE_ARTICLE_FAILURE': 'handleArticleLoadFailure'
+  'ARTICLE_LOAD_SUCCESS': 'handleArticleLoaded',
+  'ARTICLE_LOAD_FAILURE': 'handleArticleLoadFailure'
 };
 
 export default ArticleStore;

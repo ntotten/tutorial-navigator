@@ -7,31 +7,25 @@ class TutorialStore extends BaseStore {
     this.quickstarts = null;
     this.appType = null;
     this.platform = null;
-    this.articleLoaded = false;
+    this.article = null;
   }
   
   handleTutorialNavigatorLoaded(payload) {
     this.appType = payload.appType;
     this.platform = payload.platform;
     this.article = payload.article;
-    this.articleLoaded = payload.articleLoaded || false;
+    this.emitChange();
+  }
+
+  handleArticleSelected(payload) {
+    this.platform = payload.platform;
+    this.article = payload.article;
     this.emitChange();
   }
   
   handleSettingsLoaded(payload) {
     this.quickstarts = payload.quickstarts;
-    let tutorial = payload.selectedTutorial;
-    if (tutorial && tutorial.appType && tutorial.platform) {
-      this.appType = tutorial.appType;
-      this.platform = tutorial.platform;
-      this.articleLoaded = true;
-    }
-    this.emitChange();
-  }
-  
-  handleArticleLoaded(payload) {
-    this.platform = payload.platform;
-    this.articleLoaded = payload.articleLoaded;
+    // TODO: selectedTutorial?
     this.emitChange();
   }
   
@@ -40,8 +34,7 @@ class TutorialStore extends BaseStore {
       quickstarts: this.quickstarts,
       appType: this.appType,
       platform: this.platform,
-      article: this.article,
-      articleLoaded: this.articleLoaded
+      article: this.article
     };
   }
   
@@ -54,20 +47,20 @@ class TutorialStore extends BaseStore {
   }
   
   rehydrate(state) {
+    console.log(state);
     this.quickstarts = state.quickstarts;
     this.appType = state.appType;
     this.platform = state.platform;
     this.article = state.article;
-    this.articleLoaded = state.articleLoaded;
   }
   
 }
 
 TutorialStore.storeName = 'TutorialStore';
 TutorialStore.handlers = {
-  'ARTICLE_LOADED': 'handleArticleLoaded',
+  'ARTICLE_LOADED':          'handleArticleSelected',
   'LOAD_TUTORIAL_NAVIGATOR': 'handleTutorialNavigatorLoaded',
-  'LOAD_SETTINGS': 'handleSettingsLoaded'
+  'LOAD_SETTINGS':           'handleSettingsLoaded'
 };
 
 export default TutorialStore;

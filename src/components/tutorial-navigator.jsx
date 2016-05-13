@@ -11,14 +11,15 @@ class TutorialNavigator extends React.Component {
   
   render() {
     
-    let {appType, platform} = this.props;
+    let {quickstarts, appType} = this.props;
 
     let picker;
     if (appType) {
-      picker = <PlatformList {...this.props} />;
+      let platforms = quickstarts[appType].platforms;
+      picker = <PlatformList quickstart={quickstarts[appType]} platforms={platforms} {...this.props} />;
     }
     else {
-      picker = <QuickstartList {...this.props} />;
+      picker = <QuickstartList quickstarts={quickstarts} {...this.props} />;
     }
 
     return (
@@ -41,8 +42,7 @@ class TutorialNavigator extends React.Component {
 
 TutorialNavigator.propTypes = {
   quickstarts: React.PropTypes.object,
-  appType: React.PropTypes.string,
-  platform: React.PropTypes.string
+  appType: React.PropTypes.string
 }
 
 TutorialNavigator = connectToStores(TutorialNavigator, [TutorialStore], (context, props) => {
