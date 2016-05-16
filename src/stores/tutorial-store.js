@@ -47,7 +47,6 @@ class TutorialStore extends BaseStore {
   }
   
   rehydrate(state) {
-    console.log(state);
     this.quickstarts = state.quickstarts;
     this.appType = state.appType;
     this.platform = state.platform;

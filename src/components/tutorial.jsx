@@ -29,17 +29,17 @@ class Tutorial extends React.Component {
   
   render() {
     let {articleHtml} = this.props;
+    
     if (!articleHtml) {
-      <div className='loading-tutorial'>
+      return <div className='loading-tutorial'>
         <div className='auth0-spinner'>
           <div className='spinner'></div>
         </div>
-      </div>
+      </div>;
     }
-    else {
-      let markup = {__html: articleHtml};
-      return <div ref="article" dangerouslySetInnerHTML={markup} />;
-    }
+    
+    let markup = {__html: articleHtml};
+    return <div ref="article" dangerouslySetInnerHTML={markup} />;
   }
   
 }
@@ -49,13 +49,8 @@ Tutorial.propTypes = {
   componentLoadedInBrowser: React.PropTypes.func
 }
 
-Tutorial.contextTypes = {
-  getStore: React.PropTypes.func,
-  executeAction: React.PropTypes.func
-};
-
 Tutorial = connectToStores(Tutorial, [ArticleStore], (context, props) => ({
-  articleHtml: context.getStore(ArticleStore).getArticleHtml(props.appType, props.platform)
+  articleHtml: context.getStore(ArticleStore).getArticleHtml(props.appType, props.platform, props.article)
 }));
 
 export default Tutorial;

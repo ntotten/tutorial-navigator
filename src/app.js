@@ -5,6 +5,7 @@ import navigateAction from './action/navigate-action';
 import loadArticleAction from './action/load-article-action';
 import TableOfContents from './components/table-of-contents'; 
 import TutorialNavigator from './components/tutorial-navigator';
+import TutorialTableOfContents from './components/tutorial-table-of-contents';
 import Breadcrumbs from './components/breadcrumbs';
 import Tutorial from './components/tutorial';
 import { ServiceName } from './action/load-article-action';
@@ -16,6 +17,7 @@ import renderElement  from './util/render-element';
 module.exports = {
   TableOfContents : TableOfContents,
   TutorialNavigator : TutorialNavigator,
+  TutorialTableOfContents : TutorialTableOfContents,
   Breadcrumbs: Breadcrumbs,
   Tutorial : Tutorial,
   TutorialStore : TutorialStore,

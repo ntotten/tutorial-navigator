@@ -26,7 +26,8 @@ class Quickstart extends React.Component {
 }
 
 Quickstart.propTypes = {
-  quickstart: React.PropTypes.object
+  quickstart: React.PropTypes.object,
+  customNavigationAction: React.PropTypes.func
 }
 
 Quickstart.contextTypes = {

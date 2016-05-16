@@ -48,6 +48,7 @@ class Platform extends React.Component {
 }
 
 Platform.propTypes = {
+  appType: React.PropTypes.string,
   platform: React.PropTypes.object,
   customNavigationAction: React.PropTypes.func
 }

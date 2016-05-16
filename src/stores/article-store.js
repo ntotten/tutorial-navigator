@@ -10,7 +10,7 @@ class ArticleStore extends BaseStore {
   
   handleArticleLoaded(payload) {
     let {appType, platform, article, html} = payload;
-    let key = [appType, platform, article].join('/');
+    let key = this.getKeyForArticle(appType, platform, article);
     this.articles[key] = html;
     this.emitChange();
   }
@@ -20,7 +20,7 @@ class ArticleStore extends BaseStore {
   }
   
   getArticleHtml(appType, platform, article) {
-    let key = getKeyForArticle(appType, platform, article);
+    let key = this.getKeyForArticle(appType, platform, article);
     return this.articles[key] || undefined;
   }
   

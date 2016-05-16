@@ -5,6 +5,7 @@ module.exports = {
   TutorialNavigator : plugin.TutorialNavigator,
   Breadcrumbs: plugin.Breadcrumbs,
   Tutorial : plugin.Tutorial,
+  TutorialTableOfContents : plugin.TutorialTableOfContents,
   NavigatorAndTutorialView : plugin.NavigatorAndTutorialView,
 
   // Stores
