@@ -4,16 +4,16 @@ import Platform from './platform';
 class PlatformList extends React.Component {
   
   render() {
-    let {appType, platforms, onDocumentLoaded, customNavigationAction} = this.props;
+    let {quickstart, onDocumentLoaded, customNavigationAction} = this.props;
     
-    let items = Object.keys(platforms).map((name, i) => (
+    let items = Object.keys(quickstart.platforms).map((name, i) => (
       <Platform
-        key={appType + i}
+        key={quickstart.name + i}
         delay={20 * i}
-        appType={appType}
-        platform={platforms[name]}
+        quickstart={quickstart}
+        platform={quickstart.platforms[name]}
         onDocumentLoaded={onDocumentLoaded}
-        customNavigationAction={customNavigationAction}/>
+        customNavigationAction={customNavigationAction} />
     ));
 
     return (
@@ -26,8 +26,7 @@ class PlatformList extends React.Component {
 }
 
 PlatformList.propTypes = {
-  platforms: React.PropTypes.object,
-  appType: React.PropTypes.string,
+  quickstart: React.PropTypes.object,
   onDocumentLoaded: React.PropTypes.func,
   customNavigationAction: React.PropTypes.func
 };

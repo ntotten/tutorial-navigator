@@ -4,12 +4,12 @@ let ArticleService = {};
 
 ArticleService.loadArticle = function(quickstarts, payload) {
   
-  let {appType, platform, article, clientId} = payload;
+  let {quickstartId, platformId, articleId, clientId} = payload;
   
   let tokens = ['/docs'];
-  if (appType)  tokens.push(quickstarts[appType].slug);
-  if (platform) tokens.push(platform);
-  if (article)  tokens.push(article);
+  if (quickstartId) tokens.push(quickstarts[quickstartId].slug);
+  if (platformId)   tokens.push(platformId);
+  if (articleId)    tokens.push(articleId);
   
   let url = tokens.join('/') + "?e=1";
   if (clientId) url += `&a=${clientId}`;

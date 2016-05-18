@@ -8,9 +8,9 @@ export default function loadArticleAction(context, payload, done) {
   .then((html) => {
     context.dispatch('ARTICLE_LOAD_SUCCESS', {
       html,
-      appType: payload.appType,
-      platform: payload.platform,
-      article: payload.article,
+      quickstartId: payload.quickstartId,
+      platformId: payload.platformId,
+      articleId: payload.articleId,
     });
     if (done) done();
   }).catch((err) => {

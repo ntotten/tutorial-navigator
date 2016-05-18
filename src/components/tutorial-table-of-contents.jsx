@@ -5,21 +5,21 @@ import {navigateAction} from '../action/navigate-action';
 class TutorialTableOfContents extends React.Component {
   
   handleClick(article) {
-    let {appType, platform, customNavigationAction} = this.props;
+    let {quickstart, platform, customNavigationAction} = this.props;
     let action = customNavigationAction || navigateAction;
     this.context.executeAction(action, {
-      appType,
-      platform: platform.name,
-      article
+      quickstartId: quickstart.name,
+      platformId: platform.name,
+      articleId: article.name
     });
   }
   
   render() {
-    let {platform, selectedArticle} = this.props;
+    let {platform, currentArticle} = this.props;
     
     let items = platform.articles.map((article, index) => {
-      let selected = (article.name == selectedArticle) ? 'selected ' : '';
-      return <li key={index} className={selected + "toc-article"} onClick={this.handleClick.bind(this, article.name)}>
+      let selected = (article.name == currentArticle.name) ? 'selected ' : '';
+      return <li key={index} className={selected + "toc-article"} onClick={this.handleClick.bind(this, article)}>
         {article.title}
       </li>
     });
@@ -34,9 +34,9 @@ class TutorialTableOfContents extends React.Component {
 }
 
 TutorialTableOfContents.propTypes = {
-  appType: React.PropTypes.string,
+  quickstart: React.PropTypes.object,
   platform: React.PropTypes.object,
-  selectedArticle: React.PropTypes.string,
+  currentArticle: React.PropTypes.object,
   customNavigationAction: React.PropTypes.func
 }
 

@@ -9,8 +9,8 @@ class ArticleStore extends BaseStore {
   }
   
   handleArticleLoaded(payload) {
-    let {appType, platform, article, html} = payload;
-    let key = this.getKeyForArticle(appType, platform, article);
+    let {quickstartId, platformId, articleId, html} = payload;
+    let key = this.getKeyForArticle(quickstartId, platformId, articleId);
     this.articles[key] = html;
     this.emitChange();
   }
@@ -19,24 +19,19 @@ class ArticleStore extends BaseStore {
     // TODO: Handle the error
   }
   
-  getArticleHtml(appType, platform, article) {
-    let key = this.getKeyForArticle(appType, platform, article);
+  getArticleHtml(quickstartId, platformId, articleId) {
+    let key = this.getKeyForArticle(quickstartId, platformId, articleId);
     return this.articles[key] || undefined;
   }
   
-  getKeyForArticle(appType, platform, article) {
-    return [appType, platform, article].join('/');
-  }
-  
-  getState() {
-    return {
-      articles: this.articles,
-      onDocumentLoaded: this.onDocumentLoaded
-    };
+  getKeyForArticle(quickstartId, platformId, articleId) {
+    return [quickstartId, platformId, articleId].join('/');
   }
   
   dehydrate() {
-    return this.getState();
+    return {
+      articles: this.articles
+    }
   }
   
   rehydrate(state) {

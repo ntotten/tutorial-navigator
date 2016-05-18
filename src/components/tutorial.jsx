@@ -45,12 +45,19 @@ class Tutorial extends React.Component {
 }
 
 Tutorial.propTypes = {
+  quickstart: React.PropTypes.object,
+  platform: React.PropTypes.object,
+  article: React.PropTypes.object,
   articleHtml: React.PropTypes.string,
   componentLoadedInBrowser: React.PropTypes.func
 }
 
-Tutorial = connectToStores(Tutorial, [ArticleStore], (context, props) => ({
-  articleHtml: context.getStore(ArticleStore).getArticleHtml(props.appType, props.platform, props.article)
-}));
+Tutorial = connectToStores(Tutorial, [ArticleStore], (context, props) => {
+  let {quickstart, platform, article} = props;
+  let store = context.getStore(ArticleStore);
+  return {
+    articleHtml: store.getArticleHtml(quickstart.name, platform.name, article.name)
+  };
+});
 
 export default Tutorial;

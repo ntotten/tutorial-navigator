@@ -1,57 +1,52 @@
 import React from 'react';
 import navigateAction from '../action/navigate-action';
 import TutorialStore from '../stores/tutorial-store';
-import { connectToStores } from 'fluxible-addons-react';
+import {connectToStores} from 'fluxible-addons-react';
 import _ from 'lodash';
 
 class Breadcrumbs extends React.Component {
   
-  navigate(params) {
-    let {customNavigationAction} = this.props;
-    var action = customNavigationAction || navigateAction;
-    this.context.executeAction(action, {
-      appType: params.appType,
-      platform: params.platform,
-      article: params.article
-    });
+  handleClick(params) {
+    let action = this.props.customNavigationAction || navigateAction;
+    let payload = {};
+    if (params.quickstart) payload.quickstartId = params.quickstart.name;
+    if (params.platform)   payload.platformId   = params.platform.name;
+    if (params.article)    payload.articleId    = params.article.name;
+    this.context.executeAction(action, payload);
   }
   
   render() {
     let crumbs = [];
-    let {quickstarts, appType, platform, article} = this.props;
+    let {quickstart, platform, article} = this.props;
     
-    if (!appType) {
-      return <div/>;
+    if (!quickstart) {
+      return <div />;
     }
     
-    if (appType) {
-      let title = quickstarts[appType].title;
-      crumbs.push(
-        <a key="base" onClick={this.navigate.bind(this, {})}>
-          <span className="text">Documentation</span>
-        </a>
-      );
-      crumbs.push(
-        <a key="apptype" onClick={this.navigate.bind(this, {appType})}>
-          <i className="icon-budicon-461"></i><span className="text">{title}</span>
-        </a>
-      );
-    }
+    crumbs.push(
+      <a key="base" onClick={this.handleClick.bind(this, {})}>
+        <span className="text">Documentation</span>
+      </a>
+    );
+    
+    crumbs.push(
+      <a key="quickstart" onClick={this.handleClick.bind(this, {quickstart})}>
+        <i className="icon-budicon-461"></i><span className="text">{quickstart.title}</span>
+      </a>
+    );
 
     if (platform) {
-      let meta = quickstarts[appType].platforms[platform];
-      
       crumbs.push(
-        <a key="platform" onClick={this.navigate.bind(this, {appType, platform, article: meta.articles[0].name})}>
-          <i className="icon-budicon-461"></i><span className="text">{meta.title}</span>
+        <a key="platform" onClick={this.handleClick.bind(this, {quickstart, platform, article: platform.articles[0]})}>
+          <i className="icon-budicon-461"></i><span className="text">{platform.title}</span>
         </a>
       );
       
-      if (meta.articles.length > 1) {
-        let currentArticle = _.find(quickstarts[appType].platforms[platform].articles, {name: article});
+      // Only display the article breadcrumb if there is more than one article associated with the platform.
+      if (article && platform.articles.length > 1) {
         crumbs.push(
-          <a key="article" onClick={this.navigate.bind(this, {appType, platform, article})}>
-            <i className="icon-budicon-461"></i><span className="text">{currentArticle.title}</span>
+          <a key="article" onClick={this.handleClick.bind(this, {quickstart, platform, article})}>
+            <i className="icon-budicon-461"></i><span className="text">{article.title}</span>
           </a>
         );
       }
@@ -63,9 +58,9 @@ class Breadcrumbs extends React.Component {
 }
 
 Breadcrumbs.propTypes = {
-  appType: React.PropTypes.string,
-  platform: React.PropTypes.string,
-  article: React.PropTypes.string,
+  quickstart: React.PropTypes.object,
+  platform: React.PropTypes.object,
+  article: React.PropTypes.object,
   customNavigationAction: React.PropTypes.func
 }
 
@@ -75,7 +70,12 @@ Breadcrumbs.contextTypes = {
 };
 
 Breadcrumbs = connectToStores(Breadcrumbs, [TutorialStore], (context, props) => {
-  return context.getStore(TutorialStore).getState();
+  let store = context.getStore(TutorialStore);
+  return {
+    quickstart: store.getCurrentQuickstart(),
+    platform: store.getCurrentPlatform(),
+    article: store.getCurrentArticle()
+  };
 });
 
 export default Breadcrumbs;

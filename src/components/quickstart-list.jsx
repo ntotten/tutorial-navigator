@@ -22,10 +22,10 @@ class QuickstartList extends React.Component {
     let hide = 'hide ';
     if (quickstarts) {
       hide = '';
-      items = Object.keys(quickstarts).map(appType => (
+      items = Object.keys(quickstarts).map(name => (
         <Quickstart
-          key={appType}
-          quickstart={quickstarts[appType]}
+          key={name}
+          quickstart={quickstarts[name]}
           onDocumentLoaded={onDocumentLoaded}
           customNavigationAction={customNavigationAction} />
       ));

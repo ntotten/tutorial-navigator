@@ -2,33 +2,26 @@ import React from 'react';
 import Breadcrumbs from './breadcrumbs';
 import QuickstartList from './quickstart-list';
 import PlatformList from './platform-list';
-import { connectToStores } from 'fluxible-addons-react';
-import loadArticleAction from '../action/load-article-action';
 import TutorialStore from '../stores/tutorial-store';
+import {connectToStores} from 'fluxible-addons-react';
 
 class TutorialNavigator extends React.Component {
   
   render() {
     
-    let {quickstarts, appType} = this.props;
+    let {quickstarts, quickstart} = this.props;
 
-    let picker;
-    if (appType) {
-      let platforms = quickstarts[appType].platforms;
-      picker = <PlatformList quickstart={quickstarts[appType]} platforms={platforms} {...this.props} />;
+    let picker = undefined;
+    let question = undefined;
+    if (quickstart) {
+      picker = <PlatformList quickstart={quickstart} {...this.props} />;
+      question = quickstart.question;
     }
     else {
       picker = <QuickstartList quickstarts={quickstarts} {...this.props} />;
-    }
-    
-    let question;
-    if (quickstarts && appType) {
-      question = quickstarts[appType].question;
-    }
-    else {
       question = "Getting started? Try our quickstarts."
     }
-
+    
     return (
       <div id="tutorial-navigator">
         <div className='js-tutorial-navigator'>
@@ -49,11 +42,15 @@ class TutorialNavigator extends React.Component {
 
 TutorialNavigator.propTypes = {
   quickstarts: React.PropTypes.object,
-  appType: React.PropTypes.string
+  quickstart: React.PropTypes.object
 }
 
 TutorialNavigator = connectToStores(TutorialNavigator, [TutorialStore], (context, props) => {
-  return context.getStore(TutorialStore).getState();
+  let store = context.getStore(TutorialStore);
+  return {
+    quickstarts: store.getQuickstarts(),
+    quickstart: store.getCurrentQuickstart()
+  };
 });
 
 
