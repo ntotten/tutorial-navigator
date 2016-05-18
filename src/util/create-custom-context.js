@@ -1,7 +1,7 @@
 import Flux from 'flux'
 import TutorialStore from '../stores/tutorial-store';
 import ArticleStore from '../stores/article-store';
-import { loadArticle } from '../util/tutorials';
+import { loadArticle } from '../services/article-service';
 
 export default function createCustomContext(customService){
   var dispatcher = new Flux.Dispatcher();

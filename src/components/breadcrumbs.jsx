@@ -1,5 +1,4 @@
 import React from 'react';
-import { getPlatformName, getTechTitle } from '../util/tutorials';
 import navigateAction from '../action/navigate-action';
 import TutorialStore from '../stores/tutorial-store';
 import { connectToStores } from 'fluxible-addons-react';

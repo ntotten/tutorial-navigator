@@ -10,6 +10,18 @@ class TutorialStore extends BaseStore {
     this.article = null;
   }
   
+  getQuickstart() {
+    return this.quickstarts[this.appType];
+  }
+  
+  getPlatform() {
+    return this.getQuickstart().platforms[this.platform];
+  }
+  
+  getArticle() {
+    return this.getPlatform().articles[this.article];
+  }
+  
   handleTutorialNavigatorLoaded(payload) {
     this.appType = payload.appType;
     this.platform = payload.platform;

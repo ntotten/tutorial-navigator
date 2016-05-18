@@ -3,7 +3,6 @@ import TutorialStore from '../stores/tutorial-store';
 import ArticleStore from '../stores/article-store';
 import TutorialNavigator from '../components/tutorial-navigator';
 import Breadcrumbs from '../components/breadcrumbs';
-import { getPlatformName, getTechTitle } from '../util/tutorials';
 import Tutorial from '../components/tutorial';
 import { connectToStores, provideContext } from 'fluxible-addons-react';
 

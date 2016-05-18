@@ -1,5 +1,10 @@
+import TutorialStore from '../stores/tutorial-store';
+import ServiceKeys from '../services/keys';
+
 export default function loadArticleAction(context, payload, done) {
-  return context.getService(ServiceName).loadArticle(payload)
+  let articleService = context.getService(ServiceKeys.ArticleService);
+  let quickstarts = context.getStore(TutorialStore).getQuickstarts();
+  return articleService.loadArticle(quickstarts, payload)
   .then((html) => {
     context.dispatch('ARTICLE_LOAD_SUCCESS', {
       html,
@@ -14,5 +19,3 @@ export default function loadArticleAction(context, payload, done) {
     return err;
   });
 }
-
-export const ServiceName = "articleService";
