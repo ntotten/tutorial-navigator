@@ -5,7 +5,12 @@ class ArticleStore extends BaseStore {
   
   constructor(dispatcher) {
     super(dispatcher);
-    this.articles = [];
+    this.articles = {};
+  }
+  
+  getArticleHtml(quickstartId, platformId, articleId) {
+    let key = this.getKeyForArticle(quickstartId, platformId, articleId);
+    return this.articles[key] || undefined;
   }
   
   handleArticleLoaded(payload) {
@@ -19,23 +24,18 @@ class ArticleStore extends BaseStore {
     // TODO: Handle the error
   }
   
-  getArticleHtml(quickstartId, platformId, articleId) {
-    let key = this.getKeyForArticle(quickstartId, platformId, articleId);
-    return this.articles[key] || undefined;
-  }
-  
-  getKeyForArticle(quickstartId, platformId, articleId) {
-    return [quickstartId, platformId, articleId].join('/');
-  }
-  
   dehydrate() {
     return {
       articles: this.articles
-    }
+    };
   }
   
   rehydrate(state) {
     this.articles = state.articles;
+  }
+  
+  getKeyForArticle(quickstartId, platformId, articleId) {
+    return [quickstartId, platformId, articleId].join('/');
   }
   
 }

@@ -41,17 +41,16 @@ class Breadcrumbs extends React.Component {
           <i className="icon-budicon-461"></i><span className="text">{platform.title}</span>
         </a>
       );
-      
-      // Only display the article breadcrumb if there is more than one article associated with the platform.
-      if (article && platform.articles.length > 1) {
-        crumbs.push(
-          <a key="article" onClick={this.handleClick.bind(this, {quickstart, platform, article})}>
-            <i className="icon-budicon-461"></i><span className="text">{article.title}</span>
-          </a>
-        );
-      }
     }
 
+    if (article) {
+      crumbs.push(
+        <a key="article" onClick={this.handleClick.bind(this, {quickstart, platform, article})}>
+          <i className="icon-budicon-461"></i><span className="text">{article.title}</span>
+        </a>
+      );
+    }
+    
     return <div className="breadcrumbs">{crumbs}</div>;
   }
   
