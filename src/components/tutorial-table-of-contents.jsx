@@ -19,15 +19,19 @@ class TutorialTableOfContents extends React.Component {
     
     let items = platform.articles.map((article, index) => {
       let selected = (article.name == currentArticle.name) ? 'selected ' : '';
-      return <li key={index} className={selected + "toc-article"} onClick={this.handleClick.bind(this, article)}>
-        {article.title}
+      return <li key={index} className={selected + "tutorial-toc-article"} onClick={this.handleClick.bind(this, article)}>
+        <span className="tutorial-toc-article-number">{article.number}</span>
+        <span className="tutorial-toc-article-title">{article.title}</span>
       </li>
     });
     
     return (
-      <ul className="toc">
-        {items}
-      </ul>
+      <div className="tutorial-toc">
+        <div className="tutorial-toc-header">Contents</div>
+        <ul className="tutorial-toc-articles">
+          {items}
+        </ul>
+      </div>
     );
   }
   
