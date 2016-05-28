@@ -1,17 +1,26 @@
 import React from 'react';
 import _ from 'lodash';
-import {navigateAction} from '../action/navigate-action';
+import loadArticleAction from '../action/load-article-action';
+import navigateAction from '../action/navigate-action';
 
 class TutorialTableOfContents extends React.Component {
   
   handleClick(article) {
     let {quickstart, platform, customNavigationAction} = this.props;
-    let action = customNavigationAction || navigateAction;
-    this.context.executeAction(action, {
+    let payload = {
       quickstartId: quickstart.name,
       platformId: platform.name,
       articleId: article.name
-    });
+    };
+    if (customNavigationAction) {
+      this.context.executeAction(customNavigationAction, payload);
+    }
+    else {
+      Promise.all([
+        this.context.executeAction(loadArticleAction, payload),
+        this.context.executeAction(navigateAction, payload)
+      ]);
+    }
   }
   
   render() {

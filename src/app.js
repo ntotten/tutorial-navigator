@@ -33,6 +33,7 @@ module.exports = {
 
   // Utils
   createCustomContext,
+  renderElement,
 
   // Service
   ArticleService,

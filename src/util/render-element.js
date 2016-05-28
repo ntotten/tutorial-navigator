@@ -4,7 +4,7 @@ import NavigatorAndTutorialView from '../view/navigator-and-tutorial-view';
 
 export default function renderElement(documentElement, options){
   ReactDOM.render(
-      React.createElement(NavigatorAndTutorialView, options),
-      documentElement
+    React.createElement(NavigatorAndTutorialView, options),
+    documentElement
   );
 }

@@ -15,7 +15,7 @@ class Platform extends React.Component {
       this.context.executeAction(customNavigationAction, payload);
     }
     else {
-      Promises.all([
+      Promise.all([
         this.context.executeAction(loadArticleAction, payload),
         this.context.executeAction(navigateAction, payload)
       ]);
