@@ -11,7 +11,7 @@ class NavigatorAndTutorialView extends React.Component {
       return <TutorialView {...this.props} />;
     }
     else {
-      return <TutorialNavigator {...this.props} componentLoadedInBrowser={this.props.quickstartLoadedInBrowser} />;
+      return <TutorialNavigator {...this.props} />;
     }
   }
   
@@ -20,7 +20,8 @@ class NavigatorAndTutorialView extends React.Component {
 NavigatorAndTutorialView.propTypes = {
   quickstart: React.PropTypes.object,
   platform: React.PropTypes.object,
-  article: React.PropTypes.object
+  article: React.PropTypes.object,
+  componentLoadedInBrowser: React.PropTypes.func
 }
 
 NavigatorAndTutorialView.contextTypes = {

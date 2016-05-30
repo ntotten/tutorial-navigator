@@ -71,7 +71,8 @@ class TutorialView extends React.Component {
 TutorialView.propTypes = {
   quickstart: React.PropTypes.object,
   platform: React.PropTypes.object,
-  article: React.PropTypes.object
+  article: React.PropTypes.object,
+  componentLoadedInBrowser: React.PropTypes.func
 }
 
 TutorialView.contextTypes = {

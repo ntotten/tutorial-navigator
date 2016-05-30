@@ -8,22 +8,15 @@ class Tutorial extends React.Component {
     this.initClient();
   }
   
-  componentDidUpdate() {
-    this.initClient();
+  componentDidUpdate(prevProps) {
+    if (prevProps.articleHtml !== this.props.articleHtml) {
+      this.initClient();
+    }
   }
   
   initClient() {
-    if (typeof document !== 'undefined') {
-      if (this.props.componentLoadedInBrowser){
-        this.props.componentLoadedInBrowser.call(this);
-      }
-      var article = this.refs.article;
-      if (article) {
-        var child = article.firstChild;
-        if (child.nodeName === 'H1' || child.nodeName === 'H2') {
-          child.classList.add('hide');
-        }
-      }
+    if (this.props.componentLoadedInBrowser && typeof window !== 'undefined') {
+      this.props.componentLoadedInBrowser.call(this);
     }
   }
   

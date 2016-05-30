@@ -4,20 +4,13 @@ import Quickstart from './quickstart';
 class QuickstartList extends React.Component {
   
   componentDidMount() {
-    if (typeof window !== 'undefined') {
-      this.componentDidMountClient();
-    }
-  }
-  
-  componentDidMountClient() {
-    // Runs only on client, not on server
-    if (this.props.componentLoadedInBrowser) {
+    if (this.props.componentLoadedInBrowser && typeof window !== 'undefined') {
       this.props.componentLoadedInBrowser.call(this);
     }
   }
   
   render() {
-    let {quickstarts, onDocumentLoaded, customNavigationAction} = this.props;
+    let {quickstarts, customNavigationAction} = this.props;
     let items = null;
     let hide = 'hide ';
     if (quickstarts) {
@@ -26,7 +19,6 @@ class QuickstartList extends React.Component {
         <Quickstart
           key={name}
           quickstart={quickstarts[name]}
-          onDocumentLoaded={onDocumentLoaded}
           customNavigationAction={customNavigationAction} />
       ));
     }
@@ -41,7 +33,6 @@ class QuickstartList extends React.Component {
 
 QuickstartList.propTypes = {
   quickstarts: React.PropTypes.object,
-  onDocumentLoaded: React.PropTypes.func,
   customNavigationAction: React.PropTypes.func,
   componentLoadedInBrowser: React.PropTypes.func
 };
