@@ -244,41 +244,59 @@
         opacity: 1;
 
 .breadcrumbs
+  font-size: 12px;
+  margin: 15px 10px;
+  padding: 3px 15px;
+  line-height: 2.5;
+  background: white;
+  border-radius: 3px;
+  display: inline-block;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+
+  i
     font-size: 12px;
-    margin: 15px 10px;
-    padding: 3px 15px;
-    line-height: 2.5;
-    background: white;
-    border-radius: 3px;
-    display: inline-block;
-    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.08);
-    cursor: pointer;
+    animation: none;
+    margin: 0;
+    position: relative;
+    top: 3px;
+    margin-left: 12px;
+    margin-right: 10px;
+    opacity: 0.5;
 
-    i
-      font-size: 12px;
-      animation: none;
-      margin: 0;
-      position: relative;
-      top: 3px;
-      margin-left: 7px;
-      margin-right: 5px;
-      opacity: 0.5;
+  a
+    color: color_oil;
+    font-weight: normal
+    display: inline-block
+    cursor: pointer
 
-    a
-      color: color_oil;
-      font-weight: normal
-      display: inline-block
-      cursor: pointer
+  .plus
+    padding: 0 5px;
 
-    .plus
-      padding: 0 5px;
+  .text
+    color: color_oil;
+    border-radius: 20px;
 
-    .text
-      color: color_oil;
-      border-radius: 20px;
+    &:hover
+      opacity: 1;
 
-      &:hover
-        opacity: 1;
+.tutorial-toc
+  margin-top 20px
+  padding 0
+  ul, li
+    margin 0
+    padding 0
+  .tutorial-toc-article
+    cursor pointer
+    list-style none
+    margin-bottom 14px
+    font-size 14px
+    color color_text_light
+    &:hover
+      color color_text_gray
+    &.selected
+      color color_text_gray
+      font-weight 700
 
 @media screen and (max-width: 992px)
   .quickstart

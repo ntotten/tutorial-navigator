@@ -1,5 +1,4 @@
 import React from 'react';
-import Breadcrumbs from './breadcrumbs';
 import QuickstartList from './quickstart-list';
 import PlatformList from './platform-list';
 import TutorialStore from '../stores/tutorial-store';
@@ -29,7 +28,6 @@ class TutorialNavigator extends React.Component {
             <div className="container">
               <h1>Documentation</h1>
               <p className='question-text'>{question}</p><br/>
-              <Breadcrumbs {...this.props} />
             </div>
             {picker}
           </div>

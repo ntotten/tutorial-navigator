@@ -17,24 +17,35 @@ class Breadcrumbs extends React.Component {
   
   render() {
     let crumbs = [];
-    let {quickstart, platform, article} = this.props;
+    let {quickstart, platform, article, isRestricted} = this.props;
     
     if (!quickstart) {
       return <div />;
     }
     
-    crumbs.push(
-      <a key="base" onClick={this.handleClick.bind(this, {})}>
-        <span className="text">Documentation</span>
-      </a>
-    );
+    // If we're running in "restricted" mode (eg. in the management site),
+    // we're locked into a specific appType, and we don't want to display the
+    // top-level Documentation link.
+    if (isRestricted) {
+      crumbs.push(
+        <a key="quickstart" onClick={this.handleClick.bind(this, {quickstart})}>
+          <span className="text">{quickstart.title}</span>
+        </a>
+      );
+    }
+    else {
+      crumbs.push(
+        <a key="base" onClick={this.handleClick.bind(this, {})}>
+          <span className="text">Documentation</span>
+        </a>
+      );
+      crumbs.push(
+        <a key="quickstart" onClick={this.handleClick.bind(this, {quickstart})}>
+          <i className="icon-budicon-461"></i><span className="text">{quickstart.title}</span>
+        </a>
+      );
+    }
     
-    crumbs.push(
-      <a key="quickstart" onClick={this.handleClick.bind(this, {quickstart})}>
-        <i className="icon-budicon-461"></i><span className="text">{quickstart.title}</span>
-      </a>
-    );
-
     if (platform) {
       crumbs.push(
         <a key="platform" onClick={this.handleClick.bind(this, {quickstart, platform, article: platform.articles[0]})}>
@@ -59,6 +70,7 @@ Breadcrumbs.propTypes = {
   quickstart: React.PropTypes.object,
   platform: React.PropTypes.object,
   article: React.PropTypes.object,
+  isRestricted: React.PropTypes.bool,
   customNavigationAction: React.PropTypes.func
 }
 
@@ -72,7 +84,8 @@ Breadcrumbs = connectToStores(Breadcrumbs, [TutorialStore], (context, props) => 
   return {
     quickstart: store.getCurrentQuickstart(),
     platform: store.getCurrentPlatform(),
-    article: store.getCurrentArticle()
+    article: store.getCurrentArticle(),
+    isRestricted: store.getRestricted()
   };
 });
 

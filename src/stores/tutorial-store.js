@@ -5,14 +5,19 @@ class TutorialStore extends BaseStore {
   
   constructor(dispatcher) {
     super(dispatcher);
-    this.quickstarts = null;
-    this.currentQuickstartId = null;
-    this.currentPlatformId = null;
-    this.currentArticleId = null;
+    this.quickstarts = undefined;
+    this.currentQuickstartId = undefined;
+    this.currentPlatformId = undefined;
+    this.currentArticleId = undefined;
+    this.restricted = false;
   }
   
   getQuickstarts() {
     return this.quickstarts;
+  }
+  
+  getRestricted() {
+    return this.restricted;
   }
   
   getCurrentQuickstart() {
@@ -56,6 +61,12 @@ class TutorialStore extends BaseStore {
   
   handleSettingsLoaded(payload) {
     this.quickstarts = payload.quickstarts;
+    this.restricted = payload.restricted;
+    if (payload.selectedTutorial) {
+      this.currentQuickstartId = payload.selectedTutorial.quickstartId;
+      this.currentPlatformId = payload.selectedTutorial.platformId;
+      this.currentArticleId = payload.selectedTutorial.articleId;
+    }
     this.emitChange();
   }
   
@@ -64,7 +75,8 @@ class TutorialStore extends BaseStore {
       quickstarts: this.quickstarts,
       currentQuickstartId: this.currentQuickstartId,
       currentPlatformId: this.currentPlatformId,
-      currentArticleId: this.currentArticleId
+      currentArticleId: this.currentArticleId,
+      restricted: this.restricted
     }
   }
   
@@ -73,6 +85,7 @@ class TutorialStore extends BaseStore {
     this.currentQuickstartId = state.currentQuickstartId;
     this.currentPlatformId = state.currentPlatformId;
     this.currentArticleId = state.currentArticleId;
+    this.restricted = state.restricted;
   }
   
 }

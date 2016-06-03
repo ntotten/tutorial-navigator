@@ -21,6 +21,7 @@ NavigatorAndTutorialView.propTypes = {
   quickstart: React.PropTypes.object,
   platform: React.PropTypes.object,
   article: React.PropTypes.object,
+  restrict: React.PropTypes.string,
   componentLoadedInBrowser: React.PropTypes.func
 }
 
