@@ -3,56 +3,54 @@ import ArticleStore from '../stores/article-store';
 import { connectToStores } from 'fluxible-addons-react';
 
 class Tutorial extends React.Component {
+  
   componentDidMount () {
     this.initClient();
   }
-  componentDidUpdate() {
-    this.initClient();
-  }
-  initClient(html) {
-    if (typeof document !== 'undefined') {
-      if (this.props.componentLoadedInBrowser){
-        this.props.componentLoadedInBrowser.call(this);
-      }
-      var article = this.refs.article;
-      if (article) {
-        var child = article.firstChild;
-        if (child.nodeName === 'H1' || child.nodeName === 'H2') {
-          child.classList.add('hide');
-        }
-      }
+  
+  componentDidUpdate(prevProps) {
+    if (prevProps.articleHtml !== this.props.articleHtml) {
+      this.initClient();
     }
   }
-  createMarkup() {
-    return {__html: this.props.articleHtml};
+  
+  initClient() {
+    if (this.props.componentLoadedInBrowser && typeof window !== 'undefined') {
+      this.props.componentLoadedInBrowser.call(this);
+    }
   }
+  
   render() {
-    if (this.props.articleHtml) {
-      return (
-        <div id={this.props.tabName}
-          className={'tab-pane' + (this.props.default ? ' active' : '')}
-          dangerouslySetInnerHTML={this.createMarkup()}
-          ref="article" />
-      );
-    } else {
-      return (
-          <div id={this.props.tabName} className='loading-tutorial'>
-            <div className='auth0-spinner'>
-              <div className='spinner'></div>
-            </div>
-          </div>
-      );
+    let {articleHtml} = this.props;
+    
+    if (!articleHtml) {
+      return <div className='loading-tutorial'>
+        <div className='auth0-spinner'>
+          <div className='spinner'></div>
+        </div>
+      </div>;
     }
+    
+    let markup = {__html: articleHtml};
+    return <div ref="article" dangerouslySetInnerHTML={markup} />;
   }
+  
 }
 
-Tutorial.contextTypes = {
-  getStore: React.PropTypes.func,
-  executeAction: React.PropTypes.func
-};
+Tutorial.propTypes = {
+  quickstart: React.PropTypes.object,
+  platform: React.PropTypes.object,
+  article: React.PropTypes.object,
+  articleHtml: React.PropTypes.string,
+  componentLoadedInBrowser: React.PropTypes.func
+}
 
-Tutorial = connectToStores(Tutorial, [ArticleStore], (context, props) => ({
-  articleHtml: context.getStore(ArticleStore).getArticleHtml(props.appType, props.tech)
-}));
+Tutorial = connectToStores(Tutorial, [ArticleStore], (context, props) => {
+  let {quickstart, platform, article} = props;
+  let store = context.getStore(ArticleStore);
+  return {
+    articleHtml: store.getArticleHtml(quickstart.name, platform.name, article.name)
+  };
+});
 
 export default Tutorial;

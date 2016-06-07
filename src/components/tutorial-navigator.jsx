@@ -1,91 +1,54 @@
-//import TenantSwitcher from './TenantSwitcher';
 import React from 'react';
-import Breadcrumbs from './breadcrumbs';
 import QuickstartList from './quickstart-list';
-import TechList from './tech-list';
-import { connectToStores } from 'fluxible-addons-react';
-import loadArticleAction from '../action/load-article-action';
-import { getQuestion } from '../util/tutorials';
+import PlatformList from './platform-list';
 import TutorialStore from '../stores/tutorial-store';
+import {connectToStores} from 'fluxible-addons-react';
 
 class TutorialNavigator extends React.Component {
-  handleSkip() {
-    var action = this.props.customNavigationAction || loadArticleAction;
-    this.context.executeAction(action, {
-      appType: this.props.appType,
-      tech1: this.props.tech1,
-      currentTech: this.props.tech1,
-      tech2: 'no-api',
-    });
-  }
-  getTenantSwitcher() {
-    if(!this.props.userTenants || this.props.userTenants.length < 2) {
-      return false;
-    }
-
-    return (
-      <TenantSwitcher />
-    );
-  }
+  
   render() {
-    var hasMoreTenants = this.props.userTenants && this.props.userTenants.length > 1;
+    
+    let {quickstarts, quickstart} = this.props;
 
-    var picker;
-    if (this.props.appType) {
-      picker = (<TechList {...this.props} />);
-    } else {
-      picker = (<QuickstartList {...this.props} />);
+    let picker = undefined;
+    let question = undefined;
+    if (quickstart) {
+      picker = <PlatformList quickstart={quickstart} {...this.props} />;
+      question = quickstart.question;
     }
-
-    var appType = this.props.appType;
-    var tech1 = this.props.tech1;
-    var skippable = false;
-    var question = getQuestion(this.props.appType);
-    if (appType && tech1) {
-      if (appType === 'native-mobile') {
-        skippable = true;
-      } else if (appType === 'spa') {
-        skippable = true;
-      } else if (appType === 'hybrid') {
-        skippable = true;
-      }
-      question = getQuestion('backend');
+    else {
+      picker = <QuickstartList quickstarts={quickstarts} {...this.props} />;
+      question = "Getting started? Try our quickstarts."
     }
-
+    
     return (
       <div id="tutorial-navigator">
         <div className='js-tutorial-navigator'>
           <div className="banner tutorial-wizard">
             <div className="container">
               <h1>Documentation</h1>
-
-              <p className={(hasMoreTenants && !this.props.appType) ? 'hide' : 'question-text'}>{question}</p>
-
-              {this.getTenantSwitcher()}
-
-              <button href="#" data-skip onClick={this.handleSkip.bind(this)}
-                className={(skippable) ? '' : 'hide' }>No, skip this</button>
-              <br />
-              <Breadcrumbs {...this.props} customNavigationAction={this.props.customNavigationAction} />
-
+              <p className='question-text'>{question}</p><br/>
             </div>
-
             {picker}
-
           </div>
         </div>
       </div>
     );
   }
+  
 }
 
-TutorialNavigator.contextTypes = {
-  getStore: React.PropTypes.func,
-  executeAction: React.PropTypes.func,
-};
+TutorialNavigator.propTypes = {
+  quickstarts: React.PropTypes.object,
+  quickstart: React.PropTypes.object
+}
 
 TutorialNavigator = connectToStores(TutorialNavigator, [TutorialStore], (context, props) => {
-  return context.getStore(TutorialStore).getState();
+  let store = context.getStore(TutorialStore);
+  return {
+    quickstarts: store.getQuickstarts(),
+    quickstart: store.getCurrentQuickstart()
+  };
 });
 
 

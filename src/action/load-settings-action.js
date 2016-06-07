@@ -1,7 +1,8 @@
-export default function loadSettingsAction(context, payload){
+export default function loadSettingsAction(context, payload) {
   return context.dispatch('LOAD_SETTINGS', {
-    quickstart : payload.quickstart,
+    quickstarts: payload.quickstarts,
     navigation: payload.navigation,
-    selectedTutorial: payload.selectedTutorial
+    selectedTutorial: payload.selectedTutorial,
+    restricted: payload.restricted
   });
 };

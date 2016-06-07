@@ -2,18 +2,16 @@ import React from 'react';
 import navigateAction from '../action/navigate-action';
 
 class Quickstart extends React.Component {
+  
   handleClick(quickstart) {
-    this.context.executeAction(this.props.customNavigationAction || navigateAction, {
-      appType : quickstart.name
-    });
+    let action = this.props.customNavigationAction || navigateAction;
+    this.context.executeAction(action, {quickstartId: quickstart.name});
   }
 
   render() {
-    var quickstart = this.props.model;
-    var boundClick = this.handleClick.bind(this, quickstart);
-
+    var {quickstart} = this.props;
     return (
-      <div className="quickstart" data-type={quickstart.name} onClick={boundClick}>
+      <div className="quickstart" data-type={quickstart.name} onClick={this.handleClick.bind(this, quickstart)}>
         <div className="symbol"></div>
         <strong className="title">{quickstart.title}</strong>
         <p className="description">{quickstart.description}</p>
@@ -24,6 +22,12 @@ class Quickstart extends React.Component {
       </div>
     );
   }
+  
+}
+
+Quickstart.propTypes = {
+  quickstart: React.PropTypes.object,
+  customNavigationAction: React.PropTypes.func
 }
 
 Quickstart.contextTypes = {
